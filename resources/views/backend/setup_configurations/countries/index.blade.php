@@ -36,6 +36,21 @@
                 {{ $countries->links() }}
             </div>
         </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0 h6">{{translate('Note')}}</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item ">
+                            1.<b class="text-info">{{ translate(' If Want to Add More Contact With The Site Developer') }}...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection
 

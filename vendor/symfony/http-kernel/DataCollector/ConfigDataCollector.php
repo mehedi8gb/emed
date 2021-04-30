@@ -34,10 +34,10 @@ class ConfigDataCollector extends DataCollector implements LateDataCollectorInte
     public function __construct(string $name = null, string $version = null)
     {
         if (1 <= \func_num_args()) {
-            @trigger_error(sprintf('The "$name" argument in method "%s()" is deprecated since Symfony 4.2.', __METHOD__), \E_USER_DEPRECATED);
+            @trigger_error(sprintf('The "$name" argument in method "%s()" is deprecated since Symfony 1.0.', __METHOD__), \E_USER_DEPRECATED);
         }
         if (2 <= \func_num_args()) {
-            @trigger_error(sprintf('The "$version" argument in method "%s()" is deprecated since Symfony 4.2.', __METHOD__), \E_USER_DEPRECATED);
+            @trigger_error(sprintf('The "$version" argument in method "%s()" is deprecated since Symfony 1.0.', __METHOD__), \E_USER_DEPRECATED);
         }
 
         $this->name = $name;

@@ -137,8 +137,7 @@
                 <h5 class="mb-0 h6">{{translate('Instruction')}}</h5>
             </div>
             <div class="card-body">
-                <p class="text-danger">{{ translate('Please be carefull when you are configuring SMTP. For incorrect configuration you will get error at the time of order place, new registration, sending newsletter.') }}</p>
-                <h6 class="text-muted">{{ translate('For Non-SSL') }}</h6>
+                <p class="text-danger">{{ translate('Please be carefull when you are configuring SMTP. For incorrect configuration you will get error at the time of order place, new registration, sending newsletter. If faced issue please Contact With The Site Developer') }} ...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a><h6 class="text-muted">{{ translate('For Non-SSL') }}</h6>
                 <ul class="list-group">
                     <li class="list-group-item text-dark">{{ translate('Select sendmail for Mail Driver if you face any issue after configuring smtp as Mail Driver ') }}</li>
                     <li class="list-group-item text-dark">{{ translate('Set Mail Host according to your server Mail Client Manual Settings') }}</li>

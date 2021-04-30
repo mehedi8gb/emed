@@ -55,7 +55,7 @@
                         3. {{ translate('Seller Wise Flat Shipping Cost calulation: Fixed rate for each seller. If customers purchase 2 product from two seller shipping cost is calculated by addition of each seller flat shipping cost') }}.
                     </li>
                     <li class="list-group-item">
-                        4. {{ translate('Area Wise Flat Shipping Cost calulation: Fixed rate for each area. If customers purchase multiple products from one seller shipping cost is calculated by the customer shipping area. To configure area wise shipping cost go to ') }} <a href="{{ route('cities.index') }}">{{ translate('Shipping Cities') }}</a>.
+                        4. {{ translate('Area Wise Flat Shipping Cost calulation: Fixed rate for each area. If customers purchase multiple products from one seller shipping cost is calculated by the customer shipping area. To configure area wise shipping cost go to ') }} <a href="{{ route('cities.index') }}"> {{ translate('Shipping Cities') }}</a> of<b><a href="{{ env('APP_URL') }}"> {{ env('APP_NAME') }}</a></b>.
                     </li>
                 </ul>
             </div>
@@ -132,6 +132,9 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         {{ translate('1. Shipping cost for admin is applicable if Seller wise shipping cost is enabled.') }}
+                    </li>
+                    <li class="list-group-item ">
+                        <b class="text-danger">{{ translate('2. If Not Work Contact With The Site Developer') }}...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a>
                     </li>
                 </ul>
             </div>

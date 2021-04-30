@@ -42,16 +42,17 @@
         <div class="col-md-6">
             <div class="card bg-gray-light">
               <div class="card-header">
-                  <h5 class="mb-0 h6">{{ translate('Please be carefull when you are configuring Facebook chat. For incorrect configuration you will not get messenger icon on your user-end site.') }}</h5>
+                  <h5 class="mb-0 h6">{{ translate('Please be carefull, We already configured Facebook chat intigration for') }}<a href="{{ env('APP_URL') }}"> <b class="text-primary"> eMed.</b></a>{{ translate('Any incorrect configuration you will not get messenger icon on your user-end site.') }}</h5>
               </div>
                 <div class="card-body">
                     <ul class="list-group mar-no">
-                        <li class="list-group-item text-dark">1. {{ translate('Login into your facebook page') }}</li>
+                        <li class="list-group-item text-dark">1. {{ translate('Login into your facebook account and go to your page') }}</li>
                         <li class="list-group-item text-dark">2. {{ translate('Find the About option of your facebook page') }}.</li>
                         <li class="list-group-item text-dark">3. {{ translate('At the very bottom, you can find the “Facebook Page ID”') }}.</li>
                         <li class="list-group-item text-dark">4. {{ translate('Go to Settings of your page and find the option of "Advance Messaging"') }}.</li>
                         <li class="list-group-item text-dark">5. {{ translate('Scroll down that page and you will get "white listed domain"') }}.</li>
                         <li class="list-group-item text-dark">6. {{ translate('Set your website domain name') }}.</li>
+                        <li class="list-group-item ">7.<b class="text-danger">{{ translate(' If any Problem Contact With The Site Developer') }}...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a></li>
                     </ul>
                 </div>
             </div>

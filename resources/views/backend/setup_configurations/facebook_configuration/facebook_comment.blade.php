@@ -43,7 +43,7 @@
         <div class="col-md-6">
             <div class="card bg-gray-light">
               <div class="card-header">
-                  <h5 class="mb-0 h6">{{ translate('Please be carefull when you are configuring Facebook Comment. For incorrect configuration you will not get comment section on your user-end site.') }}</h5>
+                  <h5 class="mb-0 h6">{{ translate('Please be carefull, We already configured Facebook Comment intigration for') }}<a href="{{ env('APP_URL') }}"> <b class="text-primary"> eMed.</b></a>{{ translate('Any incorrect configuration you will not get comment section on your user-end site.') }}</h5>
               </div>
                 <div class="card-body">
                     <ul class="list-group mar-no">
@@ -51,13 +51,16 @@
                             1. {{ translate('Login into your facebook page') }}
                         </li>
                         <li class="list-group-item text-dark">
-                            2. {{ translate('After then go to this URL https://developers.facebook.com/apps/') }}.
+                            2. {{ translate('After then go to this URL ') }} --> <a href="https://developers.facebook.com/apps/">https://developers.facebook.com/apps/</a> .
                         </li>
                         <li class="list-group-item text-dark">
                             3. {{ translate('Create Your App') }}.
                         </li>
                         <li class="list-group-item text-dark">
                             4. {{ translate('In Dashboard page you will get your App ID') }}.
+                        </li>
+                        <li class="list-group-item ">
+                            7.<b class="text-danger">{{ translate(' If any Problem, Contact With The Site Developer') }}...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a>
                         </li>
                     </ul>
                 </div>

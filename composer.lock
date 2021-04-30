@@ -1416,12 +1416,12 @@
             "authors": [
                 {
                     "name": "Jane Doe",
-                    "email": "developer.activeitzone@gmail.com",
+                    "email": "developer.mehidy.gb@gmail.com",
                     "role": "Developer"
                 }
             ],
             "description": "My awesome package",
-            "homepage": "https://github.com/laracon21/colorcodeconverter",
+            "homepage": "https://github.com/mehidy8gb",
             "keywords": [
                 "colorcodeconverter",
                 "laracon21"
@@ -1472,8 +1472,8 @@
             ],
             "authors": [
                 {
-                    "name": "Jane Doe",
-                    "email": "developer.activeitzone@gmail.com",
+                    "name": "Mehedi",
+                    "email": "developer.mehidy.gb@gmail.com",
                     "role": "Developer"
                 }
             ],
@@ -1529,8 +1529,8 @@
             ],
             "authors": [
                 {
-                    "name": "Jane Doe",
-                    "email": "developer.activeitzone@gmail.com",
+                    "name": "mehidy",
+                    "email": "developer.mehidy.gb@gmail.com",
                     "role": "Developer"
                 }
             ],

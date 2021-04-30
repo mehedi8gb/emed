@@ -49,6 +49,9 @@
                         <li class="list-group-item text-dark">1. {{ translate('Log in to Facebook and go to your Ads Manager account') }}.</li>
                         <li class="list-group-item text-dark">2. {{ translate('Open the Navigation Bar and select Events Manager') }}.</li>
                         <li class="list-group-item text-dark">3. {{ translate('Copy your Pixel ID from underneath your Site Name and paste the number into Facebook Pixel ID field') }}.</li>
+                        <li class="list-group-item ">
+                            4.<b class="text-info"> {{ translate('If Not Work Contact With The Site Developer') }}...<a href="{{ env('DEV_NM') }}"> Mehedi</b></a>
+                        </li>
                     </ul>
                 </div>
             </div>

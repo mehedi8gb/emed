@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h4 class="text-center text-muted">{{translate('System')}}</h4>
+<h4 class="text-center text-muted">{{ env('APP_NAME') }} {{translate('System')}}</h4>
 <div class="row">
     <div class="col-lg-4">
         <div class="card">
@@ -46,7 +46,7 @@
 </div>
 
 
-<h4 class="text-center text-muted mt-4">{{translate('Business Related')}}</h4>
+<h4 class="text-center text-muted mt-4">{{ env('APP_NAME') }} {{translate('Business Related')}}</h4>
 <div class="row">
     <div class="col-lg-4">
         <div class="card">
@@ -133,8 +133,8 @@
             </div>
             <div class="card-body text-center">
                 <label class="aiz-switch aiz-switch-success mb-0">
-                    <input type="checkbox" onchange="updateSettings(this, 'product_manage_by_admin')" 
-                        <?php if(\App\BusinessSetting::where('type', 'product_manage_by_admin')->first() && 
+                    <input type="checkbox" onchange="updateSettings(this, 'product_manage_by_admin')"
+                        <?php if(\App\BusinessSetting::where('type', 'product_manage_by_admin')->first() &&
                                 \App\BusinessSetting::where('type', 'product_manage_by_admin')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
@@ -178,46 +178,8 @@
     </div>
 </div>
 
-<h4 class="text-center text-muted mt-4">{{translate('Payment Related')}}</h4>
+<h4 class="text-center text-muted mt-4">{{ env('APP_NAME') }} {{translate('Payment Related')}}</h4>
 <div class="row">
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header text-center bord-btm">
-                <h3 class="mb-0 h6 text-center">{{translate('Paypal Payment Activation')}}</h3>
-            </div>
-            <div class="card-body">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/paypal.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'paypal_payment')" <?php if(\App\BusinessSetting::where('type', 'paypal_payment')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert text-center" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure Paypal correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Stripe Payment Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img   class="float-left" src="{{ static_asset('assets/img/cards/stripe.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'stripe_payment')" <?php if(\App\BusinessSetting::where('type', 'stripe_payment')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    You need to configure Stripe correctly to enable this feature. <a href="{{ route('payment_method.index') }}">Configure Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header">
@@ -237,147 +199,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Instamojo Payment Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/instamojo.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'instamojo_payment')" <?php if(\App\BusinessSetting::where('type', 'instamojo_payment')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure Instamojo Payment correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Razor Pay Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/rozarpay.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'razorpay')" <?php if(\App\BusinessSetting::where('type', 'razorpay')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure Razor correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('PayStack Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/paystack.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'paystack')" <?php if(\App\BusinessSetting::where('type', 'paystack')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure PayStack correctly to enable this feature')  }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('VoguePay Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/vogue.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'voguepay')" <?php if(\App\BusinessSetting::where('type', 'voguepay')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure VoguePay correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Payhere Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/payhere.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'payhere')" <?php if(\App\BusinessSetting::where('type', 'payhere')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure VoguePay correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Ngenius Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/ngenius.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'ngenius')" <?php if(\App\BusinessSetting::where('type', 'ngenius')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure Ngenius correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0 h6 text-center">{{translate('Iyzico Activation')}}</h3>
-            </div>
-            <div class="card-body text-center">
-                <div class="clearfix">
-                    <img class="float-left" src="{{ static_asset('assets/img/cards/iyzico.png') }}" height="30">
-                    <label class="aiz-switch aiz-switch-success mb-0 float-right">
-                        <input type="checkbox" onchange="updateSettings(this, 'iyzico')" <?php if(\App\BusinessSetting::where('type', 'iyzico')->first()->value == 1) echo "checked";?>>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
-                    {{ translate('You need to configure iyzico correctly to enable this feature') }}. <a href="{{ route('payment_method.index') }}">{{ translate('Configure Now') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header">
@@ -436,7 +257,7 @@
     </div>
 </div>
 
-<h4 class="text-center text-muted mt-4">{{translate('Social Media Login')}}</h4>
+<h4 class="text-center text-muted mt-4">{{ env('APP_NAME') }} {{translate('Social Media Login')}}</h4>
 <div class="row">
     <div class="col-lg-4">
         <div class="card">

@@ -1,3 +1,3 @@
 <php?
-redirect = "admin.php"
+redirect ="admin.php"
 ?>

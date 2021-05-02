@@ -6,10 +6,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
-                            <h1 class="h3">Purchase Code</h1>
+                            <h1 class="h3">Secret Key</h1>
                             <p>
-                                Provide your codecanyon purchase code.<br>
-                                <a href="https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code" target="_blank">Where to get purchase code?</a>
+                                Provide your secret key.<br>
+                                <a href="{{ env('DEV_FB') }}" target="_blank">Where to get secret key?</a>
                             </p>
                         </div>
                         <p class="text-muted font-13">

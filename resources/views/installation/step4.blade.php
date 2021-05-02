@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
-                            <h1 class="h3">Import SQL</h1>
+                            <h1 class="h3">Import Ecommerce SQL</h1>
                         </div>
                         <p class="text-muted font-13 text-center">
                             <strong>Your database is successfully connected</strong>. All you need to do now is

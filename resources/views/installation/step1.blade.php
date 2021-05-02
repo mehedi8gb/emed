@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
                             <h1 class="h3">Checking file permissions</h1>
-                            <p>We ran diagnosis on your server. Review the items that have a red mark on it. <br> If everything is green, you are good to go to the next step.</p>
+                            <p>We run diagnosis on your server. Review the items that have a red mark on it. <br> If everything is green, you are good to go to the next step.</p>
                         </div>
 
                         <ul class="list-group">

@@ -43,7 +43,7 @@
         <div class="col-md-6">
             <div class="card bg-gray-light">
               <div class="card-header">
-                  <h5 class="mb-0 h6">{{ translate('Please be carefull, We already configured Facebook Comment intigration for') }}<a href="{{ env('APP_URL') }}"> <b class="text-primary"> eMed.</b></a>{{ translate('Any incorrect configuration you will not get comment section on your user-end site.') }}</h5>
+                  <h5 class="mb-0 h6">{{ translate('Please be carefull, We already configured Facebook Comment intigration for') }}<a href="{{ env('APP_URL') }}"> <b class="text-primary">{{ env('APP_NAME') }} </b></a>{{ translate('Any incorrect configuration you will not get comment section on your user-end site.') }}</h5>
               </div>
                 <div class="card-body">
                     <ul class="list-group mar-no">

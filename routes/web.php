@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\EditorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -315,3 +317,7 @@ Route::get('/blog/{slug}', 'BlogController@blog_details')->name('blog.details');
 
 //Custom page
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
+
+
+//Job circuler page
+Route::get('/job', 'EditorController@richtextedit');

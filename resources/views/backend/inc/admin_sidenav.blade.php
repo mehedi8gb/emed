@@ -265,7 +265,7 @@
                                     <span class="aiz-side-nav-text">{{ translate('Seller Commission') }}</span>
                                 </a>
                             </li>
-                            
+
                             @if (\App\Addon::where('unique_identifier', 'seller_subscription')->first() != null && \App\Addon::where('unique_identifier', 'seller_subscription')->first()->activated)
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('seller_packages.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['seller_packages.index', 'seller_packages.create', 'seller_packages.edit'])}}">
@@ -339,7 +339,7 @@
                         </ul>
                     </li>
                 @endif
-                
+
                 <!--Blog System-->
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
@@ -360,7 +360,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <!-- marketing -->
                 @if(Auth::user()->user_type == 'admin' || in_array('11', json_decode(Auth::user()->staff->role->permissions)))
                     <li class="aiz-side-nav-item">
@@ -686,6 +686,40 @@
                 </li>
                 @endif
 
+                <!-- Job Circuler -->
+
+                @if(Auth::user()->user_type == 'admin' || in_array('13', json_decode(Auth::user()->staff->role->permissions)))
+                <li class="aiz-side-nav-item">
+                  <a href="#" class="aiz-side-nav-link">
+                      <i class="las la-briefcase  aiz-side-nav-icon"></i>
+                      <span class="aiz-side-nav-text">{{translate('Job Circuler')}}</span>
+                      <span class="aiz-side-nav-arrow"></span>
+                  </a>
+                  <ul class="aiz-side-nav-list level-2">
+                      <li class="aiz-side-nav-item">
+                          <a href="{{ route('job') }}" class="aiz-side-nav-link">
+                              <span class="aiz-side-nav-text">{{translate('Circulers')}}</span>
+                          </a>
+                      </li>
+                      {{-- <li class="aiz-side-nav-item">
+                          <a href="{{ route('website.footer') }}" class="aiz-side-nav-link">
+                              <span class="aiz-side-nav-text">{{translate('Footer')}}</span>
+                          </a>
+                      </li>
+                      <li class="aiz-side-nav-item">
+                          <a href="{{ route('website.pages') }}" class="aiz-side-nav-link {{ areActiveRoutes(['website.pages', 'custom-pages.create' ,'custom-pages.edit'])}}">
+                              <span class="aiz-side-nav-text">{{translate('Pages')}}</span>
+                          </a>
+                      </li>
+                      <li class="aiz-side-nav-item">
+                          <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
+                              <span class="aiz-side-nav-text">{{translate('Appearance')}}</span>
+                          </a>
+                      </li> --}}
+                  </ul>
+              </li>
+              @endif
+
                 <!-- Setup & Configurations -->
                 @if(Auth::user()->user_type == 'admin' || in_array('14', json_decode(Auth::user()->staff->role->permissions)))
                   <li class="aiz-side-nav-item">
@@ -711,7 +745,7 @@
                                 <span class="aiz-side-nav-text">{{translate('Languages')}}</span>
                             </a>
                         </li>
-                        
+
                         <li class="aiz-side-nav-item">
                             <a href="{{route('currency.index')}}" class="aiz-side-nav-link">
                                 <span class="aiz-side-nav-text">{{translate('Currency')}}</span>
@@ -752,7 +786,7 @@
                                 <span class="aiz-side-nav-text">{{translate('Analytics Tools')}}</span>
                             </a>
                         </li>
-                        
+
                         <li class="aiz-side-nav-item">
                             <a href="javascript:void(0);" class="aiz-side-nav-link">
                                 <span class="aiz-side-nav-text">{{translate('Facebook')}}</span>
@@ -771,13 +805,13 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('google_recaptcha.index') }}" class="aiz-side-nav-link">
                                 <span class="aiz-side-nav-text">{{translate('Google reCAPTCHA')}}</span>
                             </a>
                         </li>
-                        
+
                         <li class="aiz-side-nav-item">
                             <a href="javascript:void(0);" class="aiz-side-nav-link">
                                 <span class="aiz-side-nav-text">{{translate('Shipping')}}</span>
@@ -801,7 +835,7 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </li>
                 @endif

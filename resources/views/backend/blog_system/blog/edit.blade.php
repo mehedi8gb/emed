@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
-                            {{translate('Category')}} 
+                            {{translate('Category')}}
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
@@ -46,18 +46,18 @@
                             </select>
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Slug')}}</label>
                         <div class="col-md-9">
                             <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" value="{{ $blog->slug }}" class="form-control" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">
-                            {{translate('Banner')}} 
+                            {{translate('Banner')}}
                             <small>(1300x650)</small>
                         </label>
                         <div class="col-md-9">
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
                             {{translate('Short Description')}}
@@ -84,7 +84,7 @@
                             <textarea name="short_description" rows="5" class="form-control">{{ $blog->short_description }}</textarea>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">
                             {{translate('Description')}}
@@ -93,17 +93,17 @@
                             <textarea class="aiz-text-editor" name="description">{{ $blog->description }}</textarea>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Meta Title')}}</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="meta_title" value="{{ $blog->meta_title }}" placeholder="{{translate('Meta Title')}}">
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">
-                            {{translate('Meta Image')}} 
+                            {{translate('Meta Image')}}
                             <small>(200x200)+</small>
                         </label>
                         <div class="col-md-9">
@@ -136,7 +136,7 @@
                             <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" value="{{ $blog->meta_keywords }}" placeholder="{{translate('Meta Keywords')}}">
                         </div>
                     </div>
-                    
+
                     <div class="form-group mb-0 text-right">
                         <button type="submit" class="btn btn-primary">
                             {{translate('Save')}}

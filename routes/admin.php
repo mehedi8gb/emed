@@ -248,4 +248,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::any('/uploaded-files/file-info', 'AizUploadController@file_info')->name('uploaded-files.info');
     Route::resource('/uploaded-files', 'AizUploadController');
     Route::get('/uploaded-files/destroy/{id}', 'AizUploadController@destroy')->name('uploaded-files.destroy');
+
+    //Job circuler page
+    Route::get('/job', 'EditorController@richtextedit')->name('job');
+    Route::get('/job/create', 'EditorController@jobCreate')->name('job.store');
+    Route::get('/job/edit', 'EditorController@jobEdit')->name('job.edit');
 });

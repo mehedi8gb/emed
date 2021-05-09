@@ -711,7 +711,7 @@
                               <span class="aiz-side-nav-text">{{translate('Pages')}}</span>
                           </a>
                       </li>
-                      <li class="aiz-side-nav-item">
+                      {{-- <li class="aiz-side-nav-item">
                           <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
                               <span class="aiz-side-nav-text">{{translate('Appearance')}}</span>
                           </a>

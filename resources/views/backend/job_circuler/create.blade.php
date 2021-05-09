@@ -17,7 +17,10 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="job_title" class="form-control" required>
+                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="job_title" name="job_title" class="form-control" required>
+                            @error('job_title')
+                         <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     {{-- <div class="form-group row" id="category">

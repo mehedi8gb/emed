@@ -103,9 +103,9 @@
                     @endforeach
                 </tbody>
             </table>
-            {{-- <div class="aiz-pagination">
-                {{ $blogs->links() }}
-            </div> --}}
+            <div class="aiz-pagination">
+                {{ $jobs->links() }}
+            </div>
         </div>
 </div>
 

@@ -91,13 +91,13 @@
                             </label>
                         </td>
                         <td class="text-right">
-                            {{-- <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('job.edit',$jobs->id)}}" title="{{ translate('Edit') }}">
+                            <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('job.edit',$job->id)}}" title="{{ translate('Edit') }}">
                                 <i class="las la-pen"></i>
-                            </a> --}}
+                            </a>
 
-                            {{-- <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" data-href="{{route('job.destroy', $jobs->id)}}" title="{{ translate('Delete') }}">
+                            <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" data-href="{{route('job.destroy', $job->id)}}" title="{{ translate('Delete') }}">
                                 <i class="las la-trash"></i>
-                            </a> --}}
+                            </a>
                         </td>
                     </tr>
                     @endforeach

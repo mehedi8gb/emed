@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2021 at 10:17 AM
+-- Generation Time: Apr 30, 2021 at 04:35 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -26,8 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `addons`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `addons` (
   `id` int(11) NOT NULL,
@@ -39,10 +37,6 @@ CREATE TABLE `addons` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `addons`:
---
 
 --
 -- Dumping data for table `addons`
@@ -58,8 +52,6 @@ INSERT INTO `addons` (`id`, `name`, `unique_identifier`, `version`, `activated`,
 --
 -- Table structure for table `addresses`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL,
@@ -74,16 +66,10 @@ CREATE TABLE `addresses` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `addresses`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `affiliate_configs`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `affiliate_configs` (
@@ -93,10 +79,6 @@ CREATE TABLE `affiliate_configs` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `affiliate_configs`:
---
 
 --
 -- Dumping data for table `affiliate_configs`
@@ -109,8 +91,6 @@ INSERT INTO `affiliate_configs` (`id`, `type`, `value`, `created_at`, `updated_a
 
 --
 -- Table structure for table `affiliate_logs`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `affiliate_logs` (
@@ -127,16 +107,10 @@ CREATE TABLE `affiliate_logs` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `affiliate_logs`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `affiliate_options`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `affiliate_options` (
@@ -148,10 +122,6 @@ CREATE TABLE `affiliate_options` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `affiliate_options`:
---
 
 --
 -- Dumping data for table `affiliate_options`
@@ -167,8 +137,6 @@ INSERT INTO `affiliate_options` (`id`, `type`, `details`, `percentage`, `status`
 --
 -- Table structure for table `affiliate_payments`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `affiliate_payments` (
   `id` int(11) NOT NULL,
@@ -179,10 +147,6 @@ CREATE TABLE `affiliate_payments` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `affiliate_payments`:
---
 
 --
 -- Dumping data for table `affiliate_payments`
@@ -196,8 +160,6 @@ INSERT INTO `affiliate_payments` (`id`, `affiliate_user_id`, `amount`, `payment_
 --
 -- Table structure for table `affiliate_stats`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `affiliate_stats` (
   `id` int(11) NOT NULL,
@@ -210,16 +172,10 @@ CREATE TABLE `affiliate_stats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- RELATIONSHIPS FOR TABLE `affiliate_stats`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `affiliate_users`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `affiliate_users` (
@@ -235,10 +191,6 @@ CREATE TABLE `affiliate_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `affiliate_users`:
---
-
---
 -- Dumping data for table `affiliate_users`
 --
 
@@ -250,8 +202,6 @@ INSERT INTO `affiliate_users` (`id`, `paypal_email`, `bank_information`, `user_i
 --
 -- Table structure for table `affiliate_withdraw_requests`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `affiliate_withdraw_requests` (
   `id` int(11) NOT NULL,
@@ -262,16 +212,10 @@ CREATE TABLE `affiliate_withdraw_requests` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `affiliate_withdraw_requests`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `app_settings`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `app_settings` (
@@ -290,10 +234,6 @@ CREATE TABLE `app_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `app_settings`:
---
-
---
 -- Dumping data for table `app_settings`
 --
 
@@ -305,8 +245,6 @@ INSERT INTO `app_settings` (`id`, `name`, `logo`, `currency_id`, `currency_forma
 --
 -- Table structure for table `attributes`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `attributes` (
   `id` int(11) NOT NULL,
@@ -314,10 +252,6 @@ CREATE TABLE `attributes` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `attributes`:
---
 
 --
 -- Dumping data for table `attributes`
@@ -332,8 +266,6 @@ INSERT INTO `attributes` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `attribute_translations`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `attribute_translations` (
   `id` bigint(20) NOT NULL,
@@ -344,16 +276,10 @@ CREATE TABLE `attribute_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `attribute_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `banners`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `banners` (
@@ -365,10 +291,6 @@ CREATE TABLE `banners` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `banners`:
---
 
 --
 -- Dumping data for table `banners`
@@ -387,8 +309,6 @@ INSERT INTO `banners` (`id`, `photo`, `url`, `position`, `published`, `created_a
 
 --
 -- Table structure for table `blogs`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `blogs` (
@@ -409,16 +329,10 @@ CREATE TABLE `blogs` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `blogs`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `blog_categories`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `blog_categories` (
@@ -430,16 +344,10 @@ CREATE TABLE `blog_categories` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `blog_categories`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `brands`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `brands` (
@@ -455,10 +363,6 @@ CREATE TABLE `brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `brands`:
---
-
---
 -- Dumping data for table `brands`
 --
 
@@ -471,8 +375,6 @@ INSERT INTO `brands` (`id`, `name`, `logo`, `top`, `slug`, `meta_title`, `meta_d
 --
 -- Table structure for table `brand_translations`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `brand_translations` (
   `id` bigint(20) NOT NULL,
@@ -483,16 +385,10 @@ CREATE TABLE `brand_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `brand_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `business_settings`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `business_settings` (
@@ -502,10 +398,6 @@ CREATE TABLE `business_settings` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `business_settings`:
---
 
 --
 -- Dumping data for table `business_settings`
@@ -624,8 +516,6 @@ INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_a
 --
 -- Table structure for table `carts`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `carts` (
   `id` int(11) UNSIGNED NOT NULL,
@@ -645,16 +535,10 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `carts`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `categories`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `categories` (
@@ -675,10 +559,6 @@ CREATE TABLE `categories` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `categories`:
---
 
 --
 -- Dumping data for table `categories`
@@ -702,8 +582,6 @@ INSERT INTO `categories` (`id`, `parent_id`, `level`, `name`, `order_level`, `co
 --
 -- Table structure for table `category_translations`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `category_translations` (
   `id` bigint(20) NOT NULL,
@@ -713,10 +591,6 @@ CREATE TABLE `category_translations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `category_translations`:
---
 
 --
 -- Dumping data for table `category_translations`
@@ -740,8 +614,6 @@ INSERT INTO `category_translations` (`id`, `category_id`, `name`, `lang`, `creat
 --
 -- Table structure for table `cities`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
@@ -752,16 +624,10 @@ CREATE TABLE `cities` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `cities`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `city_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `city_translations` (
@@ -773,16 +639,10 @@ CREATE TABLE `city_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `city_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `colors`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `colors` (
@@ -792,10 +652,6 @@ CREATE TABLE `colors` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `colors`:
---
 
 --
 -- Dumping data for table `colors`
@@ -951,8 +807,6 @@ INSERT INTO `colors` (`id`, `name`, `code`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `commission_histories`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `commission_histories` (
   `id` int(11) NOT NULL,
@@ -965,16 +819,10 @@ CREATE TABLE `commission_histories` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- RELATIONSHIPS FOR TABLE `commission_histories`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `conversations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `conversations` (
@@ -988,17 +836,10 @@ CREATE TABLE `conversations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `conversations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `countries`
---
--- Creation: May 08, 2021 at 05:59 PM
--- Last update: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `countries` (
@@ -1011,10 +852,6 @@ CREATE TABLE `countries` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `countries`:
---
-
---
 -- Dumping data for table `countries`
 --
 
@@ -1025,8 +862,6 @@ INSERT INTO `countries` (`id`, `code`, `name`, `status`, `created_at`, `updated_
 
 --
 -- Table structure for table `coupons`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `coupons` (
@@ -1042,16 +877,10 @@ CREATE TABLE `coupons` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `coupons`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `coupon_usages`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `coupon_usages` (
@@ -1062,16 +891,10 @@ CREATE TABLE `coupon_usages` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `coupon_usages`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `currencies`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `currencies` (
@@ -1086,10 +909,6 @@ CREATE TABLE `currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `currencies`:
---
-
---
 -- Dumping data for table `currencies`
 --
 
@@ -1102,8 +921,6 @@ INSERT INTO `currencies` (`id`, `name`, `symbol`, `exchange_rate`, `status`, `co
 --
 -- Table structure for table `customers`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
@@ -1111,10 +928,6 @@ CREATE TABLE `customers` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `customers`:
---
 
 --
 -- Dumping data for table `customers`
@@ -1128,8 +941,6 @@ INSERT INTO `customers` (`id`, `user_id`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `customer_packages`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `customer_packages` (
   `id` int(11) NOT NULL,
@@ -1141,16 +952,10 @@ CREATE TABLE `customer_packages` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `customer_packages`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer_package_payments`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `customer_package_payments` (
@@ -1166,16 +971,10 @@ CREATE TABLE `customer_package_payments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `customer_package_payments`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer_package_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `customer_package_translations` (
@@ -1187,16 +986,10 @@ CREATE TABLE `customer_package_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `customer_package_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer_products`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `customer_products` (
@@ -1229,16 +1022,10 @@ CREATE TABLE `customer_products` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `customer_products`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer_product_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `customer_product_translations` (
@@ -1252,16 +1039,10 @@ CREATE TABLE `customer_product_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `customer_product_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `flash_deals`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `flash_deals` (
@@ -1279,16 +1060,10 @@ CREATE TABLE `flash_deals` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `flash_deals`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `flash_deal_products`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `flash_deal_products` (
@@ -1301,16 +1076,10 @@ CREATE TABLE `flash_deal_products` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `flash_deal_products`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `flash_deal_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `flash_deal_translations` (
@@ -1322,16 +1091,10 @@ CREATE TABLE `flash_deal_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `flash_deal_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `general_settings`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `general_settings` (
@@ -1358,10 +1121,6 @@ CREATE TABLE `general_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `general_settings`:
---
-
---
 -- Dumping data for table `general_settings`
 --
 
@@ -1372,8 +1131,6 @@ INSERT INTO `general_settings` (`id`, `frontend_color`, `logo`, `footer_logo`, `
 
 --
 -- Table structure for table `home_categories`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `home_categories` (
@@ -1386,10 +1143,6 @@ CREATE TABLE `home_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `home_categories`:
---
-
---
 -- Dumping data for table `home_categories`
 --
 
@@ -1400,45 +1153,7 @@ INSERT INTO `home_categories` (`id`, `category_id`, `subsubcategories`, `status`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jobs`
---
--- Creation: May 09, 2021 at 07:08 AM
--- Last update: May 09, 2021 at 07:52 AM
---
-
-CREATE TABLE `jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `banner` blob DEFAULT NULL,
-  `status` int(191) NOT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `jobs`:
---
-
---
--- Dumping data for table `jobs`
---
-
-INSERT INTO `jobs` (`id`, `job_title`, `slug`, `short_description`, `job_description`, `banner`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(3, 'Software and Website Developer', 'software-and-website-developer', '', '<p><b>wow, <i>this is sukh<br><span style=\"background-color: rgb(255, 255, 0);\">wow im crazy</span></i></b></p>', NULL, 0, NULL, '2021-05-08 20:41:16', NULL),
-(4, 'Web Application developer', 'web-application-developer', '', '<p>demo data</p>', NULL, 0, NULL, '2021-05-09 07:31:43', NULL),
-(5, 'wow its working', 'wow-its-working', '', '<p><span style=\"background-color: rgb(255, 255, 0);\">yes its world<br>text<b> bold</b></span></p>', NULL, 0, NULL, '2021-05-09 07:46:14', NULL),
-(6, 'php', 'php', 'its worked', '<p>wow sukh</p>', NULL, 0, NULL, '2021-05-09 07:52:25', NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `languages`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `languages` (
@@ -1449,10 +1164,6 @@ CREATE TABLE `languages` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `languages`:
---
 
 --
 -- Dumping data for table `languages`
@@ -1467,8 +1178,6 @@ INSERT INTO `languages` (`id`, `name`, `code`, `rtl`, `created_at`, `updated_at`
 --
 -- Table structure for table `links`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `links` (
   `id` int(11) NOT NULL,
@@ -1478,16 +1187,10 @@ CREATE TABLE `links` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `links`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `messages`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `messages` (
@@ -1499,16 +1202,10 @@ CREATE TABLE `messages` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `messages`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `migrations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `migrations` (
@@ -1518,24 +1215,17 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `migrations`:
---
-
---
 -- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2021_05_09_000101_create_jobs_table', 2);
+(2, '2014_10_12_100000_create_password_resets_table', 1);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `oauth_access_tokens`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `oauth_access_tokens` (
@@ -1549,10 +1239,6 @@ CREATE TABLE `oauth_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `oauth_access_tokens`:
---
 
 --
 -- Dumping data for table `oauth_access_tokens`
@@ -1583,8 +1269,6 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 --
 -- Table structure for table `oauth_auth_codes`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1595,16 +1279,10 @@ CREATE TABLE `oauth_auth_codes` (
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `oauth_auth_codes`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `oauth_clients`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `oauth_clients` (
@@ -1621,10 +1299,6 @@ CREATE TABLE `oauth_clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `oauth_clients`:
---
-
---
 -- Dumping data for table `oauth_clients`
 --
 
@@ -1637,8 +1311,6 @@ INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `per
 --
 -- Table structure for table `oauth_personal_access_clients`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `oauth_personal_access_clients` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -1646,10 +1318,6 @@ CREATE TABLE `oauth_personal_access_clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `oauth_personal_access_clients`:
---
 
 --
 -- Dumping data for table `oauth_personal_access_clients`
@@ -1663,8 +1331,6 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 --
 -- Table structure for table `oauth_refresh_tokens`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `oauth_refresh_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1673,16 +1339,10 @@ CREATE TABLE `oauth_refresh_tokens` (
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `oauth_refresh_tokens`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `orders`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `orders` (
@@ -1707,16 +1367,10 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `orders`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `order_details`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `order_details` (
@@ -1738,16 +1392,10 @@ CREATE TABLE `order_details` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `order_details`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `otp_configurations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `otp_configurations` (
@@ -1757,10 +1405,6 @@ CREATE TABLE `otp_configurations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `otp_configurations`:
---
 
 --
 -- Dumping data for table `otp_configurations`
@@ -1781,8 +1425,6 @@ INSERT INTO `otp_configurations` (`id`, `type`, `value`, `created_at`, `updated_
 --
 -- Table structure for table `pages`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL,
@@ -1797,10 +1439,6 @@ CREATE TABLE `pages` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `pages`:
---
 
 --
 -- Dumping data for table `pages`
@@ -1820,8 +1458,6 @@ INSERT INTO `pages` (`id`, `type`, `title`, `slug`, `content`, `meta_title`, `me
 --
 -- Table structure for table `page_translations`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `page_translations` (
   `id` bigint(20) NOT NULL,
@@ -1832,10 +1468,6 @@ CREATE TABLE `page_translations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `page_translations`:
---
 
 --
 -- Dumping data for table `page_translations`
@@ -1849,8 +1481,6 @@ INSERT INTO `page_translations` (`id`, `page_id`, `title`, `content`, `lang`, `c
 --
 -- Table structure for table `password_resets`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `password_resets` (
   `email` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
@@ -1858,16 +1488,10 @@ CREATE TABLE `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `password_resets`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `payments`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `payments` (
@@ -1881,16 +1505,10 @@ CREATE TABLE `payments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `payments`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `pickup_points`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `pickup_points` (
@@ -1905,16 +1523,10 @@ CREATE TABLE `pickup_points` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- RELATIONSHIPS FOR TABLE `pickup_points`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `pickup_point_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `pickup_point_translations` (
@@ -1927,16 +1539,10 @@ CREATE TABLE `pickup_point_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `pickup_point_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `policies`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `policies` (
@@ -1946,10 +1552,6 @@ CREATE TABLE `policies` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `policies`:
---
 
 --
 -- Dumping data for table `policies`
@@ -1966,8 +1568,6 @@ INSERT INTO `policies` (`id`, `name`, `content`, `created_at`, `updated_at`) VAL
 
 --
 -- Table structure for table `products`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `products` (
@@ -2025,16 +1625,10 @@ CREATE TABLE `products` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `products`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product_stocks`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `product_stocks` (
@@ -2049,16 +1643,10 @@ CREATE TABLE `product_stocks` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `product_stocks`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product_taxes`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `product_taxes` (
@@ -2071,16 +1659,10 @@ CREATE TABLE `product_taxes` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- RELATIONSHIPS FOR TABLE `product_taxes`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product_translations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `product_translations` (
@@ -2094,16 +1676,10 @@ CREATE TABLE `product_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `product_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `reviews`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `reviews` (
@@ -2118,16 +1694,10 @@ CREATE TABLE `reviews` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `reviews`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `roles`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `roles` (
@@ -2137,10 +1707,6 @@ CREATE TABLE `roles` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `roles`:
---
 
 --
 -- Dumping data for table `roles`
@@ -2155,8 +1721,6 @@ INSERT INTO `roles` (`id`, `name`, `permissions`, `created_at`, `updated_at`) VA
 --
 -- Table structure for table `role_translations`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `role_translations` (
   `id` bigint(20) NOT NULL,
@@ -2167,16 +1731,10 @@ CREATE TABLE `role_translations` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `role_translations`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `sb_conversations`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `sb_conversations` (
@@ -2189,20 +1747,10 @@ CREATE TABLE `sb_conversations` (
   `agent_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `sb_conversations`:
---   `agent_id`
---       `sb_users` -> `id`
---   `user_id`
---       `sb_users` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `sb_messages`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `sb_messages` (
@@ -2216,30 +1764,16 @@ CREATE TABLE `sb_messages` (
   `conversation_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- RELATIONSHIPS FOR TABLE `sb_messages`:
---   `user_id`
---       `sb_users` -> `id`
---   `conversation_id`
---       `sb_conversations` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `sb_settings`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `sb_settings` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `value` text COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `sb_settings`:
---
 
 --
 -- Dumping data for table `sb_settings`
@@ -2255,8 +1789,6 @@ INSERT INTO `sb_settings` (`name`, `value`) VALUES
 
 --
 -- Table structure for table `sb_users`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `sb_users` (
@@ -2275,10 +1807,6 @@ CREATE TABLE `sb_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `sb_users`:
---
-
---
 -- Dumping data for table `sb_users`
 --
 
@@ -2291,8 +1819,6 @@ INSERT INTO `sb_users` (`id`, `first_name`, `last_name`, `password`, `email`, `p
 --
 -- Table structure for table `sb_users_data`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `sb_users_data` (
   `id` int(11) NOT NULL,
@@ -2302,18 +1828,10 @@ CREATE TABLE `sb_users_data` (
   `value` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `sb_users_data`:
---   `user_id`
---       `sb_users` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `searches`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `searches` (
@@ -2323,10 +1841,6 @@ CREATE TABLE `searches` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `searches`:
---
 
 --
 -- Dumping data for table `searches`
@@ -2340,8 +1854,6 @@ INSERT INTO `searches` (`id`, `query`, `count`, `created_at`, `updated_at`) VALU
 
 --
 -- Table structure for table `sellers`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `sellers` (
@@ -2365,10 +1877,6 @@ CREATE TABLE `sellers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `sellers`:
---
-
---
 -- Dumping data for table `sellers`
 --
 
@@ -2379,8 +1887,6 @@ INSERT INTO `sellers` (`id`, `user_id`, `seller_package_id`, `remaining_uploads`
 
 --
 -- Table structure for table `seller_packages`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `seller_packages` (
@@ -2395,16 +1901,10 @@ CREATE TABLE `seller_packages` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `seller_packages`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `seller_withdraw_requests`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `seller_withdraw_requests` (
@@ -2418,16 +1918,10 @@ CREATE TABLE `seller_withdraw_requests` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- RELATIONSHIPS FOR TABLE `seller_withdraw_requests`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `seo_settings`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `seo_settings` (
@@ -2442,10 +1936,6 @@ CREATE TABLE `seo_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `seo_settings`:
---
-
---
 -- Dumping data for table `seo_settings`
 --
 
@@ -2456,8 +1946,6 @@ INSERT INTO `seo_settings` (`id`, `keyword`, `author`, `revisit`, `sitemap_link`
 
 --
 -- Table structure for table `shops`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `shops` (
@@ -2481,10 +1969,6 @@ CREATE TABLE `shops` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `shops`:
---
-
---
 -- Dumping data for table `shops`
 --
 
@@ -2496,8 +1980,6 @@ INSERT INTO `shops` (`id`, `user_id`, `name`, `logo`, `sliders`, `address`, `fac
 --
 -- Table structure for table `sliders`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `sliders` (
   `id` int(11) NOT NULL,
@@ -2507,10 +1989,6 @@ CREATE TABLE `sliders` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `sliders`:
---
 
 --
 -- Dumping data for table `sliders`
@@ -2525,8 +2003,6 @@ INSERT INTO `sliders` (`id`, `photo`, `published`, `link`, `created_at`, `update
 --
 -- Table structure for table `staff`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `staff` (
   `id` int(11) NOT NULL,
@@ -2535,10 +2011,6 @@ CREATE TABLE `staff` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `staff`:
---
 
 --
 -- Dumping data for table `staff`
@@ -2553,8 +2025,6 @@ INSERT INTO `staff` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VAL
 --
 -- Table structure for table `subscribers`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `subscribers` (
   `id` int(11) NOT NULL,
@@ -2563,16 +2033,10 @@ CREATE TABLE `subscribers` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `subscribers`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `taxes`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `taxes` (
@@ -2582,10 +2046,6 @@ CREATE TABLE `taxes` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- RELATIONSHIPS FOR TABLE `taxes`:
---
 
 --
 -- Dumping data for table `taxes`
@@ -2598,8 +2058,6 @@ INSERT INTO `taxes` (`id`, `name`, `tax_status`, `created_at`, `updated_at`) VAL
 
 --
 -- Table structure for table `tickets`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `tickets` (
@@ -2616,16 +2074,10 @@ CREATE TABLE `tickets` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `tickets`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `ticket_replies`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `ticket_replies` (
@@ -2638,17 +2090,10 @@ CREATE TABLE `ticket_replies` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `ticket_replies`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `translations`
---
--- Creation: May 08, 2021 at 05:59 PM
--- Last update: May 09, 2021 at 06:36 AM
 --
 
 CREATE TABLE `translations` (
@@ -2659,10 +2104,6 @@ CREATE TABLE `translations` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `translations`:
---
 
 --
 -- Dumping data for table `translations`
@@ -4074,24 +3515,12 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 (1685, 'en', 'New page has been created successfully', 'New page has been created successfully', '2021-04-26 19:34:50', '2021-04-26 19:34:50'),
 (1686, 'en', 'Details Info', 'Details Info', '2021-04-26 19:35:57', '2021-04-26 19:35:57'),
 (1687, 'en', 'Copy Link', 'Copy Link', '2021-04-26 19:35:57', '2021-04-26 19:35:57'),
-(1688, 'en', 'Ok. I Understood', 'Ok. I Understood', '2021-04-26 20:08:46', '2021-04-26 20:08:46'),
-(1689, 'en', 'Job Circuler', 'Job Circuler', '2021-05-08 18:00:06', '2021-05-08 18:00:06'),
-(1690, 'en', 'Circulers', 'Circulers', '2021-05-08 18:00:06', '2021-05-08 18:00:06'),
-(1691, 'en', 'All Circulers', 'All Circulers', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
-(1692, 'en', 'Add Job Circuler', 'Add Job Circuler', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
-(1693, 'en', 'Job Title', 'Job Title', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
-(1694, 'en', 'Job Information', 'Job Information', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
-(1695, 'en', 'Job Description', 'Job Description', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
-(1696, 'en', 'Meta Keywords', 'Meta Keywords', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
-(1697, 'en', 'Best', 'Best', '2021-05-09 06:33:39', '2021-05-09 06:33:39'),
-(1698, 'en', 'Add circuler', 'Add circuler', '2021-05-09 06:36:21', '2021-05-09 06:36:21');
+(1688, 'en', 'Ok. I Understood', 'Ok. I Understood', '2021-04-26 20:08:46', '2021-04-26 20:08:46');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `uploads`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `uploads` (
@@ -4108,10 +3537,6 @@ CREATE TABLE `uploads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `uploads`:
---
-
---
 -- Dumping data for table `uploads`
 --
 
@@ -4124,8 +3549,6 @@ INSERT INTO `uploads` (`id`, `file_original_name`, `file_name`, `user_id`, `file
 
 --
 -- Table structure for table `users`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `users` (
@@ -4157,10 +3580,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONSHIPS FOR TABLE `users`:
---
-
---
 -- Dumping data for table `users`
 --
 
@@ -4176,8 +3595,6 @@ INSERT INTO `users` (`id`, `referred_by`, `provider_id`, `user_type`, `name`, `e
 --
 -- Table structure for table `wallets`
 --
--- Creation: May 08, 2021 at 05:59 PM
---
 
 CREATE TABLE `wallets` (
   `id` int(11) NOT NULL,
@@ -4189,16 +3606,10 @@ CREATE TABLE `wallets` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONSHIPS FOR TABLE `wallets`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `wishlists`
---
--- Creation: May 08, 2021 at 05:59 PM
 --
 
 CREATE TABLE `wishlists` (
@@ -4208,10 +3619,6 @@ CREATE TABLE `wishlists` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONSHIPS FOR TABLE `wishlists`:
---
 
 --
 -- Indexes for dumped tables
@@ -4463,13 +3870,6 @@ ALTER TABLE `general_settings`
 --
 ALTER TABLE `home_categories`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `jobs`
---
-ALTER TABLE `jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `jobs_id_unique` (`id`);
 
 --
 -- Indexes for table `languages`
@@ -5026,12 +4426,6 @@ ALTER TABLE `home_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `jobs`
---
-ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
@@ -5053,7 +4447,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -5263,7 +4657,7 @@ ALTER TABLE `ticket_replies`
 -- AUTO_INCREMENT for table `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1699;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1689;
 
 --
 -- AUTO_INCREMENT for table `uploads`

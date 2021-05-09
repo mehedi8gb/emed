@@ -26,6 +26,7 @@ class EditorController extends Controller
 
             'job_title' => $request->job_title,
             'slug' => $request->slug,
+            'short_description' => $request->short_description,
             'job_description' => $request->job_description,
             'created_at' => Carbon::now()
             ]);

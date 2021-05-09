@@ -40,6 +40,7 @@
                         <th data-breakpoints="lg">{{translate('Short Description')}}</th>
                         <th data-breakpoints="lg">{{translate('Slug')}}</th>
                         <th data-breakpoints="lg">{{translate('Status')}}</th>
+                        <th data-breakpoints="lg">{{translate('Created at')}}</th>
                         <th class="text-right">{{translate('Options')}}</th>
 
                     </tr>
@@ -49,7 +50,7 @@
                     @foreach($jobs as $job)
                     <tr>
                         <td>
-                            {{ ($key+1) }}
+                            {{ ($key++) }}
                         </td>
                         <td>
                             {{ $job->job_title }}
@@ -75,6 +76,18 @@
                             <label class="aiz-switch aiz-switch-success mb-0">
                                 <input type="checkbox" onchange="change_status(this)" value="{{ $job->status }}">
                                 <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="aiz-switch aiz-switch-success mb-0">
+                                @if ($job->created_at == null)
+                                    <span class="text-danger">Time Not Set</span>
+                                    @else
+                                    {{ $job->created_at->diffForHumans() }}
+                                @endif
+                                <span>
+                                {{ $job->created_at }}
+                                </span>
                             </label>
                         </td>
                         <td class="text-right">

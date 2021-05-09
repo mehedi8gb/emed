@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Job extends Model
+class Jobs extends Model
 {
     use SoftDeletes;
 
@@ -16,5 +16,7 @@ class Job extends Model
         'job_description',
         'banner',
         'status',
+        'created_at'
     ];
+
 }

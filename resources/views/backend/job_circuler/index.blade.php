@@ -38,46 +38,56 @@
                         <th>{{translate('Job Title')}}</th>
                         {{-- <th data-breakpoints="lg">{{translate('Job Category')}}</th> --}}
                         <th data-breakpoints="lg">{{translate('Short Description')}}</th>
+                        <th data-breakpoints="lg">{{translate('Slug')}}</th>
                         <th data-breakpoints="lg">{{translate('Status')}}</th>
                         <th class="text-right">{{translate('Options')}}</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach($job as $key => $blog)
+                    @php($key=1)
+                    @foreach($jobs as $job)
                     <tr>
                         <td>
-                            {{ ($key+1) + ($job->currentPage() - 1) * $job->perPage() }}
+                            {{ ($key+1) }}
                         </td>
                         <td>
-                            {{ $job->title }}
+                            {{ $job->job_title }}
                         </td>
-                        <td>
+                        {{-- <td>
                             @if($job->category != null)
                                 {{ $job->category->category_name }}
                             @else
                                 --
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             {{ $job->short_description }}
                         </td>
                         <td>
                             <label class="aiz-switch aiz-switch-success mb-0">
-                                <input type="checkbox" onchange="change_status(this)" value="{{ $job->id }}">
+                                <a href="{{ $job->slug }}">{{ $job->slug }}</a>
+                                <span></span>
+                            </label>
+
+                        </td>
+                        <td>
+                            <label class="aiz-switch aiz-switch-success mb-0">
+                                <input type="checkbox" onchange="change_status(this)" value="{{ $job->status }}">
                                 <span></span>
                             </label>
                         </td>
                         <td class="text-right">
-                            <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('job.edit',$job->id)}}" title="{{ translate('Edit') }}">
+                            {{-- <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('job.edit',$jobs->id)}}" title="{{ translate('Edit') }}">
                                 <i class="las la-pen"></i>
-                            </a>
+                            </a> --}}
 
-                            <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" data-href="{{route('job.destroy', $blog->id)}}" title="{{ translate('Delete') }}">
+                            {{-- <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" data-href="{{route('job.destroy', $jobs->id)}}" title="{{ translate('Delete') }}">
                                 <i class="las la-trash"></i>
-                            </a>
+                            </a> --}}
                         </td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
             {{-- <div class="aiz-pagination">

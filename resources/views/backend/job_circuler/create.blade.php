@@ -9,7 +9,7 @@
                 <h5 class="mb-0 h6">{{translate('Job Information')}}</h5>
             </div>
             <div class="card-body">
-                <form id="add_form" class="form-horizontal" action="{{ route('job.store') }}" method="POST">
+                <form id="add_form" class="form-horizontal" action="{{ route('job_data.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
@@ -17,10 +17,10 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="title" class="form-control" required>
+                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="job_title" class="form-control" required>
                         </div>
                     </div>
-                    <div class="form-group row" id="category">
+                    {{-- <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
                             {{translate('Category')}}
                             <span class="text-danger">*</span>
@@ -28,14 +28,14 @@
                         <div class="col-md-9">
                             <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" required>
                                 <option>--</option>
-                                {{-- @foreach ($job_categories as $category)
+                                @foreach ($job_categories as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name }}
                                 </option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                     <div class="form-group row">
@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">
                             {{translate('Banner')}}
                             <small>(1300x650)</small>
@@ -64,9 +64,9 @@
                             <div class="file-preview box sm">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    {{-- <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">
                             {{translate('Short Description')}}
                             <span class="text-danger">*</span>
@@ -74,17 +74,18 @@
                         <div class="col-md-9">
                             <textarea name="short_description" rows="5" class="form-control" required=""></textarea>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">
                             {{translate('Job Description')}}
+                            <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <textarea class="aiz-text-editor" name="description"></textarea>
+                            <textarea class="aiz-text-editor" name="job_description" required=""></textarea>
                         </div>
                     </div>
-
+{{--
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Meta Title')}}</label>
                         <div class="col-md-9">
@@ -126,7 +127,7 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="{{translate('Meta Keywords')}}">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-0 text-right">
                         <button type="submit" class="btn btn-primary">

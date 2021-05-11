@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-8 mx-auto">
+    <div class="col-lg-12 mx-auto">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0 h6">{{translate('Job Information')}}</h5>
@@ -17,35 +17,42 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="job_title" name="job_title" class="form-control" required>
-                            @error('job_title')
-                         <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="job_title" name="job_title" class="form-control" >
+                                @error('job_title')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
                     </div>
-                    {{-- <div class="form-group row" id="category">
+                    <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
                             {{translate('Category')}}
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" required>
-                                <option>--</option>
-                                @foreach ($job_categories as $category)
+                            <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" >
+                                <option value="">select category</option>
+                                @foreach ($job_category as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name }}
                                 </option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
-                    </div> --}}
+                    </div>
 
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Slug')}}
                             <span class="text-danger">*</span></label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" class="form-control" required>
+                            <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" class="form-control" >
+                            @error('slug')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 
@@ -75,7 +82,10 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <textarea name="short_description" rows="5" class="form-control" required=""></textarea>
+                            <textarea name="short_description" rows="5" class="form-control" ></textarea>
+                            @error('short_description')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 
@@ -85,7 +95,10 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <textarea class="aiz-text-editor" name="job_description" required=""></textarea>
+                            <textarea class="aiz-text-editor" name="job_description" ></textarea>
+                            @error('job_description')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 {{--

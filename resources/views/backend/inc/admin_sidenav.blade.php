@@ -705,10 +705,10 @@
                           <a href="{{ route('job.store') }}" class="aiz-side-nav-link">
                               <span class="aiz-side-nav-text">{{translate('Add circuler')}}</span>
                           </a>
-                      {{-- </li>
+                       </li>
                       <li class="aiz-side-nav-item">
-                          <a href="{{ route('website.pages') }}" class="aiz-side-nav-link {{ areActiveRoutes(['website.pages', 'custom-pages.create' ,'custom-pages.edit'])}}">
-                              <span class="aiz-side-nav-text">{{translate('Pages')}}</span>
+                          <a href="{{ route('job.category.index') }}" class="aiz-side-nav-link">
+                              <span class="aiz-side-nav-text">{{translate('Add Category')}}</span>
                           </a>
                       </li>
                       {{-- <li class="aiz-side-nav-item">

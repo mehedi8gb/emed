@@ -36,32 +36,33 @@
                     <tr>
                         <th>#</th>
                         <th>{{translate('Job Title')}}</th>
-                        {{-- <th data-breakpoints="lg">{{translate('Job Category')}}</th> --}}
+                        <th data-breakpoints="lg">{{translate('Job Category')}}</th>
                         <th data-breakpoints="lg">{{translate('Short Description')}}</th>
                         <th data-breakpoints="lg">{{translate('Slug')}}</th>
                         <th data-breakpoints="lg">{{translate('Status')}}</th>
                         <th data-breakpoints="lg">{{translate('Created at')}}</th>
+                        <th data-breakpoints="lg">{{translate('Updated at')}}</th>
                         <th class="text-right">{{translate('Options')}}</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @php($key=1)
+
                     @foreach($jobs as $job)
                     <tr>
                         <td>
-                            {{ ($key++) }}
+                            {{ $jobs->firstItem()+$loop->index }}
                         </td>
                         <td>
                             {{ $job->job_title }}
                         </td>
-                        {{-- <td>
+                        <td>
                             @if($job->category != null)
                                 {{ $job->category->category_name }}
                             @else
                                 --
                             @endif
-                        </td> --}}
+                        </td>
                         <td>
                             {{ $job->short_description }}
                         </td>
@@ -74,7 +75,7 @@
                         </td>
                         <td>
                             <label class="aiz-switch aiz-switch-success mb-0">
-                                <input type="checkbox" onchange="change_status(this)" value="{{ $job->status }}">
+                                <input type="checkbox" onchange="job_change_status(this)" value="{{ $job->status }}" <?php if($job->status == 1) echo "checked";?>>
                                 <span></span>
                             </label>
                         </td>
@@ -85,13 +86,21 @@
                                     @else
                                     {{ $job->created_at->diffForHumans() }}
                                 @endif
-                                <span>
-                                {{ $job->created_at }}
-                                </span>
+
+                            </label>
+                        </td>
+                        <td>
+                            <label class="aiz-switch aiz-switch-success mb-0">
+                                @if ($job->updated_at == null)
+                                    <span class="text-danger">Time Not Set</span>
+                                    @else
+                                    {{ $job->updated_at->diffForHumans() }}
+                                @endif
+
                             </label>
                         </td>
                         <td class="text-right">
-                            <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('job.edit',$job->id)}}" title="{{ translate('Edit') }}">
+                            <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ url('/admin/job/edit',$job->id)}}" title="{{ translate('Edit') }}">
                                 <i class="las la-pen"></i>
                             </a>
 
@@ -119,14 +128,14 @@
 @section('script')
 
     <script type="text/javascript">
-        function change_status(el){
+        function job_change_status(el){
             var status = 0;
             if(el.checked){
                 var status = 1;
             }
-            $.post('{{ route('blog.change-status') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
+            $.post('{{ url('/job/change-status/','$job->id->status') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
                 if(data == 1){
-                    AIZ.plugins.notify('success', '{{ translate('Change blog status successfully') }}');
+                    AIZ.plugins.notify('success', '{{ translate('Change Job status successfully') }}');
                 }
                 else{
                     AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');

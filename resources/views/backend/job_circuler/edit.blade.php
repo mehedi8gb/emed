@@ -3,25 +3,28 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-8 mx-auto">
+    <div class="col-lg-12 mx-auto">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0 h6">{{translate('job Information')}}</h5>
             </div>
             <div class="card-body">
-                <form id="add_form" class="form-horizontal" action="{{ route('job.update',$job->id) }}" method="POST">
+                <form id="add_form" class="form-horizontal" action="{{ url('/admin/job/update',$job->id) }}" method="POST">
                     @csrf
-                    @method('PATCH')
+                    @method('POST')
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
                             {{translate('Job Title')}}
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="job_title" value="{{ $job->job_title }}" class="form-control" required>
+                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="job_title" value="{{ $job->job_title }}" class="form-control">
+                            @error('job_title')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
-                    {{-- <div class="form-group row" id="category">
+                    <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
                             {{translate('Category')}}
                             <span class="text-danger">*</span>
@@ -38,20 +41,20 @@
                                 @endif
                             >
                                 <option>--</option>
-                                @foreach ($job_categories as $category)
+                                @foreach ($job_category as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name }}
                                 </option>
                                 @endforeach
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
 
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Slug')}}</label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" value="{{ $job->slug }}" class="form-control" required>
+                            <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" value="{{ $job->slug }}" class="form-control" >
                         </div>
                     </div>
 
@@ -82,6 +85,9 @@
                         </label>
                         <div class="col-md-9">
                             <textarea name="short_description" rows="5" class="form-control">{{ $job->short_description }}</textarea>
+                            @error('short_description')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 
@@ -90,7 +96,10 @@
                             {{translate('Description')}}
                         </label>
                         <div class="col-md-9">
-                            <textarea class="aiz-text-editor" name="description">{{ $job->job_description }}</textarea>
+                            <textarea class="aiz-text-editor" name="job_description">{{ $job->job_description }}</textarea>
+                            @error('job_description')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 {{--

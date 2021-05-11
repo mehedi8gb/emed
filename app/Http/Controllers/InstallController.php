@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use URL;
-use DB;
-use Hash;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\DB;
+use phpseclib\Crypt\Hash;
 use App\BusinessSetting;
 use App\User;
 use App\Product;
-use CoreComponentRepository;
+use MehediIitdu\CoreComponentRepository\CoreComponentRepository;
 
 class InstallController extends Controller
 {

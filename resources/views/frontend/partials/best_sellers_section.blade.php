@@ -1,4 +1,4 @@
-@if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
+{{-- @if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
     @php
         $array = array();
         foreach (\App\Seller::where('verification_status', 1)->get() as $key => $seller) {
@@ -76,4 +76,4 @@
         </div>
     </section>
     @endif
-@endif
+@endif --}}

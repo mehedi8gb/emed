@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\JobCategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -253,7 +255,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/job', 'JobController@index')->name('job');
     Route::get('/job/create', 'JobController@jobCreate')->name('job.store');
     Route::post('/job/store', 'JobController@Create')->name('job_data.store');
+    Route::get('/job/create', 'JobController@CatCreate')->name('job.store');
     Route::get('/job/delate/{id}', 'JobController@destroy')->name('job.destroy');
     Route::get('/job/edit/{id}', 'JobController@jobEdit')->name('job.edit');
-    Route::post('/job/update', 'JobController@update')->name('job.update');
+    Route::post('/job/update/{id}', 'JobController@update')->name('job.update');
+    Route::post('/job/change-status/', 'JobController@job_change_status')->name('job.change-status');
+    //job Category page
+    Route::get('/job/category', 'JobCategoryController@index')->name('job.category.index');
+    Route::get('/job/category/create','JobCategoryController@create')->name('job.category.create');
+    Route::post('/job/category/store','JobCategoryController@store')->name('job.category.data.store');
+    Route::get('/job/category/destroy/{id}','JobCategoryController@destroy')->name('job.category.distroy');
+    Route::get('/job/category/edit/{id}','JobCategoryController@Edit')->name('job.category.edit');
+    Route::post('/job/category/update/{id}','JobCategoryController@update')->name('job.category.update');
 });

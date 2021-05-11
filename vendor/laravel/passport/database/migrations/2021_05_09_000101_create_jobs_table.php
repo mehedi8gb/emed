@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->string('job_title');
             $table->string('slug');
+	    $table->string('company');
             $table->longText('job_description');
             $table->binary('banner')->nullable();
             $table->string('status');

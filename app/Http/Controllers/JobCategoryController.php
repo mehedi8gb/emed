@@ -16,8 +16,7 @@ class JobCategoryController extends Controller
     {
         $sort_search =null;
         $categories = JobCategory::orderBy('category_name', 'asc');
-
-        if ($request->has('search')){
+         if ($request->has('search')){
             $sort_search = $request->search;
             $categories = $categories->where('category_name', 'like', '%'.$sort_search.'%');
         }
@@ -47,7 +46,7 @@ class JobCategoryController extends Controller
     {
 
         $request->validate([
-            'category_name' => 'required|max:255',
+            'category_name' => 'required|max:25|min:3',
 
         ]);
 
@@ -98,8 +97,14 @@ class JobCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'category_name' => 'required|max:255',
+            ['category_name' => 'required|max:255|min:3'|'unique:category_name'],
+
+            [
+                'category_id.required' => 'The category name field is required.',
+                'category_id.unique' => 'The category name must not be same.'
+            ]
         ]);
+
 
         $category = JobCategory::find($id);
 

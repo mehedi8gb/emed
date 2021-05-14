@@ -259,7 +259,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/job/delate/{id}', 'JobController@destroy')->name('job.destroy');
     Route::get('/job/edit/{id}', 'JobController@jobEdit')->name('job.edit');
     Route::post('/job/update/{id}', 'JobController@update')->name('job.update');
-    Route::post('/job/change-status/', 'JobController@job_change_status')->name('job.change-status');
+    Route::post('/job/change-status/', 'JobController@change_status')->name('job.change-status');
     //job Category page
     Route::get('/job/category', 'JobCategoryController@index')->name('job.category.index');
     Route::get('/job/category/create','JobCategoryController@create')->name('job.category.create');

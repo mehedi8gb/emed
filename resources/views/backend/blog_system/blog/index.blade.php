@@ -22,7 +22,7 @@
             <div class="col text-center text-md-left">
                 <h5 class="mb-md-0 h6">{{ translate('All blog posts') }}</h5>
             </div>
-            
+
             <div class="col-md-2">
                 <div class="form-group mb-0">
                     <input type="text" class="form-control form-control-sm" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="{{ translate('Type & Enter') }}">
@@ -71,7 +71,7 @@
                             <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('blog.edit',$blog->id)}}" title="{{ translate('Edit') }}">
                                 <i class="las la-pen"></i>
                             </a>
-                            
+
                             <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" data-href="{{route('blog.destroy', $blog->id)}}" title="{{ translate('Delete') }}">
                                 <i class="las la-trash"></i>
                             </a>

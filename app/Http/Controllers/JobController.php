@@ -12,12 +12,11 @@ class JobController extends Controller
     public function index(Request $request){
 
 
-
         $sort_search = null;
-        $job = Jobs::orderBy('created_at', 'desc');
+        $jobs = Jobs::orderBy('created_at', 'desc');
 
         if ($request->search != null){
-            $job = $job->where('job_title', 'short description', '%'.$request->search.'%');
+            $jobs = $jobs->where('job_title', 'like', '%'.$request->search.'%');
             $sort_search = $request->search;
         }
 
@@ -88,41 +87,50 @@ class JobController extends Controller
         $job = Jobs::find($id);
         $job_category = JobCategory::all();
 
-        return view('backend.job_circuler.edit', compact('job', 'job_category'));
+        return view('backend.job_circuler.edit', compact('job','job_category'));
 
 }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'job_title' => 'required|max:50||min:5',
+            'job_title' => 'required|max:50|min:5',
+            'category_id' => 'required',
             'short_description' => 'required|min:5|max:150',
             'job_description' => 'required|min:5|max:1200',
-        ]);
+            'slug' => 'required'
+        ],
+        [
+            'category_id.required' => 'The category name field is required.',
+            'slug.required' => 'The slug is required. add title then slug will automatically create.'
+        ]
+    );
 
-        $update = Jobs::find($id)->update([
+        // $update = Jobs::find($id)->update([
 
-            'job_title' => $request->job_title,
-            // $job->banner = $request->banner;
-            'category_id' => $request->category_id,
-            'slug' => preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug)),
-            'short_description' => $request->short_description,
-            'job_description' => $request->job_description,
-        ]);
+        //     'job_title' => $request->job_title,
+        //     // $job->banner = $request->banner;
+        //     'category_id' => $request->category_id,
+        //     'slug' => preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug)),
+        //     'short_description' => $request->short_description,
+        //     'job_description' => $request->job_description,
 
-        //  $job->category_id = $request->category_id;
-        // $job->job_title = $request->job_title;
-        //  $job->banner = $request->banner;
-        // $job->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
-        // $job->short_description = $request->short_description;
-        // $job->job_description = $request->job_description;
+        // ]);
 
-         // $job->meta_title = $request->meta_title;
-         // $job->meta_img = $request->meta_img;
+        $job = Jobs::find($id);
+        $job->category_id = $request->category_id;
+        $job->job_title = $request->job_title;
+        $job->banner = $request->banner;
+        $job->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
+        $job->short_description = $request->short_description;
+        $job->job_description = $request->job_description;
+
+        // $job->meta_title = $request->meta_title;
+        // $job->meta_img = $request->meta_img;
         // $job->meta_description = $request->meta_description;
-         // $job->meta_keywords = $request->meta_keywords;
+        // $job->meta_keywords = $request->meta_keywords;
 
-        // $job->save();
+        $job->save();
 
 
         flash(translate('Circuler has been updated successfully'))->success();
@@ -130,8 +138,8 @@ class JobController extends Controller
     }
 
 
-    public function job_change_status(Request $request, $id) {
-        $job = Jobs::find($id);
+    public function change_status(Request $request) {
+        $job = Jobs::find($request->id);
         $job->status = $request->status;
         $job->save();
         return 1;

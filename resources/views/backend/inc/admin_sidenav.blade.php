@@ -692,7 +692,7 @@
                 <li class="aiz-side-nav-item">
                   <a href="#" class="aiz-side-nav-link">
                       <i class="las la-briefcase  aiz-side-nav-icon"></i>
-                      <span class="aiz-side-nav-text">{{translate('Job Circuler')}}</span>
+                      <span class="aiz-side-nav-text">{{translate('Career')}}</span>
                       <span class="aiz-side-nav-arrow"></span>
                   </a>
                   <ul class="aiz-side-nav-list level-2">
@@ -703,14 +703,19 @@
                       </li>
                        <li class="aiz-side-nav-item">
                           <a href="{{ route('job.store') }}" class="aiz-side-nav-link">
-                              <span class="aiz-side-nav-text">{{translate('Add circuler')}}</span>
+                              <span class="aiz-side-nav-text">{{translate('Add Circuler')}}</span>
                           </a>
                        </li>
                       <li class="aiz-side-nav-item">
                           <a href="{{ route('job.category.index') }}" class="aiz-side-nav-link">
-                              <span class="aiz-side-nav-text">{{translate('Add Category')}}</span>
+                              <span class="aiz-side-nav-text">{{translate('Categories')}}</span>
                           </a>
                       </li>
+                      <li class="aiz-side-nav-item">
+                        <a href="{{ route('job.category.create') }}" class="aiz-side-nav-link">
+                            <span class="aiz-side-nav-text">{{translate('Add Category')}}</span>
+                        </a>
+                     </li>
                       {{-- <li class="aiz-side-nav-item">
                           <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
                               <span class="aiz-side-nav-text">{{translate('Appearance')}}</span>

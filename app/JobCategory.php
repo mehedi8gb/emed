@@ -9,12 +9,7 @@ class JobCategory extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'id',
-        'category_name',
-        'slug',
-    ];
-    public function category_name()
+    public function posts()
     {
         return $this->hasMany(Jobs::class);
     }

@@ -15,6 +15,9 @@
                         <label class="col-md-3 col-form-label">{{translate('Name')}}</label>
                         <div class="col-md-9">
                             <input type="text" placeholder="{{translate('Name')}}" id="category_name" name="category_name" class="form-control">
+                            @error('category_name')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 

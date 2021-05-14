@@ -136,7 +136,6 @@ class BlogController extends Controller
     public function change_status(Request $request) {
         $blog = Blog::find($request->id);
         $blog->status = $request->status;
-
         $blog->save();
         return 1;
     }

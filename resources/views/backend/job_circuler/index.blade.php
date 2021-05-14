@@ -34,15 +34,15 @@
             <table class="table mb-0 aiz-table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>{{translate('Job Title')}}</th>
-                        <th data-breakpoints="lg">{{translate('Job Category')}}</th>
-                        <th data-breakpoints="lg">{{translate('Short Description')}}</th>
-                        <th data-breakpoints="lg">{{translate('Slug')}}</th>
-                        <th data-breakpoints="lg">{{translate('Status')}}</th>
-                        <th data-breakpoints="lg">{{translate('Created at')}}</th>
-                        <th data-breakpoints="lg">{{translate('Updated at')}}</th>
-                        <th class="text-right">{{translate('Options')}}</th>
+                        <th style="width: 1%">#</th>
+                        <th style="width: 7%">{{translate('Title')}}</th>
+                        <th style="width: 9%" data-breakpoints="lg">{{translate('Category')}}</th>
+                        <th style="width: 35%" data-breakpoints="lg">{{translate('Description')}}</th>
+                        <th style="width: 7%" data-breakpoints="lg">{{translate('Slug')}}</th>
+                        <th style="width: 3%" data-breakpoints="lg">{{translate('Status')}}</th>
+                        <th style="width: 10%" data-breakpoints="lg">{{translate('Create')}}</th>
+                        <th style="width: 10%" data-breakpoints="lg">{{translate('Update')}}</th>
+                        <th style="width: 5%"class="text-right">{{translate('Options')}}</th>
 
                     </tr>
                 </thead>
@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <label class="aiz-switch aiz-switch-success mb-0">
-                                <input type="checkbox" onchange="job_change_status(this)" value="{{ $job->status }}" <?php if($job->status == 1) echo "checked";?>>
+                                <input type="checkbox" onchange="change_status(this)" value="{{ $job->id }}" <?php if($job->status == 1) echo "checked";?>>
                                 <span></span>
                             </label>
                         </td>
@@ -127,21 +127,21 @@
 
 @section('script')
 
-    <script type="text/javascript">
-        function job_change_status(el){
-            var status = 0;
-            if(el.checked){
-                var status = 1;
-            }
-            $.post('{{ url('/job/change-status/','$job->id->status') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
-                if(data == 1){
-                    AIZ.plugins.notify('success', '{{ translate('Change Job status successfully') }}');
-                }
-                else{
-                    AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
-                }
-            });
+<script type="text/javascript">
+    function change_status(el){
+        var status = 0;
+        if(el.checked){
+            var status = 1;
         }
-    </script>
+        $.post('{{ route('job.change-status') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
+            if(data == 1){
+                AIZ.plugins.notify('success', '{{ translate('Circuler status Changed  successfully') }}');
+            }
+            else{
+                AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
+            }
+        });
+    }
+</script>
 
 @endsection

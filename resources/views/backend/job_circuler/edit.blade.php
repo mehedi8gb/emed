@@ -35,18 +35,21 @@
                                 name="category_id"
                                 id="category_id"
                                 data-live-search="true"
-                                required
                                 @if($job->category != null)
                                 data-selected="{{ $job->category->id }}"
                                 @endif
                             >
-                                <option>--</option>
+                                <option value="">select category</option>
                                 @foreach ($job_category as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name }}
                                 </option>
                                 @endforeach
+
                             </select>
+                            @error('category_id')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                     </div>
 

@@ -56,6 +56,10 @@ Route::post('/home/section/featured', 'HomeController@load_featured_section')->n
 Route::post('/home/section/best_selling', 'HomeController@load_best_selling_section')->name('home.section.best_selling');
 Route::post('/home/section/home_categories', 'HomeController@load_home_categories_section')->name('home.section.home_categories');
 Route::post('/home/section/best_sellers', 'HomeController@load_best_sellers_section')->name('home.section.best_sellers');
+
+
+
+
 //category dropdown menu ajax call
 Route::post('/category/nav-element-list', 'HomeController@get_category_items')->name('category.elements');
 
@@ -309,6 +313,9 @@ Route::get('/bkash/success', 'BkashController@success')->name('bkash.success');
 //Nagad
 Route::get('/nagad/callback', 'NagadController@verify')->name('nagad.callback');
 
+//Job Section
+Route::get('/career', 'JobController@alljobs')->name('front.job');
+Route::get('/career/{slug}', 'JobController@job_details')->name('front.job.details');
 
 //Blog Section
 Route::get('/blog', 'BlogController@all_blog')->name('blog');
@@ -319,5 +326,3 @@ Route::get('/blog/{slug}', 'BlogController@blog_details')->name('blog.details');
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
 
 
-//Job circuler page
-Route::get('/job', 'EditorController@richtextedit');

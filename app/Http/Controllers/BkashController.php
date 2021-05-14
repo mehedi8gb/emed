@@ -8,7 +8,7 @@ use App\SellerPackage;
 use App\Order;
 use App\BusinessSetting;
 use App\Seller;
-use Session;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BkashController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Jobs;
 use App\JobCategory;
 use Carbon\Carbon;
@@ -62,11 +63,15 @@ class JobController extends Controller
 
 
         Jobs::insert([
-             'job_title' => $request->job_title,
-             'category_id' => $request->category_id,
+            'job_title' => $request->job_title,
+            'category_id' => $request->category_id,
             'slug' => preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug)),
             'short_description' => $request->short_description,
             'job_description' => $request->job_description,
+            'meta_title' => $request->meta_title,
+            'meta_img' => $request->meta_img,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
             'created_at' => Carbon::now(),
             ]);
             flash(translate('Circuler has been inserted successfully'))->success();
@@ -125,10 +130,10 @@ class JobController extends Controller
         $job->short_description = $request->short_description;
         $job->job_description = $request->job_description;
 
-        // $job->meta_title = $request->meta_title;
-        // $job->meta_img = $request->meta_img;
-        // $job->meta_description = $request->meta_description;
-        // $job->meta_keywords = $request->meta_keywords;
+        $job->meta_title = $request->meta_title;
+        $job->meta_img = $request->meta_img;
+        $job->meta_description = $request->meta_description;
+        $job->meta_keywords = $request->meta_keywords;
 
         $job->save();
 
@@ -145,14 +150,14 @@ class JobController extends Controller
         return 1;
     }
 
-    public function all_jobs() {
-        $job = Jobs::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
+    public function alljobs() {
+        $jobs = Jobs::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
         return view("frontend.job.listing", compact('jobs'));
     }
 
     public function job_details($slug) {
-        $job = Jobs::where('slug', $slug)->first();
-        return view("frontend.job.details", compact('job'));
+        $jobs = Jobs::where('slug', $slug)->first();
+        return view("frontend.job.details", compact('jobs'));
     }
 
 }

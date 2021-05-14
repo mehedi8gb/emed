@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">
                             {{translate('Banner')}}
                             <small>(1300x650)</small>
@@ -74,7 +74,7 @@
                             <div class="file-preview box sm">
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
@@ -101,7 +101,7 @@
                                 @enderror
                         </div>
                     </div>
-{{--
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Meta Title')}}</label>
                         <div class="col-md-9">
@@ -143,7 +143,7 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="{{translate('Meta Keywords')}}">
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="form-group mb-0 text-right">
                         <button type="submit" class="btn btn-primary">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2021 at 08:13 PM
+-- Generation Time: May 14, 2021 at 04:38 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -334,7 +334,9 @@ CREATE TABLE `blogs` (
 --
 
 INSERT INTO `blogs` (`id`, `category_id`, `title`, `slug`, `short_description`, `description`, `banner`, `meta_title`, `meta_img`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 0, 'dddd', 'dddd', 'dddd', '<p>ddd</p>', NULL, 'ddd', NULL, 'dd', 'dd', 1, '2021-05-11 17:09:23', '2021-05-11 17:09:23', NULL);
+(1, 0, 'dddd', 'dddd', 'dddd', '<p>ddd</p>', NULL, 'ddd', NULL, 'dd', 'dd', 1, '2021-05-11 17:09:23', '2021-05-11 17:09:23', NULL),
+(2, 1, 'wefqwef', 'wefqwef', 'qwefqwre', '<p>wefqwref</p>', NULL, 'qwef', NULL, 'qwf', 'qwfe', 1, '2021-05-11 22:29:28', '2021-05-14 11:53:17', NULL),
+(3, 1, 'Pakistani Arabic Bridal', 'pakistani-arabic-bridal', 'yes this is short', '<p>wow this is long</p>', 3, 'pakistan', 3, 'pakistan', 'pakistan', 1, '2021-05-14 11:54:15', '2021-05-14 12:01:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -517,8 +519,8 @@ INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_a
 (110, 'nagad', '1', '2021-01-22 10:30:03', '2021-04-25 14:29:59'),
 (111, 'bkash', '1', '2021-01-22 10:30:03', '2021-04-25 14:30:00'),
 (112, 'bkash_sandbox', '1', '2021-01-22 10:30:03', '2021-01-22 10:30:03'),
-(113, 'header_menu_labels', '[\"Home\",\"Brand Names\",\"Generics (Allopathic)\",\"Generics (Herbal)\",\"Pharmaceuticals\",\"Blogs\",\"Contact\"]', '2021-02-16 02:43:11', '2021-04-26 19:30:49'),
-(114, 'header_menu_links', '[\"http:\\/\\/localhost\\/ecom\",\"http:\\/\\/localhost\\/ecom\\/brands\",\"http:\\/\\/localhost\\/ecom\\/generics-Allopathic\",\"http:\\/\\/localhost\\/ecom\\/generics-herbal\",\"http:\\/\\/localhost\\/ecom\\/pharmaceuticals\",\"http:\\/\\/localhost\\/ecom\\/blog\",\"http:\\/\\/localhost\\/ecom\\/contact\"]', '2021-02-16 02:43:11', '2021-04-26 19:30:49'),
+(113, 'header_menu_labels', '[\"Home\",\"Brand Names\",\"Generics (Allopathic)\",\"Generics (Herbal)\",\"Pharmaceuticals\",\"Blogs\",\"Contact\",\"career\"]', '2021-02-16 02:43:11', '2021-05-14 14:32:47'),
+(114, 'header_menu_links', '[\"http:\\/\\/localhost\\/ecom\",\"http:\\/\\/localhost\\/ecom\\/brands\",\"http:\\/\\/localhost\\/ecom\\/generics-Allopathic\",\"http:\\/\\/localhost\\/ecom\\/generics-herbal\",\"http:\\/\\/localhost\\/ecom\\/pharmaceuticals\",\"http:\\/\\/localhost\\/ecom\\/blog\",\"http:\\/\\/localhost\\/ecom\\/contact\",\"http:\\/\\/localhost\\/ecom\\/career\"]', '2021-02-16 02:43:11', '2021-05-14 14:32:47'),
 (115, 'product_manage_by_admin', '1', '2021-04-25 14:29:39', '2021-04-25 14:29:39'),
 (116, 'cookies_agreement_text', '<b>we use cookies accept it to use our service properly!</b>', '2021-04-26 19:36:16', '2021-04-26 19:36:16'),
 (117, 'show_cookies_agreement', 'on', '2021-04-26 19:36:16', '2021-04-26 19:36:16'),
@@ -1182,6 +1184,10 @@ CREATE TABLE `jobs` (
   `short_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `job_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `banner` blob DEFAULT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_img` int(11) DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(191) NOT NULL DEFAULT 1,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1192,17 +1198,20 @@ CREATE TABLE `jobs` (
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`id`, `category_id`, `job_title`, `slug`, `short_description`, `job_description`, `banner`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(10, 0, 'Software and Website Developer', 'software-and-website-developer', 'demo1', '<p>demo1</p>', NULL, 1, '2021-05-11 10:12:44', '2021-05-11 09:56:13', '2021-05-11 10:12:44'),
-(11, 0, 'Software and Website Developer2', 'software-and-website-developer2', 'Software and Website Developer2', '<p><span style=\"font-size: 12px;\">Software and Website Developer2</span><br></p>', NULL, 1, '2021-05-11 15:42:58', '2021-05-11 09:56:33', '2021-05-11 15:42:58'),
-(12, 0, 'Software and Website Developer3', 'software-and-website-developer3', 'Software and Website Developer3', '<p>Software and Website Developer3</p>', NULL, 0, '2021-05-11 15:42:42', '2021-05-11 09:56:49', '2021-05-11 15:42:42'),
-(13, 0, 'Software and Website Developer4', 'software-and-website-developer4', 'Software and Website Developer4', '<p><span style=\"font-size: 12px;\">Software and Website Developer4</span><br></p>', NULL, 0, '2021-05-11 15:42:46', '2021-05-11 09:57:01', '2021-05-11 15:42:46'),
-(14, 0, 'Software and Website Developerddd', 'software-and-website-developerddd', 'Software and Website Developer', '<p><span style=\"font-size: 12px;\">Software and Website Developer</span><br></p>', NULL, 0, '2021-05-11 15:42:50', '2021-05-11 09:57:13', '2021-05-11 15:42:50'),
-(15, 0, 'Software and Website Developer update', 'software-and-website-developer-update', 'Software and Website Developer6', '<p><span style=\"font-size: 12px;\">Software and Website Developer yeeeeeeeeeeees</span><br></p>', NULL, 0, '2021-05-11 15:42:53', '2021-05-11 10:13:11', '2021-05-11 15:42:53'),
-(16, 3, 'this is new', 'this-is-new', 'demoo', '<p>demoo</p>', NULL, 1, NULL, '2021-05-11 15:43:38', NULL),
-(17, 4, 'Software', 'software', 'demoooooo', '<p><b>demooooooooo</b></p>', NULL, 1, '2021-05-11 16:06:04', '2021-05-11 16:00:47', '2021-05-11 16:06:04'),
-(18, 0, 'seghaerttteqargaer', 'seghaerttteqargaer', 'erghaerhaer', '<p>aerhqaerh</p>', NULL, 1, NULL, '2021-05-11 17:02:59', NULL),
-(19, 5, 'wow its working', 'wow-its-working', 'ggggg', '<p>ggggg</p>', NULL, 1, NULL, '2021-05-11 18:11:47', NULL);
+INSERT INTO `jobs` (`id`, `category_id`, `job_title`, `slug`, `short_description`, `job_description`, `banner`, `meta_title`, `meta_img`, `meta_description`, `meta_keywords`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(10, 0, 'Software and Website Developer', 'software-and-website-developer', 'demo1', '<p>demo1</p>', NULL, NULL, NULL, NULL, NULL, 1, '2021-05-11 10:12:44', '2021-05-11 09:56:13', '2021-05-11 10:12:44'),
+(11, 0, 'Software and Website Developer2', 'software-and-website-developer2', 'Software and Website Developer2', '<p><span style=\"font-size: 12px;\">Software and Website Developer2</span><br></p>', NULL, NULL, NULL, NULL, NULL, 1, '2021-05-11 15:42:58', '2021-05-11 09:56:33', '2021-05-11 15:42:58'),
+(12, 0, 'Software and Website Developer3', 'software-and-website-developer3', 'Software and Website Developer3', '<p>Software and Website Developer3</p>', NULL, NULL, NULL, NULL, NULL, 0, '2021-05-11 15:42:42', '2021-05-11 09:56:49', '2021-05-11 15:42:42'),
+(13, 0, 'Software and Website Developer4', 'software-and-website-developer4', 'Software and Website Developer4', '<p><span style=\"font-size: 12px;\">Software and Website Developer4</span><br></p>', NULL, NULL, NULL, NULL, NULL, 0, '2021-05-11 15:42:46', '2021-05-11 09:57:01', '2021-05-11 15:42:46'),
+(14, 0, 'Software and Website Developerddd', 'software-and-website-developerddd', 'Software and Website Developer', '<p><span style=\"font-size: 12px;\">Software and Website Developer</span><br></p>', NULL, NULL, NULL, NULL, NULL, 0, '2021-05-11 15:42:50', '2021-05-11 09:57:13', '2021-05-11 15:42:50'),
+(15, 0, 'Software and Website Developer update', 'software-and-website-developer-update', 'Software and Website Developer6', '<p><span style=\"font-size: 12px;\">Software and Website Developer yeeeeeeeeeeees</span><br></p>', NULL, NULL, NULL, NULL, NULL, 0, '2021-05-11 15:42:53', '2021-05-11 10:13:11', '2021-05-11 15:42:53'),
+(16, 3, 'this is new', 'this-is-new', 'demoo', '<p>demoo</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-11 15:43:38', NULL),
+(17, 4, 'Software', 'software', 'demoooooo', '<p><b>demooooooooo</b></p>', NULL, NULL, NULL, NULL, NULL, 1, '2021-05-11 16:06:04', '2021-05-11 16:00:47', '2021-05-11 16:06:04'),
+(18, 5, 'seghaerttteqargaer', 'seghaerttteqargaer', 'erghaerhaer', '<p>aerhqaerh</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-11 17:02:59', '2021-05-14 12:45:12'),
+(19, 5, 'wow its', 'wow-its-', 'ggggg', '<p>ggggg</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-11 18:11:47', '2021-05-12 04:53:54'),
+(20, 5, 'Software and Website 1', 'software-and-website-1', 'argqaergqerg', '<p>wregerger</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-12 04:53:27', '2021-05-14 11:52:49'),
+(21, 3, '45341214', '45341214', 'dwsefawregfre', '<p>wregaerger</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-14 06:40:49', '2021-05-14 12:46:19'),
+(22, 8, 'python developer', 'python-developer', 'python developer', '<p>python worker</p>', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-05-14 13:16:41', '2021-05-14 14:36:20');
 
 -- --------------------------------------------------------
 
@@ -1212,7 +1221,7 @@ INSERT INTO `jobs` (`id`, `category_id`, `job_title`, `slug`, `short_description
 
 CREATE TABLE `job_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `category_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_name` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1224,12 +1233,10 @@ CREATE TABLE `job_categories` (
 --
 
 INSERT INTO `job_categories` (`id`, `category_name`, `slug`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'fff', 'fff', '2021-05-11 13:32:17', '2021-05-11 10:28:22', '2021-05-11 13:32:17'),
-(2, 'fff', 'fff', '2021-05-11 13:32:21', '2021-05-11 10:31:38', '2021-05-11 13:32:21'),
-(3, 'ph', 'ph', NULL, '2021-05-11 13:32:32', '2021-05-11 13:38:23'),
-(4, 'pharmasist', 'pharmasist', NULL, '2021-05-11 16:00:09', '2021-05-11 16:00:09'),
+(4, 'pharmasist', 'pharmasist', '2021-05-12 05:06:46', '2021-05-11 16:00:09', '2021-05-12 05:06:46'),
 (5, 'medical', 'medical', NULL, '2021-05-11 16:49:42', '2021-05-11 16:49:42'),
-(6, 'wow', 'wow', NULL, '2021-05-11 16:53:52', '2021-05-11 16:53:52');
+(7, 'pharmasist', 'pharmasist', NULL, '2021-05-12 04:52:52', '2021-05-14 12:59:48'),
+(8, 'Software', 'Software', NULL, '2021-05-14 14:36:03', '2021-05-14 14:36:03');
 
 -- --------------------------------------------------------
 
@@ -3627,7 +3634,31 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 (1714, 'en', 'Job Category', 'Job Category', '2021-05-11 15:28:06', '2021-05-11 15:28:06'),
 (1715, 'en', 'Blog Information', 'Blog Information', '2021-05-11 17:09:14', '2021-05-11 17:09:14'),
 (1716, 'en', 'Blog Title', 'Blog Title', '2021-05-11 17:09:14', '2021-05-11 17:09:14'),
-(1717, 'en', 'Blog post has been created successfully', 'Blog post has been created successfully', '2021-05-11 17:09:23', '2021-05-11 17:09:23');
+(1717, 'en', 'Blog post has been created successfully', 'Blog post has been created successfully', '2021-05-11 17:09:23', '2021-05-11 17:09:23'),
+(1718, 'en', 'This is used for search. Input those words by which cutomer can find this product.', 'This is used for search. Input those words by which cutomer can find this product.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1719, 'en', 'These images are visible in product details page gallery. Use 600x600 sizes images.', 'These images are visible in product details page gallery. Use 600x600 sizes images.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1720, 'en', 'This image is visible in all product box. Use 300x300 sizes image. Keep some blank space around main object of your image as we had to crop some edge in different devices to make it responsive.', 'This image is visible in all product box. Use 300x300 sizes image. Keep some blank space around main object of your image as we had to crop some edge in different devices to make it responsive.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1721, 'en', 'Use proper link without extra parameter. Don\'t use short share link/embeded iframe code.', 'Use proper link without extra parameter. Don\'t use short share link/embeded iframe code.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1722, 'en', 'Product Wise Shipping', 'Product Wise Shipping', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1723, 'en', 'Is Product Quantity Mulitiply', 'Is Product Quantity Mulitiply', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1724, 'en', 'Low Stock Quantity Warning', 'Low Stock Quantity Warning', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1725, 'en', 'Stock Visibility State', 'Stock Visibility State', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1726, 'en', 'Show Stock Quantity', 'Show Stock Quantity', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1727, 'en', 'Show Stock With Text Only', 'Show Stock With Text Only', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1728, 'en', 'Hide Stock', 'Hide Stock', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1729, 'en', 'Flash Deal', 'Flash Deal', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1730, 'en', 'Add To Flash', 'Add To Flash', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1731, 'en', 'Estimate Shipping Time', 'Estimate Shipping Time', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1732, 'en', 'Shipping Days', 'Shipping Days', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1733, 'en', 'Save As Draft', 'Save As Draft', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1734, 'en', 'Save & Unpublish', 'Save & Unpublish', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1735, 'en', 'Save & Publish', 'Save & Publish', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1736, 'en', 'Change Circuler status successfully', 'Change Circuler status successfully', '2021-05-14 12:10:29', '2021-05-14 12:10:29'),
+(1737, 'en', 'Career', 'Career', '2021-05-14 12:27:05', '2021-05-14 12:27:05'),
+(1738, 'en', 'Create', 'Create', '2021-05-14 12:42:34', '2021-05-14 12:42:34'),
+(1739, 'en', 'Circuler status Changed  successfully', 'Circuler status Changed  successfully', '2021-05-14 12:46:18', '2021-05-14 12:46:18');
+INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`, `updated_at`) VALUES
+(1740, 'en', 'job', 'job', '2021-05-14 13:33:19', '2021-05-14 13:33:19');
 
 -- --------------------------------------------------------
 
@@ -3655,7 +3686,8 @@ CREATE TABLE `uploads` (
 INSERT INTO `uploads` (`id`, `file_original_name`, `file_name`, `user_id`, `file_size`, `extension`, `type`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Em+Ed+logo', 'uploads/all/qNmqoaHdVemnirJXqgzMTZ0qJnTEOao2vwtO4ULK.png', 9, 12911, 'png', 'image', '2021-04-26 18:08:40', '2021-04-26 18:08:40', NULL),
 (2, 'Em+Ed+logo', 'uploads/all/dnDmGubP7bJCmHIzQwwMghBJTipExjX2J4zGFtnE.png', 9, 16462, 'png', 'image', '2021-04-26 18:10:24', '2021-04-26 18:10:24', NULL),
-(3, 'Em+Ed+logo', 'uploads/all/jQP245cqpWJnvr15TtP1tQpE0aJWjHN0RzaR7iY3.png', 9, 35233, 'png', 'image', '2021-04-26 18:13:05', '2021-04-26 18:13:05', NULL);
+(3, 'Em+Ed+logo', 'uploads/all/jQP245cqpWJnvr15TtP1tQpE0aJWjHN0RzaR7iY3.png', 9, 35233, 'png', 'image', '2021-04-26 18:13:05', '2021-04-26 18:13:05', NULL),
+(4, 'admin', 'uploads/all/D5JorTGHV9e1VXLifipLRl9xQAtMYwbKfVZAKjP9.png', 9, 189774, 'png', 'image', '2021-05-14 13:15:58', '2021-05-14 13:15:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -3698,7 +3730,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `referred_by`, `provider_id`, `user_type`, `name`, `email`, `email_verified_at`, `verification_code`, `new_email_verificiation_code`, `password`, `remember_token`, `avatar`, `avatar_original`, `address`, `country`, `city`, `postal_code`, `phone`, `balance`, `banned`, `referral_code`, `customer_package_id`, `remaining_uploads`, `created_at`, `updated_at`) VALUES
 (3, NULL, NULL, 'seller', 'Mr. Seller', 'seller@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', '1zoU4eQxnOC5yxRWLsTzMNBPpJuOvTk4g3GMUVYIrbGijiXHOfIlFq0wHrIn', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, 'Demo address', 'US', 'Demo city', '1234', NULL, 0.00, 0, '3dLUoHsR1l', NULL, NULL, '2018-10-07 04:42:57', '2020-03-05 01:33:22'),
 (8, NULL, NULL, 'customer', 'Mr. Customer', 'customer@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', '9ndcz5o7xgnuxctJIbvUQcP41QKmgnWCc7JDSnWdHOvipOP2AijpamCNafEe', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, 'Demo address', 'US', 'Demo city', '1234', NULL, 0.00, 0, '8zJTyXTlTT', NULL, NULL, '2018-10-07 04:42:57', '2020-03-03 04:26:11'),
-(9, NULL, NULL, 'admin', 'Mehedi Hasan', 'mehidy.gb@gmail.com', '2021-04-25 14:04:06', NULL, NULL, '$2y$10$r4RVf1sirDyq92LrTpvrnuMOULdcngDDv/mS9v8zrbHlqpbC3pffi', 'Id7qqRivI90iZ9kURLUs8wAeeUqv78tDxpe7lMQodjMVKLqwmStvwtw3k1WZ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0, NULL, NULL, 0, '2021-04-25 14:10:06', '2021-04-25 14:10:06'),
+(9, NULL, NULL, 'admin', 'Mehedi Hasan', 'mehidy.gb@gmail.com', '2021-04-25 14:04:06', NULL, NULL, '$2y$10$r4RVf1sirDyq92LrTpvrnuMOULdcngDDv/mS9v8zrbHlqpbC3pffi', 'cJH9dqPkjMYE3cRZngIvyahVEMqJp012HdMNxr5cHrqtSf2Vvlo5Rwar9rRD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0, NULL, NULL, 0, '2021-04-25 14:10:06', '2021-04-25 14:10:06'),
 (10, NULL, NULL, 'staff', 'Accountant', 'accountant@example.com', NULL, NULL, NULL, '$2y$10$f0bfeW7ofUoJP1Q2hLPVZ.Cn2kROCdPU2rwN4bMHLqqr/pywbFplW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01902549358', 0.00, 0, NULL, NULL, 0, '2021-04-25 14:32:35', '2021-04-25 14:32:35'),
 (11, NULL, NULL, 'staff', 'Manager', 'manager@example.com', NULL, NULL, NULL, '$2y$10$VkJbxqFFFz00QNzmqk6IS.RmPPWrXgr6ewfYTQf7VV/KRcSNMkpjK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01635354223', 0.00, 0, NULL, NULL, 0, '2021-04-25 14:33:06', '2021-04-25 14:33:06'),
 (12, NULL, NULL, 'customer', 'demo user', NULL, '2021-05-10 22:05:09', '123864', NULL, '$2y$10$uCG8aDojABjLFrj1FTl1OeWOZNpmvwc3AJrJfIIOsQ.ARBn3KEq76', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+8801635354223', 0.00, 0, NULL, NULL, 0, '2021-05-11 10:05:10', '2021-05-11 10:06:09'),
@@ -4389,7 +4421,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `blog_categories`
@@ -4557,13 +4589,13 @@ ALTER TABLE `home_categories`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `job_categories`
 --
 ALTER TABLE `job_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -4797,13 +4829,13 @@ ALTER TABLE `ticket_replies`
 -- AUTO_INCREMENT for table `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1718;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1741;
 
 --
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`

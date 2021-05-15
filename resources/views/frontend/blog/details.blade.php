@@ -43,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-xl-8 mx-auto">
-                <div class="bg-white rounded shadow-sm p-4">
+                <div class="bg-white rounded shadow-sm p-4"> 
                     <div class="border-bottom">
                         <h1 class="h4">
                             {{ $blog->title }}
@@ -58,7 +58,7 @@
                     <div class="mb-4 overflow-hidden">
                         {!! $blog->description !!}
                     </div>
-
+                    
                     @if (get_setting('facebook_comment') == 1)
                     <div>
                         <div class="fb-comments" data-href="{{ route("blog",$blog->slug) }}" data-width="" data-numposts="5"></div>

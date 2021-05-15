@@ -1,28 +1,28 @@
-@extends('backend.layouts.app')
+@extends('frontend.layouts.user_panel')
 
-@section('content')
+@section('panel_content')
 
 <div class="row">
     <div class="col-lg-12 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0 h6">{{translate('Job Information')}}</h5>
+                <h5 class="mb-0 h6">{{translate('job Information')}}</h5>
             </div>
             <div class="card-body">
-                <form id="add_form" class="form-horizontal" action="{{ route('job_data.store') }}" method="POST">
+                <form id="add_form" class="form-horizontal" action="{{ url('/customer/job/update',$job->id) }}" method="POST">
                     @csrf
+                    @method('POST')
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
                             {{translate('Job Title')}}
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="job_title" name="job_title" value="{{old('job_title')}}" class="form-control" >
-                                @error('job_title')
+                            <input type="text" placeholder="{{translate('Job Title')}}" onkeyup="makeSlug(this.value)" id="title" name="job_title" value="{{ $job->job_title }}" class="form-control">
+                            @error('job_title')
                      <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-
-                         </div>
+                        </div>
                     </div>
                     <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
@@ -30,13 +30,22 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" >
-                                <option >select category</option>
+                            <select
+                                class="form-control aiz-selectpicker"
+                                name="category_id"
+                                id="category_id"
+                                data-live-search="true"
+                                @if($job->category != null)
+                                data-selected="{{ $job->category->id }}"
+                                @endif
+                            >
+                                <option value="">select category</option>
                                 @foreach ($job_category as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name }}
                                 </option>
                                 @endforeach
+
                             </select>
                             @error('category_id')
                      <div class="alert alert-danger">{{ $message }}</div>
@@ -46,17 +55,13 @@
 
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{translate('Slug')}}
-                            <span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-form-label">{{translate('Slug')}}</label>
                         <div class="col-md-9">
-                            <input type="text" value="{{old('slug')}}" placeholder="{{translate('Slug')}}" name="slug" id="slug" class="form-control" >
-                            @error('slug')
-                     <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                            <input type="text" placeholder="{{translate('Slug')}}" name="slug" id="slug" value="{{ $job->slug }}" class="form-control" >
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">
                             {{translate('Banner')}}
                             <small>(1300x650)</small>
@@ -69,12 +74,12 @@
                                     </div>
                                 </div>
                                 <div class="form-control file-amount">{{ translate('Choose File') }}</div>
-                                <input type="hidden" name="banner" class="selected-files">
+                                <input type="hidden" name="banner" class="selected-files" value="{{ $job->banner }}">
                             </div>
                             <div class="file-preview box sm">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
@@ -82,7 +87,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <textarea name="short_description" rows="5" class="form-control" ></textarea>
+                            <textarea name="short_description" rows="5" class="form-control">{{ $job->short_description }}</textarea>
                             @error('short_description')
                      <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -91,21 +96,20 @@
 
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">
-                            {{translate('Job Description')}}
-                            <span class="text-danger">*</span>
+                            {{translate('Description')}}
                         </label>
                         <div class="col-md-9">
-                            <textarea class="aiz-text-editor" name="job_description" ></textarea>
+                            <textarea class="aiz-text-editor" name="job_description">{{ $job->job_description }}</textarea>
                             @error('job_description')
                      <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                         </div>
                     </div>
-
+{{--
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Meta Title')}}</label>
                         <div class="col-md-9">
-                            <input value="{{old('meta_title')}}" type="text" class="form-control" name="meta_title" placeholder="{{translate('Meta Title')}}">
+                            <input type="text" class="form-control" name="meta_title" value="{{ $job->meta_title }}" placeholder="{{translate('Meta Title')}}">
                         </div>
                     </div>
 
@@ -122,7 +126,7 @@
                                     </div>
                                 </div>
                                 <div class="form-control file-amount">{{ translate('Choose File') }}</div>
-                                <input value="{{old('meta_img')}}" type="hidden" name="meta_img" class="selected-files">
+                                <input type="hidden" name="meta_img" class="selected-files" value="{{ $job->meta_img }}">
                             </div>
                             <div class="file-preview box sm">
                             </div>
@@ -132,7 +136,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Meta Description')}}</label>
                         <div class="col-md-9">
-                            <textarea value="{{old('meta_description')}}" name="meta_description" rows="5" class="form-control"></textarea>
+                            <textarea name="meta_description" rows="5" class="form-control">{{ $job->meta_description }}</textarea>
                         </div>
                     </div>
 
@@ -141,9 +145,9 @@
                             {{translate('Meta Keywords')}}
                         </label>
                         <div class="col-md-9">
-                            <input value="{{old('meta_keywords')}}" type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="{{translate('Meta Keywords')}}">
+                            <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" value="{{ $job->meta_keywords }}" placeholder="{{translate('Meta Keywords')}}">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-0 text-right">
                         <button type="submit" class="btn btn-primary">

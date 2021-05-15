@@ -159,6 +159,25 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function() {
     Route::post('/customer/update-profile', 'HomeController@customer_update_profile')->name('customer.profile.update');
     Route::post('/seller/update-profile', 'HomeController@seller_update_profile')->name('seller.profile.update');
 
+     //Job circuler page
+     Route::get('/customer/job', 'JobController@index')->name('user.job');
+     Route::get('/customer/job/create', 'JobController@jobCreate')->name('user.job.store');
+     Route::post('/customer/job/store', 'JobController@Create')->name('user.job_data.store');
+     Route::get('/customer/job/create', 'JobController@CatCreate')->name('user.job.store');
+     Route::get('/customer/job/delate/{id}', 'JobController@destroy')->name('user.job.destroy');
+     Route::get('/customer/job/edit/{id}', 'JobController@jobEdit')->name('user.job.edit');
+     Route::post('/customer/job/update/{id}', 'JobController@update')->name('user.job.update');
+     Route::post('/customer/job/change-status', 'JobController@change_status')->name('user.job.change-status');
+
+    //  //job Category page
+
+    //  Route::get('/job/category', 'JobCategoryController@index')->name('job.category.index');
+    //  Route::get('/job/category/create','JobCategoryController@create')->name('job.category.create');
+    //  Route::post('/job/category/store','JobCategoryController@store')->name('job.category.data.store');
+    //  Route::get('/job/category/destroy/{id}','JobCategoryController@destroy')->name('job.category.distroy');
+    //  Route::get('/job/category/edit/{id}','JobCategoryController@Edit')->name('job.category.edit');
+    //  Route::post('/job/category/update/{id}','JobCategoryController@update')->name('job.category.update');
+
     Route::resource('purchase_history', 'PurchaseHistoryController');
     Route::post('/purchase_history/details', 'PurchaseHistoryController@purchase_history_details')->name('purchase_history.details');
     Route::get('/purchase_history/destroy/{id}', 'PurchaseHistoryController@destroy')->name('purchase_history.destroy');

@@ -190,7 +190,7 @@
                             <span class="aiz-side-nav-text">{{ translate('Money Withdraw') }}</span>
                         </a>
                     </li>
-                    
+
                     <li class="aiz-side-nav-item">
                         <a href="{{ route('commission-log.index') }}" class="aiz-side-nav-link">
                             <i class="las la-file-alt aiz-side-nav-icon"></i>
@@ -267,6 +267,41 @@
                                 ->where('user_id', Auth::user()->id)
                                 ->count();
                 @endphp
+
+
+                    {{-- Job Section --}}
+
+                    <li class="aiz-side-nav-item">
+                        <a href="javascript:void(0);" class="aiz-side-nav-link {{ areActiveRoutes(['affiliate.user.index', 'affiliate.payment_settings'])}}">
+                            <i class="las la-industry aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">{{ translate('Career') }}</span>
+                            <span class="aiz-side-nav-arrow"></span>
+                        </a>
+                        <ul class="aiz-side-nav-list level-2">
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('user.job') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('Circulers') }}</span>
+                                </a>
+                            </li>
+                             <li class="aiz-side-nav-item">
+                                <a href="{{ route('user.job.store') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('Add Circuler') }}</span>
+                                </a>
+                           </li>
+                           {{-- <li class="aiz-side-nav-item">
+                                <a href="{{ route('affiliate.user.withdraw_request_history') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('Job Categories') }}</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('affiliate.user.withdraw_request_history') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('Add Category') }}</span>
+                                </a>
+                            </li> --}}
+                        </ul>
+                    </li>
+
+
 
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('support_ticket.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['support_ticket.index'])}}">

@@ -59,7 +59,7 @@
                     </div>
                 </div>
             @endforeach
-
+            
         </div>
         <div class="aiz-pagination aiz-pagination-center mt-4">
             {{ $blogs->links() }}

@@ -10,16 +10,16 @@ use App\Category;
 use App\FlashDealProduct;
 use App\ProductTax;
 use App\Language;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\SubSubCategory;
+use Laracon21\Combinations\Combinations;
 use Session;
 use Carbon\Carbon;
 use ImageOptimizer;
 use DB;
-use Combinations;
 use CoreComponentRepository;
 use Illuminate\Support\Str;
-use Artisan;
+use Illuminate\Support\Facades\Artisan;
 
 class ProductController extends Controller
 {
@@ -212,7 +212,7 @@ class ProductController extends Controller
         if ($request->has('is_quantity_multiplied')) {
             $product->is_quantity_multiplied = 1;
         }
-        
+
         $product->meta_title = $request->meta_title;
         $product->meta_description = $request->meta_description;
 
@@ -522,18 +522,18 @@ class ProductController extends Controller
                 $product->shipping_cost = json_encode($request->shipping_cost);
             }
         }
-        
+
         if ($request->has('is_quantity_multiplied')) {
             $product->is_quantity_multiplied = 1;
         }
         if ($request->has('cash_on_delivery')) {
             $product->cash_on_delivery = 1;
         }
-        
+
         if ($request->has('featured')) {
             $product->featured = 1;
         }
-        
+
         if ($request->has('todays_deal')) {
             $product->todays_deal = 1;
         }

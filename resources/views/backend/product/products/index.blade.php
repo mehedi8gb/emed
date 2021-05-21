@@ -23,6 +23,7 @@
         <div class="card-header row gutters-5">
             <div class="col text-center text-md-left">
                 <h5 class="mb-md-0 h6">{{ translate('All Product') }}</h5>
+                <h1>ADmin</h1>
             </div>
             @if($type == 'Seller')
             <div class="col-md-2 ml-auto">

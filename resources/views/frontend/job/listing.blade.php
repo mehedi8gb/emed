@@ -17,7 +17,7 @@
                     </li>
                     <li class="text-dark fw-600 breadcrumb-item">
                         <a class="text-reset" href="{{ route('front.job') }}">
-                            "{{ translate('job') }}"
+                            "{{ translate('Circulers') }}"
                         </a>
                     </li>
                 </ul>
@@ -28,33 +28,59 @@
 
 <section class="pb-4">
     <div class="container">
-        <div class="card-columns">
+        <div class="card-row ">
             @foreach($jobs as $job)
-                <div class="card mb-3 overflow-hidden shadow-sm">
-                    <a href="{{ url("job").'/'. $job->slug }}" class="text-reset d-block">
-                        <img
-                            src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
+                <div class="card w-100 overflow-hidden shadow-sm">
+                    <div class="p-4">
+                    <a href="{{ url("career").'/'. $job->slug }}" class="text-reset d-block">
+                        <img style="float: right;  width: 10%; margin: 12px"
+                            src="{{ static_asset('assets/') }}"
                             data-src="{{ uploaded_asset($job->banner) }}"
                             alt="{{ $job->title }}"
                             class="img-fluid lazyload "
                         >
                     </a>
-                    <div class="p-4">
-                        <h2 class="fs-18 fw-600 mb-1">
-                            <a href="{{ url("career").'/'. $job->slug }}" class="text-reset">
-                                {{ $job->title }}
-                            </a>
-                        </h2>
+
                         @if($job->category != null)
-                        <div class="mb-2 opacity-50">
+                        <div class="mb-2 opacity-70">
                             <i>{{ $job->category->category_name }}</i>
                         </div>
                         @endif
-                        <p class="opacity-70 mb-4">
-                            {{ $job->short_description }}
+                        <h2 class="fs-18 fw-600 mb-2">
+                            <a href="{{ url("career").'/'. $job->slug }}" class="text-reset">
+                                {{ $job->job_title }} <hr>
+                            </a>
+                        </h2>
+                        <div class="mb-2 opacity-72">
+                            <i>{{ $job->company }}</i>
+                        </div>
+                        <div class="mb-1 opacity-71 ">
+
+                            <span> <i class="las la-map-marker"></i>
+                                @if ($job->location_id != null)
+                                {{$job->location->location}}
+                                    @else
+                                    NA
+                                @endif</span>
+                        </div>
+                        <div class="mb-1 opacity-72">
+                            <i class="las la-university"></i>
+                            <span>{{ $job->education }}</span>
+                        </div>
+                        <div>
+                        <p class="opacity-72 mb-2">
+                            <i class="las la-briefcase"></i>
+                            {{ $job->experience }}
                         </p>
-                        <a href="{{ url("career").'/'. $job->slug }}" class="btn btn-soft-primary">
-                            {{ translate('View More') }}
+                        </div>
+                        <div>
+                            <p class="opacity-95 mb-4">
+                               <b> {{ $job->short_description }} </b>
+                            </p>
+                        </div>
+                        <a data-html="true" data-animation="true" data-toggle="tooltip" data-placement="top" title="<i>Read Everything carefully then Mail us your application and cv</i>"
+                        href="{{ url("career").'/'. $job->slug }}" class="btn btn-soft-primary">
+                            {{ translate('View Circuler') }}
                         </a>
                     </div>
                 </div>

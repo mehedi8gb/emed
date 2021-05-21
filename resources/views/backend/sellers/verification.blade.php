@@ -51,9 +51,9 @@
                           @if ($info->type == 'text' || $info->type == 'select' || $info->type == 'radio')
                               <td>{{ $info->value }}</td>
                           @elseif ($info->type == 'multi_select')
-                              <td>
+                              {{-- <td>
                                   {{ implode(json_decode($info->value), ', ') }}
-                              </td>
+                              </td> --}}
                           @elseif ($info->type == 'file')
                               <td>
                                   <a href="{{ my_asset($info->value) }}" target="_blank" class="btn-info">{{translate('Click here')}}</a>

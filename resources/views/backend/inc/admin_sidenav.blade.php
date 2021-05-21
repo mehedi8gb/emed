@@ -696,7 +696,7 @@
                       <span class="aiz-side-nav-arrow"></span>
                   </a>
                   <ul class="aiz-side-nav-list level-2">
-                      <li class="aiz-side-nav-item">
+                      <li class="aiz-side-nav-item active">
                           <a href="{{ route('job') }}" class="aiz-side-nav-link">
                               <span class="aiz-side-nav-text">{{translate('Circulers')}}</span>
                           </a>
@@ -716,11 +716,11 @@
                             <span class="aiz-side-nav-text">{{translate('Add Category')}}</span>
                         </a>
                      </li>
-                      {{-- <li class="aiz-side-nav-item">
-                          <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
-                              <span class="aiz-side-nav-text">{{translate('Appearance')}}</span>
+                      <li class="aiz-side-nav-item">
+                          <a href="{{ route('job.location.index') }}" class="aiz-side-nav-link">
+                              <span class="aiz-side-nav-text">{{translate('Locations')}}</span>
                           </a>
-                      </li> --}}
+                      </li>
                   </ul>
               </li>
               @endif

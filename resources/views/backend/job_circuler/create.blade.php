@@ -24,6 +24,22 @@
 
                          </div>
                     </div>
+                    {{-- company --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Company Name')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Enter Your Company Name')}}"  id="company" name="company" value="{{old('company')}}" class="form-control" >
+                                @error('company')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end company --}}
+
                     <div class="form-group row" id="category">
                         <label class="col-md-3 col-from-label">
                             {{translate('Category')}}
@@ -31,11 +47,9 @@
                         </label>
                         <div class="col-md-9">
                             <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" >
-                                <option >select category</option>
-                                @foreach ($job_category as $category)
-                                <option value="{{ $category->id }}">
-                                    {{ $category->category_name }}
-                                </option>
+                                <option disabled selected value="">select category</option>
+             @foreach ($job_category as $category)
+          <option value="{{ $category->id }}"> {{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                             @error('category_id')
@@ -44,6 +58,202 @@
                         </div>
                     </div>
 
+                      {{-- location --}}
+                    <div class="form-group row" id="location">
+                        <label class="col-md-3 col-from-label">
+                            {{translate('Location')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control aiz-selectpicker" name="location_id" id="location_id" data-live-search="true" >
+                                <option value="" selected disabled>select location</option>
+                                @foreach ($job_locations as $item )
+<option value="{{$item->id}}">{{$item->location}}</option>
+                                @endforeach
+                            </select>
+                            @error('location')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                        </div>
+                    </div>
+                    {{--End location --}}
+
+                    {{-- education --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('educational Status')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Your educational status')}}"  id="education" name="education" value="{{old('education')}}" class="form-control" >
+                                @error('education')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end education --}}
+
+                    {{-- experience --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Experience')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Your experience')}}"  id="experience" name="experience" value="{{old('experience')}}" class="form-control" >
+                                @error('experience')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end experience --}}
+
+                         {{-- Gender --}}
+
+                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label">
+                                {{translate('Gender')}}
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="customControlValidation2" value="1" name="gender" required>
+                                    <label class="custom-control-label" for="customControlValidation2">Male</label>
+                                    <div class="invalid-feedback">Please check one option</div>
+                                  </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="customControlValidation3" value="2" name="gender" required>
+                                    <label class="custom-control-label" for="customControlValidation3">Females</label>
+                                    <div class="invalid-feedback">Please check one option</div>
+                                  </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="customControlValidation4" value="3" name="gender" required>
+                                    <label class="custom-control-label" for="customControlValidation4">Both's</label>
+                                    <div class="invalid-feedback">Please check one option</div>
+                                  </div>
+
+                             </div>
+                        </div>
+
+                       {{-- end Gender --}}
+
+
+                       {{-- salary --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Salary')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('salary')}}"  id="salary" name="salary" value="{{old('salary')}}" class="form-control" >
+                                @error('salary')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end salary --}}
+
+                    {{-- age --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Age')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Ex: 22 to 30 years')}}"  id="age" name="age" value="{{old('age')}}" class="form-control" >
+                                @error('age')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end age --}}
+
+                    {{-- vacancy --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('vacancy')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('vacancy')}}"  id="vacancy" name="vacancy" value="{{old('vacancy')}}" class="form-control" >
+                                @error('vacancy')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end vacancy --}}
+
+                    {{-- Employment Status --}}
+                    <div class="form-group row" id="category">
+                        <label class="col-md-3 col-from-label">
+                            {{translate('Employment Status')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control aiz-selectpicker" name="employment_status" id="employment_status" data-live-search="true" >
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+
+                            </select>
+                            @error('employment_status')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                        </div>
+                    </div>
+                    {{-- end Employment Status --}}
+
+                    {{-- Address --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Address')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('1234 Main St')}}"  id="address" name="address" value="{{old('address')}}" class="form-control" >
+                                @error('address')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end Address --}}
+
+                    {{-- Address 2 --}}
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Address 2')}}
+                            <span class="text-danger"></span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Apartment, studio, or floor')}}"  id="address2" name="address2" value="{{old('address2')}}" class="form-control" >
+                                @error('address2')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div>
+                    {{-- end Address2 --}}
+
+                    {{-- Location --}}
+                    {{-- <div class="form-group row">
+                        <label class="col-md-3 col-form-label">
+                            {{translate('Location')}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="{{translate('Location')}}"  id="location_id" name="location_id" value="{{old('location_id')}}" class="form-control" >
+                                @error('location_id')
+                     <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+                         </div>
+                    </div> --}}
+                    {{-- end Location --}}
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Slug')}}

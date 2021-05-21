@@ -252,19 +252,32 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/uploaded-files/destroy/{id}', 'AizUploadController@destroy')->name('uploaded-files.destroy');
 
     //Job circuler page
-    Route::get('/job', 'JobController@index')->name('job');
-    Route::get('/job/create', 'JobController@jobCreate')->name('job.store');
-    Route::post('/job/store', 'JobController@Create')->name('job_data.store');
-    Route::get('/job/create', 'JobController@CatCreate')->name('job.store');
-    Route::get('/job/delate/{id}', 'JobController@destroy')->name('job.destroy');
-    Route::get('/job/edit/{id}', 'JobController@jobEdit')->name('job.edit');
-    Route::post('/job/update/{id}', 'JobController@update')->name('job.update');
-    Route::post('/job/change-status/', 'JobController@change_status')->name('job.change-status');
-    //job Category page
-    Route::get('/job/category', 'JobCategoryController@index')->name('job.category.index');
-    Route::get('/job/category/create','JobCategoryController@create')->name('job.category.create');
-    Route::post('/job/category/store','JobCategoryController@store')->name('job.category.data.store');
-    Route::get('/job/category/destroy/{id}','JobCategoryController@destroy')->name('job.category.distroy');
-    Route::get('/job/category/edit/{id}','JobCategoryController@Edit')->name('job.category.edit');
-    Route::post('/job/category/update/{id}','JobCategoryController@update')->name('job.category.update');
+    Route::prefix('job')->group(function () {
+        Route::get('/', 'JobController@index')->name('job');
+        Route::get('/create', 'JobController@jobCreate')->name('job.store');
+        Route::post('/store', 'JobController@Create')->name('job_data.store');
+        // Route::get('/create', 'JobController@CatCreate')->name('job.store');
+        // Route::get('/create', 'JobController@LocCreate')->name('job.store');
+        Route::get('/delate/{id}', 'JobController@destroy')->name('job.destroy');
+        Route::get('/edit/{id}', 'JobController@jobEdit')->name('job.edit');
+        Route::post('/update/{id}', 'JobController@update')->name('job.update');
+        Route::post('/change-status/', 'JobController@change_status')->name('job.change-status');
+        //job Category page
+        Route::get('/category', 'JobCategoryController@index')->name('job.category.index');
+        Route::get('/category/create','JobCategoryController@create')->name('job.category.create');
+        Route::post('/category/store','JobCategoryController@store')->name('job.category.data.store');
+        Route::get('/category/destroy/{id}','JobCategoryController@destroy')->name('job.category.distroy');
+        Route::get('/category/edit/{id}','JobCategoryController@Edit')->name('job.category.edit');
+        Route::post('/category/update/{id}','JobCategoryController@update')->name('job.category.update');
+
+        //job Location page
+        Route::get('/location', 'JobLocationsController@index')->name('job.location.index');
+        Route::get('/location/create','JobLocationsController@create')->name('job.location.create');
+        // Route::get('/location/create','JobLocationsController@Loccreate')->name('job.location.create');
+        Route::post('/location/store','JobLocationsController@store')->name('job.location.data.store');
+        Route::get('/location/destroy/{id}','JobLocationsController@destroy')->name('job.location.distroy');
+        Route::get('/location/edit/{id}','JobLocationsController@Edit')->name('job.location.edit');
+        Route::post('/location/update/{id}','JobLocationsController@update')->name('job.location.update');
+    });
+
 });

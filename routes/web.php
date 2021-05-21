@@ -159,15 +159,6 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function() {
     Route::post('/customer/update-profile', 'HomeController@customer_update_profile')->name('customer.profile.update');
     Route::post('/seller/update-profile', 'HomeController@seller_update_profile')->name('seller.profile.update');
 
-     //Job circuler page
-     Route::get('/customer/job', 'JobController@index')->name('user.job');
-     Route::get('/customer/job/create', 'JobController@jobCreate')->name('user.job.store');
-     Route::post('/customer/job/store', 'JobController@Create')->name('user.job_data.store');
-     Route::get('/customer/job/create', 'JobController@CatCreate')->name('user.job.store');
-     Route::get('/customer/job/delate/{id}', 'JobController@destroy')->name('user.job.destroy');
-     Route::get('/customer/job/edit/{id}', 'JobController@jobEdit')->name('user.job.edit');
-     Route::post('/customer/job/update/{id}', 'JobController@update')->name('user.job.update');
-     Route::post('/customer/job/change-status', 'JobController@change_status')->name('user.job.change-status');
 
     //  //job Category page
 
@@ -202,6 +193,30 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function() {
 
 Route::get('/customer_products/destroy/{id}', 'CustomerProductController@destroy')->name('customer_products.destroy');
 
+
+
+
+  //Job circuler page
+  Route::group(['prefix' => 'customer', 'middleware' => ['verified', 'user']], function(){
+    Route::get('/job', 'JobController@customerIndex')->name('users.job');
+    Route::get('/job/create', 'JobController@jobCreate')->name('user.job.store');
+    Route::post('/job/store', 'JobController@customerCreate')->name('users.job_data.store');
+    Route::get('/job/delate/{id}', 'JobController@destroy')->name('user.job.destroy');
+    Route::get('/job/edit/{id}', 'JobController@jobEdit')->name('user.job.edit');
+    Route::post('/job/update/{id}', 'JobController@customerUpdate')->name('users.job.update');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 Route::group(['prefix' => 'seller', 'middleware' => ['seller', 'verified', 'user']], function() {
     Route::get('/products', 'HomeController@seller_product_list')->name('seller.products');
     Route::get('/product/upload', 'HomeController@show_product_upload_form')->name('seller.products.upload');
@@ -217,6 +232,18 @@ Route::group(['prefix' => 'seller', 'middleware' => ['seller', 'verified', 'user
     Route::get('/digitalproducts', 'HomeController@seller_digital_product_list')->name('seller.digitalproducts');
     Route::get('/digitalproducts/upload', 'HomeController@show_digital_product_upload_form')->name('seller.digitalproducts.upload');
     Route::get('/digitalproducts/{id}/edit', 'HomeController@show_digital_product_edit_form')->name('seller.digitalproducts.edit');
+
+
+    // Route::group(['prefix' => 'customers'], function(){
+    //     Route::get('/job', 'JobController@index')->name('user.job');
+    //     Route::get('/job/create', 'JobController@jobCreate')->name('user.job.store');
+    //     Route::post('/job/store', 'JobController@Create')->name('user.job_data.store');
+    //     Route::get('/job/create', 'JobController@CatCreate')->name('user.job.store');
+    //     Route::get('/job/delate/{id}', 'JobController@destroy')->name('user.job.destroy');
+    //     Route::get('/job/edit/{id}', 'JobController@jobEdit')->name('user.job.edit');
+    //     Route::post('/job/update/{id}', 'JobController@update')->name('user.job.update');
+    //     Route::post('/job/change-status', 'JobController@change_status')->name('user.job.change-status');
+    //     });
 });
 
 Route::group(['middleware' => ['auth']], function() {

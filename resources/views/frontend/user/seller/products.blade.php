@@ -60,6 +60,7 @@
         <div class="card-header row gutters-5">
             <div class="col">
                 <h5 class="mb-md-0 h6">{{ translate('All Products') }}</h5>
+                <h1>hhh</h1>
             </div>
             <div class="col-md-3">
                 <div class="input-group input-group-sm">

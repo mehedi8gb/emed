@@ -279,7 +279,7 @@
                         </a>
                         <ul class="aiz-side-nav-list level-2">
                             <li class="aiz-side-nav-item">
-                                <a href="{{ route('user.job') }}" class="aiz-side-nav-link">
+                                <a href="{{ route('users.job') }}" class="aiz-side-nav-link">
                                     <span class="aiz-side-nav-text">{{ translate('Circulers') }}</span>
                                 </a>
                             </li>

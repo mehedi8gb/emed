@@ -17,7 +17,7 @@
 <br>
 
 <div class="card">
-    <form class="" id="sort_blogs" action="" method="GET">
+    {{-- <form class="" id="sort_blogs" action="" method="GET">
         <div class="card-header row gutters-5">
             <div class="col text-center text-md-left">
                 <h5 class="mb-md-0 h6">{{ translate('All Circulers') }}</h5>
@@ -29,7 +29,17 @@
                 </div>
             </div>
         </div>
-        </from>
+        </from> --}}
+        <div class="card-header d-block d-md-flex">
+            <h5 class="mb-0 h6">{{ translate('Jobs') }}</h5>
+            <form class="" id="search_jobs" action="" method="GET">
+                <div class="box-inline pad-rgt pull-left">
+                    <div class="" style="min-width: 200px;">
+                        <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="{{ translate('Type name & Enter') }}">
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="card-body">
             <table class="table mb-0 aiz-table">
                 <thead>
@@ -76,7 +86,7 @@
                         </td>
                         <td>
                             <label class="aiz-switch aiz-switch-success mb-0">
-                                <a href="{{ $job->slug }}">{{ $job->slug }}</a>
+                                <a target="_blank" href="{{env('APP_URL').('/career/').$job->slug }}">{{ $job->slug }}</a>
                                 <span></span>
                             </label>
 

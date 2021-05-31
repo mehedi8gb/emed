@@ -43,7 +43,7 @@
 
                         @if($job->category != null)
                         <div class="mb-2 opacity-70">
-                            <i>{{ $job->category->category_name }}</i>
+                            <span>{{ $job->category->category_name }}</span>
                         </div>
                         @endif
                         <h2 class="fs-18 fw-600 mb-2">
@@ -52,7 +52,7 @@
                             </a>
                         </h2>
                         <div class="mb-2 opacity-72">
-                            <i>{{ $job->company }}</i>
+                            <span>{{ $job->company }}</span>
                         </div>
                         <div class="mb-1 opacity-71 ">
 

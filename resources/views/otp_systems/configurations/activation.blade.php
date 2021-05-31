@@ -3,7 +3,7 @@
 @section('content')
     <h4 class="text-center text-muted">{{translate('Activate OTP')}}</h4>
     <div class="row">
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     <h3 class="mb-0 h6">{{translate('Nexmo OTP')}}</h3>
@@ -15,7 +15,7 @@
                     </label>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <h4 class="text-center text-muted mt-4">{{translate('OTP will be Used For')}}</h4>
     <div class="row">

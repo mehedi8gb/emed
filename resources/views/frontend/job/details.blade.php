@@ -29,16 +29,16 @@
     <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
     <style>
 
-b {
-  color: #28292c;
+span.job {
+  color: #1d1e20;
   font-family: sans-serif;
-  opacity: 88%;
+  opacity: 92%;
   font-size: 12px;
 }
-strong {
+label.jobs {
   color: arial black;
   font-family: sans-serif;
-  font-size: 13px;
+  font-size: 14px;
 }
     </style>
 @endsection
@@ -98,7 +98,7 @@ strong {
                         {!! $jobs->job_description !!}
                     </div>
                     <div>
-                        <a href="mailto:{{env('ADMIN_EMAIL')}}" class="btn btn-outline-primary">{{translate('Apply Now')}}</a>
+                        <a href="mailto:{{$jobs->jobuser->email}}?subject=I would like to Apply as {{$jobs->job_title}}!&amp;body=Write Your Application , Attach a CV for more attractive application and sent it to the Author ``{{ $jobs->user_id == $jobs->jobuser->id ? $jobs->jobuser->name : '' }}``" class="btn btn-outline-primary">{{translate('Apply Now')}}</a>
                     </div>
 
                     @if (get_setting('facebook_comment') == 1)
@@ -117,16 +117,16 @@ strong {
                                 <div class="panel-body">
 
                                             <h6>
-                                                <strong>Published on:</strong>&nbsp;
+                                                <label class="jobs">Published on:</label >&nbsp;
 
-                                                <b>{{$jobs->created_at->format('D d M Y')}} </b>
+                                                <span class="job">{{$jobs->created_at->format('D d M Y')}} </span>
                                             </h6>
 
                                     <!--JOB Vacancies:-->
 
                                         <h6>
-                                            <strong>Vacancy:</strong>&nbsp;
-                                           <b> {{ $jobs->vacancy }} </b>
+                                            <label class="jobs">Vacancy:</label> &nbsp;
+                                           <span class="job"> {{ $jobs->vacancy }} </span>
                                         </h6>
 
 
@@ -135,8 +135,8 @@ strong {
 
 
                                         <h6>
-                                            <strong>Employment Status:</strong>&nbsp;
-                                            <b>{{$jobs->employment_status}}</b>
+                                            <label class="jobs">Employment Status:</label> &nbsp;
+                                            <span class="job">{{$jobs->employment_status}}</span>
 
                                         </h6>
 
@@ -144,12 +144,12 @@ strong {
 
 
                                         <h6>
-                                            <strong>Experience:</strong>&nbsp;
+                                            <label class="jobs">Experience:</label> &nbsp;
 
                                                 @if ($jobs->experience != null)
-                                                <b>{{$jobs->experience}} <b>
+                                                <span class="job">{{$jobs->experience}} </span>
                                                 @else
-                                                <b>NA</b>
+                                                <span class="job">NA</span>
                                             @endif
                                         </h6>
 
@@ -157,12 +157,12 @@ strong {
 
 
                                          <h6>
-                                            <strong>Education:</strong>&nbsp;
+                                            <label class="jobs">Education:</label> &nbsp;
 
                                             @if ($jobs->education != null)
-                                            <b> {{$jobs->education}}  <b>
+                                            <span class="job"> {{$jobs->education}}  </span>
                                                 @else
-                                                <b>NA</b>
+                                                <span class="job">NA</span>
                                             @endif
                                         </h6>
 
@@ -172,15 +172,15 @@ strong {
 
 
                     <h6>
-              <strong>Gender:</strong>&nbsp;
+              <label class="jobs">Gender:</label> &nbsp;
              @if ($jobs->gender == 1)
-                 <b>Only males are allowed to apply</b>
+                 <span class="job">Only males are allowed to apply</span>
                           @endif
              @if ($jobs->gender == 2)
-               <b>Only females are allowed to apply</b>
+               <span class="job">Only females are allowed to apply</span>
                         @endif
              @if ($jobs->gender == 3)
-                  <b>Males & Females both's are allowed to apply</b>
+                  <span class="job">Males & Females both's are allowed to apply</span>
                           @endif
               </h6>
 
@@ -189,11 +189,11 @@ strong {
                                     -->
 
                                         <h6>
-                                            <strong>Age:</strong>&nbsp;
+                                            <label class="jobs">Age:</label>&nbsp;
                                             @if ($jobs->age != null)
-                                            <b>{{$jobs->age}}</b>
+                                            <span class="job">{{$jobs->age}}</span>
                                                 @else
-                                                <b>NA</b>
+                                                <span class="job">NA</span>
                                             @endif
 
                                         </h6>
@@ -203,14 +203,14 @@ strong {
                                     -->
 
                                         <h6 style="line-height: 24px;">
-                                            <strong>Job Location:</strong>&nbsp;
+                                            <label class="jobs">Job Location:</label>&nbsp;
 
                                             @if ($jobs->location_id != null)
-                                            <b> {{$jobs->location->location}}@if ($jobs->address != null)
-                                                , {{$jobs->address}}</b>
+                                            <span class="job"> {{$jobs->location->location}}@if ($jobs->address != null)
+                                                , {{$jobs->address}}</span>
                                             @endif
                                                 @else
-                                                <b>NA</b>
+                                                <span class="job">NA</span>
                                             @endif
                                         </h6>
 
@@ -219,12 +219,12 @@ strong {
                                     -->
 
                                         <h6>
-                                            <strong>Salary:</strong>&nbsp;
+                                            <label class="jobs">Salary:</label>&nbsp;
 
                                             @if ($jobs->salary != null)
-                                            <b>{{$jobs->salary}}</b>
+                                            <span class="job">{{$jobs->salary}}</span>
                                                 @else
-                                                <b>NA</b>
+                                                <span class="job">NA</span>
                                             @endif
                                         </h6>
 
@@ -237,10 +237,10 @@ strong {
                                     -->
 {{--
                                             <h6>
-                                                <strong>Application Deadline:</strong>&nbsp;5 Jun 2021
+                                                <label class="job">Application Deadline:</label class="job">&nbsp;5 Jun 2021
                                             </h6> --}}
                                             <div>
-                                                <a href="mailto:{{env('ADMIN_EMAIL')}}" class="btn btn-outline-primary">{{translate('Apply Now')}}</a>
+                                                <a href="mailto:{{$jobs->jobuser->email}}?subject=I would like to Apply as {{$jobs->job_title}}!&amp;body=Write Your Application , Attach a CV for more attractive application and sent it to the Author ``{{$jobs->jobuser->name}}``" class="btn btn-outline-primary">{{translate('Apply Now')}}</a>
                                             </div>
                                 </div>
                             </div>

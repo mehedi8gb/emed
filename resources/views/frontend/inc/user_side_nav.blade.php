@@ -234,7 +234,7 @@
                     </li>
                 @endif
 
-                @if (\App\Addon::where('unique_identifier', 'affiliate_system')->first() != null && \App\Addon::where('unique_identifier', 'affiliate_system')->first()->activated && Auth::user()->affiliate_user != null && Auth::user()->affiliate_user->status)
+                @if (\App\Addon::where('unique_identifier', 'affiliate_system')->first() == null && \App\Addon::where('unique_identifier', 'affiliate_system')->first()->activated && Auth::user()->affiliate_user != null && Auth::user()->affiliate_user->status)
                     <li class="aiz-side-nav-item">
                         <a href="javascript:void(0);" class="aiz-side-nav-link {{ areActiveRoutes(['affiliate.user.index', 'affiliate.payment_settings'])}}">
                             <i class="las la-dollar-sign aiz-side-nav-icon"></i>

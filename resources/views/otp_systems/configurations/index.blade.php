@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0 h6">{{translate('Nexmo Credential')}}</h5>
@@ -88,7 +88,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0 h6">{{translate('Fast2SMS Credential')}}</h5>
@@ -235,7 +235,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

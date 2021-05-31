@@ -424,9 +424,11 @@ class JobController extends Controller
         return view("frontend.job.listing", compact('jobs'));
     }
 
-    public function job_details($slug) {
+    public function job_details(Request $id, $slug) {
+        $job = Jobs::FindOrFail($id);
         $jobs = Jobs::where('slug', $slug)->first();
-        return view("frontend.job.details", compact('jobs'));
+        $user = User::all();
+        return view("frontend.job.details", compact('jobs','job','user'));
     }
 
 }

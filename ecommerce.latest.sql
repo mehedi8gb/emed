@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2021 at 09:40 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Generation Time: May 21, 2021 at 11:12 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,11 +32,20 @@ CREATE TABLE `addons` (
   `name` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
   `unique_identifier` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
   `version` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1',
+  `activated` int(1) NOT NULL DEFAULT 1,
   `image` varchar(1000) COLLATE utf32_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Dumping data for table `addons`
+--
+
+INSERT INTO `addons` (`id`, `name`, `unique_identifier`, `version`, `activated`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'affiliate', 'affiliate_system', '1.6', 1, 'affiliate_banner.jpg', '2021-04-25 14:12:38', '2021-04-25 14:12:38'),
+(2, 'Seller Subscription System', 'seller_subscription', '1.0', 1, 'seller_subscription.jpg', '2021-04-25 14:12:49', '2021-05-15 19:56:10'),
+(3, 'OTP', 'otp_system', '1.4', 1, 'otp_system.jpg', '2021-04-25 14:13:20', '2021-04-25 14:13:20');
 
 -- --------------------------------------------------------
 
@@ -52,9 +61,162 @@ CREATE TABLE `addresses` (
   `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `postal_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `set_default` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `set_default` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_configs`
+--
+
+CREATE TABLE `affiliate_configs` (
+  `id` int(11) NOT NULL,
+  `type` varchar(1000) COLLATE utf32_unicode_ci DEFAULT NULL,
+  `value` text COLLATE utf32_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Dumping data for table `affiliate_configs`
+--
+
+INSERT INTO `affiliate_configs` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'verification_form', '[{\"type\":\"text\",\"label\":\"Your name\"},{\"type\":\"text\",\"label\":\"Email\"},{\"type\":\"text\",\"label\":\"Full Address\"},{\"type\":\"text\",\"label\":\"Phone Number\"},{\"type\":\"text\",\"label\":\"How will you affiliate?\"}]', '2020-03-09 09:56:21', '2020-03-09 04:30:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_logs`
+--
+
+CREATE TABLE `affiliate_logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `guest_id` int(11) DEFAULT NULL,
+  `referred_by_user` int(11) NOT NULL,
+  `amount` double(20,2) NOT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
+  `order_detail_id` bigint(20) DEFAULT NULL,
+  `affiliate_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_options`
+--
+
+CREATE TABLE `affiliate_options` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
+  `details` longtext COLLATE utf32_unicode_ci DEFAULT NULL,
+  `percentage` double NOT NULL DEFAULT 0,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Dumping data for table `affiliate_options`
+--
+
+INSERT INTO `affiliate_options` (`id`, `type`, `details`, `percentage`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'user_registration_first_purchase', NULL, 20, 1, '2020-03-03 05:08:37', '2020-03-05 03:56:30'),
+(3, 'product_sharing', NULL, 20, 0, '2020-03-08 01:55:03', '2020-03-10 02:12:32'),
+(4, 'category_wise_affiliate', NULL, 0, 0, '2020-03-08 01:55:03', '2020-03-10 02:12:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_payments`
+--
+
+CREATE TABLE `affiliate_payments` (
+  `id` int(11) NOT NULL,
+  `affiliate_user_id` int(11) NOT NULL,
+  `amount` double(8,2) NOT NULL,
+  `payment_method` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `payment_details` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `affiliate_payments`
+--
+
+INSERT INTO `affiliate_payments` (`id`, `affiliate_user_id`, `amount`, `payment_method`, `payment_details`, `created_at`, `updated_at`) VALUES
+(2, 1, 20.00, 'Paypal', NULL, '2020-03-10 02:04:30', '2020-03-10 02:04:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_stats`
+--
+
+CREATE TABLE `affiliate_stats` (
+  `id` int(11) NOT NULL,
+  `affiliate_user_id` int(11) NOT NULL,
+  `no_of_click` int(11) NOT NULL DEFAULT 0,
+  `no_of_order_item` int(11) NOT NULL DEFAULT 0,
+  `no_of_delivered` int(11) NOT NULL DEFAULT 0,
+  `no_of_cancel` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `affiliate_stats`
+--
+
+INSERT INTO `affiliate_stats` (`id`, `affiliate_user_id`, `no_of_click`, `no_of_order_item`, `no_of_delivered`, `no_of_cancel`, `created_at`, `updated_at`) VALUES
+(1, 9, 2, 0, 0, 0, '2021-05-16 07:49:25', '2021-05-16 08:15:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_users`
+--
+
+CREATE TABLE `affiliate_users` (
+  `id` int(11) NOT NULL,
+  `paypal_email` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
+  `bank_information` text COLLATE utf32_unicode_ci DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `informations` text COLLATE utf32_unicode_ci DEFAULT NULL,
+  `balance` double(10,2) NOT NULL DEFAULT 0.00,
+  `status` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Dumping data for table `affiliate_users`
+--
+
+INSERT INTO `affiliate_users` (`id`, `paypal_email`, `bank_information`, `user_id`, `informations`, `balance`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'demo@gmail.com', '123456', 8, '[{\"type\":\"text\",\"label\":\"Your name\",\"value\":\"Nostrum dicta sint l\"},{\"type\":\"text\",\"label\":\"Email\",\"value\":\"Aut perferendis null\"},{\"type\":\"text\",\"label\":\"Full Address\",\"value\":\"Voluptatem Sit dolo\"},{\"type\":\"text\",\"label\":\"Phone Number\",\"value\":\"Ut ad beatae occaeca\"},{\"type\":\"text\",\"label\":\"How will you affiliate?\",\"value\":\"Porro sint soluta u\"}]', 30.00, 1, '2020-03-09 05:35:07', '2020-03-10 02:04:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `affiliate_withdraw_requests`
+--
+
+CREATE TABLE `affiliate_withdraw_requests` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amount` double(10,2) NOT NULL,
+  `status` int(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -83,7 +245,7 @@ CREATE TABLE `app_settings` (
 --
 
 INSERT INTO `app_settings` (`id`, `name`, `logo`, `currency_id`, `currency_format`, `facebook`, `twitter`, `instagram`, `youtube`, `google_plus`, `created_at`, `updated_at`) VALUES
-(1, 'Active eCommerce', 'uploads/logo/matggar.png', 1, 'symbol', 'https://facebook.com', 'https://twitter.com', 'https://instagram.com', 'https://youtube.com', 'https://google.com', '2019-08-04 16:39:15', '2019-08-04 16:39:18');
+(1, 'eMed Ecommerce', 'uploads/logo/matggar.png', 1, 'symbol', 'https://facebook.com', 'https://twitter.com', 'https://instagram.com', 'https://youtube.com', 'https://google.com', '2019-08-04 16:39:15', '2019-08-04 16:39:18');
 
 -- --------------------------------------------------------
 
@@ -94,8 +256,8 @@ INSERT INTO `app_settings` (`id`, `name`, `logo`, `currency_id`, `currency_forma
 CREATE TABLE `attributes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf32_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
@@ -117,8 +279,8 @@ CREATE TABLE `attribute_translations` (
   `attribute_id` bigint(20) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -131,10 +293,10 @@ CREATE TABLE `banners` (
   `id` int(11) NOT NULL,
   `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `url` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `position` int(11) NOT NULL DEFAULT '1',
-  `published` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `position` int(11) NOT NULL DEFAULT 1,
+  `published` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -161,18 +323,27 @@ CREATE TABLE `blogs` (
   `category_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci,
-  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `short_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `banner` int(11) DEFAULT NULL,
   `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_img` int(11) DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
-  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
-  `status` int(1) NOT NULL DEFAULT '1',
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blogs`
+--
+
+INSERT INTO `blogs` (`id`, `category_id`, `title`, `slug`, `short_description`, `description`, `banner`, `meta_title`, `meta_img`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 0, 'dddd', 'dddd', 'dddd', '<p>ddd</p>', NULL, 'ddd', NULL, 'dd', 'dd', 1, '2021-05-11 17:09:23', '2021-05-11 17:09:23', NULL),
+(2, 1, 'wefqwef', 'wefqwef', 'qwefqwre', '<p>wefqwref</p>', NULL, 'qwef', NULL, 'qwf', 'qwfe', 1, '2021-05-11 22:29:28', '2021-05-14 11:53:17', NULL),
+(3, 1, 'Pakistani Arabic Bridal', 'pakistani-arabic-bridal', 'yes this is short', '<p>wow this is long</p>', 3, 'pakistan', 3, 'pakistan', 'pakistan', 1, '2021-05-14 11:54:15', '2021-05-14 12:01:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,6 +360,13 @@ CREATE TABLE `blog_categories` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `blog_categories`
+--
+
+INSERT INTO `blog_categories` (`id`, `category_name`, `slug`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'fff', 'fff', '2021-05-11 10:24:27', '2021-05-11 10:24:27', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -199,12 +377,12 @@ CREATE TABLE `brands` (
   `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `logo` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `top` int(1) NOT NULL DEFAULT '0',
+  `top` int(1) NOT NULL DEFAULT 0,
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `meta_description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -226,8 +404,8 @@ CREATE TABLE `brand_translations` (
   `brand_id` bigint(20) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -239,9 +417,9 @@ CREATE TABLE `brand_translations` (
 CREATE TABLE `business_settings` (
   `id` int(11) NOT NULL,
   `type` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `value` longtext COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `value` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -249,8 +427,8 @@ CREATE TABLE `business_settings` (
 --
 
 INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
-(1, 'home_default_currency', '1', '2018-10-16 01:35:52', '2019-01-28 01:26:53'),
-(2, 'system_default_currency', '1', '2018-10-16 01:36:58', '2020-01-26 04:22:13'),
+(1, 'home_default_currency', '27', '2018-10-16 01:35:52', '2021-04-25 14:10:06'),
+(2, 'system_default_currency', '27', '2018-10-16 01:36:58', '2021-04-25 14:10:06'),
 (3, 'currency_format', '1', '2018-10-17 03:01:59', '2018-10-17 03:01:59'),
 (4, 'symbol_format', '1', '2018-10-17 03:01:59', '2019-01-20 02:10:55'),
 (5, 'no_of_decimals', '3', '2018-10-17 03:01:59', '2020-03-04 00:57:16'),
@@ -264,29 +442,29 @@ INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_a
 (13, 'best_selling', '1', '2018-12-24 08:13:44', '2019-02-14 05:29:13'),
 (14, 'paypal_sandbox', '0', '2019-01-16 12:44:18', '2019-01-16 12:44:18'),
 (15, 'sslcommerz_sandbox', '1', '2019-01-16 12:44:18', '2019-03-14 00:07:26'),
-(16, 'sslcommerz_payment', '0', '2019-01-24 09:39:07', '2019-01-29 06:13:46'),
+(16, 'sslcommerz_payment', '1', '2019-01-24 09:39:07', '2021-04-25 14:29:54'),
 (17, 'vendor_commission', '20', '2019-01-31 06:18:04', '2019-04-13 06:49:26'),
 (18, 'verification_form', '[{\"type\":\"text\",\"label\":\"Your name\"},{\"type\":\"text\",\"label\":\"Shop name\"},{\"type\":\"text\",\"label\":\"Email\"},{\"type\":\"text\",\"label\":\"License No\"},{\"type\":\"text\",\"label\":\"Full Address\"},{\"type\":\"text\",\"label\":\"Phone Number\"},{\"type\":\"file\",\"label\":\"Tax Papers\"}]', '2019-02-03 11:36:58', '2019-02-16 06:14:42'),
 (19, 'google_analytics', '0', '2019-02-06 12:22:35', '2019-02-06 12:22:35'),
-(20, 'facebook_login', '0', '2019-02-07 12:51:59', '2019-02-08 19:41:15'),
-(21, 'google_login', '0', '2019-02-07 12:52:10', '2019-02-08 19:41:14'),
-(22, 'twitter_login', '0', '2019-02-07 12:52:20', '2019-02-08 02:32:56'),
+(20, 'facebook_login', '1', '2019-02-07 12:51:59', '2021-04-25 14:30:04'),
+(21, 'google_login', '1', '2019-02-07 12:52:10', '2021-04-25 14:30:05'),
+(22, 'twitter_login', '1', '2019-02-07 12:52:20', '2021-04-25 14:30:08'),
 (23, 'payumoney_payment', '1', '2019-03-05 11:38:17', '2019-03-05 11:38:17'),
 (24, 'payumoney_sandbox', '1', '2019-03-05 11:38:17', '2019-03-05 05:39:18'),
 (36, 'facebook_chat', '0', '2019-04-15 11:45:04', '2019-04-15 11:45:04'),
-(37, 'email_verification', '0', '2019-04-30 07:30:07', '2019-04-30 07:30:07'),
-(38, 'wallet_system', '0', '2019-05-19 08:05:44', '2019-05-19 02:11:57'),
-(39, 'coupon_system', '0', '2019-06-11 09:46:18', '2019-06-11 09:46:18'),
-(40, 'current_version', '4.7', '2019-06-11 09:46:18', '2019-06-11 09:46:18'),
+(37, 'email_verification', '1', '2019-04-30 07:30:07', '2021-05-15 19:34:13'),
+(38, 'wallet_system', '1', '2019-05-19 08:05:44', '2021-04-25 14:29:31'),
+(39, 'coupon_system', '1', '2019-06-11 09:46:18', '2021-04-25 14:29:36'),
+(40, 'current_version', '1.0.0 ', '2019-06-11 09:46:18', '2019-06-11 09:46:18'),
 (41, 'instamojo_payment', '0', '2019-07-06 09:58:03', '2019-07-06 09:58:03'),
 (42, 'instamojo_sandbox', '1', '2019-07-06 09:58:43', '2019-07-06 09:58:43'),
 (43, 'razorpay', '0', '2019-07-06 09:58:43', '2019-07-06 09:58:43'),
 (44, 'paystack', '0', '2019-07-21 13:00:38', '2019-07-21 13:00:38'),
 (45, 'pickup_point', '0', '2019-10-17 11:50:39', '2019-10-17 11:50:39'),
-(46, 'maintenance_mode', '0', '2019-10-17 11:51:04', '2019-10-17 11:51:04'),
+(46, 'maintenance_mode', '0', '2019-10-17 11:51:04', '2021-04-25 14:30:28'),
 (47, 'voguepay', '0', '2019-10-17 11:51:24', '2019-10-17 11:51:24'),
 (48, 'voguepay_sandbox', '0', '2019-10-17 11:51:38', '2019-10-17 11:51:38'),
-(50, 'category_wise_commission', '0', '2020-01-21 07:22:47', '2020-01-21 07:22:47'),
+(50, 'category_wise_commission', '1', '2020-01-21 07:22:47', '2021-04-25 14:29:45'),
 (51, 'conversation_system', '1', '2020-01-21 07:23:21', '2020-01-21 07:23:21'),
 (52, 'guest_checkout_active', '1', '2020-01-22 07:36:38', '2020-01-22 07:36:38'),
 (53, 'facebook_pixel', '0', '2020-01-22 11:43:58', '2020-01-22 11:43:58'),
@@ -299,20 +477,20 @@ INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_a
 (61, 'payhere', '0', '2020-07-30 18:23:53', '2020-07-30 18:23:53'),
 (62, 'google_recaptcha', '0', '2020-08-17 07:13:37', '2020-08-17 07:13:37'),
 (63, 'ngenius', '0', '2020-09-22 10:58:21', '2020-09-22 10:58:21'),
-(64, 'header_logo', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(64, 'header_logo', '3', '2020-11-16 07:26:36', '2021-04-26 18:13:49'),
 (65, 'show_language_switcher', 'on', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(66, 'show_currency_switcher', 'on', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(66, 'show_currency_switcher', NULL, '2020-11-16 07:26:36', '2021-04-25 22:54:53'),
 (67, 'header_stikcy', 'on', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(68, 'footer_logo', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(69, 'about_us_description', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(70, 'contact_address', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(71, 'contact_phone', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(72, 'contact_email', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(68, 'footer_logo', '3', '2020-11-16 07:26:36', '2021-04-26 18:23:25'),
+(69, 'about_us_description', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:27'),
+(70, 'contact_address', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:28'),
+(71, 'contact_phone', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:28'),
+(72, 'contact_email', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:28'),
 (73, 'widget_one_labels', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (74, 'widget_one_links', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(75, 'widget_one', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(76, 'frontend_copyright_text', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(77, 'show_social_links', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(75, 'widget_one', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:38'),
+(76, 'frontend_copyright_text', 'demo', '2020-11-16 07:26:36', '2021-04-25 22:55:56'),
+(77, 'show_social_links', 'on', '2020-11-16 07:26:36', '2021-04-25 22:55:56'),
 (78, 'facebook_link', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (79, 'twitter_link', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (80, 'instagram_link', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
@@ -325,31 +503,37 @@ INSERT INTO `business_settings` (`id`, `type`, `value`, `created_at`, `updated_a
 (87, 'home_banner1_links', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (88, 'home_banner2_images', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (89, 'home_banner2_links', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(90, 'home_categories', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(90, 'home_categories', NULL, '2020-11-16 07:26:36', '2021-04-25 22:58:41'),
 (91, 'top10_categories', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (92, 'top10_brands', '[]', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(93, 'website_name', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(94, 'site_motto', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(93, 'website_name', 'eMed', '2020-11-16 07:26:36', '2021-04-25 22:59:41'),
+(94, 'site_motto', 'The Best Ecommerce Platform on the internet.', '2020-11-16 07:26:36', '2021-04-25 22:59:41'),
 (95, 'site_icon', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(96, 'base_color', '#e62e04', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(97, 'base_hov_color', '#e62e04', '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(96, 'base_color', '#e62e00', '2020-11-16 07:26:36', '2021-04-25 22:59:41'),
+(97, 'base_hov_color', '#e62e88', '2020-11-16 07:26:36', '2021-04-25 22:59:41'),
 (98, 'meta_title', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (99, 'meta_description', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (100, 'meta_keywords', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (101, 'meta_image', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(102, 'site_name', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(103, 'system_logo_white', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
-(104, 'system_logo_black', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
+(102, 'site_name', 'eMed', '2020-11-16 07:26:36', '2021-04-25 16:53:42'),
+(103, 'system_logo_white', '3', '2020-11-16 07:26:36', '2021-04-26 18:13:16'),
+(104, 'system_logo_black', '3', '2020-11-16 07:26:36', '2021-04-26 18:13:16'),
 (105, 'timezone', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (106, 'admin_login_background', NULL, '2020-11-16 07:26:36', '2020-11-16 07:26:36'),
 (107, 'iyzico_sandbox', '1', '2020-12-30 16:45:56', '2020-12-30 16:45:56'),
 (108, 'iyzico', '1', '2020-12-30 16:45:56', '2020-12-30 16:45:56'),
 (109, 'decimal_separator', '1', '2020-12-30 16:45:56', '2020-12-30 16:45:56'),
-(110, 'nagad', '0', '2021-01-22 10:30:03', '2021-01-22 10:30:03'),
-(111, 'bkash', '0', '2021-01-22 10:30:03', '2021-01-22 10:30:03'),
+(110, 'nagad', '1', '2021-01-22 10:30:03', '2021-04-25 14:29:59'),
+(111, 'bkash', '1', '2021-01-22 10:30:03', '2021-04-25 14:30:00'),
 (112, 'bkash_sandbox', '1', '2021-01-22 10:30:03', '2021-01-22 10:30:03'),
-(113, 'header_menu_labels', '[\"Home\",\"Flash Sale\",\"Blogs\",\"All Brands\",\"All Categories\"]', '2021-02-16 02:43:11', '2021-02-16 02:52:18'),
-(114, 'header_menu_links', '[\"http:\\/\\/domain.com\",\"http:\\/\\/domain.com\\/flash-deals\",\"http:\\/\\/domain.com\\/blog\",\"http:\\/\\/domain.com\\/brands\",\"http:\\/\\/domain.com\\/categories\"]', '2021-02-16 02:43:11', '2021-02-18 01:20:04');
+(113, 'header_menu_labels', '[\"Home\",\"Brand Names\",\"Generics (Allopathic)\",\"Generics (Herbal)\",\"Pharmaceuticals\",\"Blogs\",\"Contact\",\"career\"]', '2021-02-16 02:43:11', '2021-05-14 14:32:47'),
+(114, 'header_menu_links', '[\"http:\\/\\/localhost\\/ecom\",\"http:\\/\\/localhost\\/ecom\\/brands\",\"http:\\/\\/localhost\\/ecom\\/generics-Allopathic\",\"http:\\/\\/localhost\\/ecom\\/generics-herbal\",\"http:\\/\\/localhost\\/ecom\\/pharmaceuticals\",\"http:\\/\\/localhost\\/ecom\\/blog\",\"http:\\/\\/localhost\\/ecom\\/contact\",\"http:\\/\\/localhost\\/ecom\\/career\"]', '2021-02-16 02:43:11', '2021-05-14 14:32:47'),
+(115, 'product_manage_by_admin', '1', '2021-04-25 14:29:39', '2021-04-25 14:29:39'),
+(116, 'cookies_agreement_text', '<b>we use cookies accept it to use our service properly!</b>', '2021-04-26 19:36:16', '2021-04-26 19:36:16'),
+(117, 'show_cookies_agreement', 'on', '2021-04-26 19:36:16', '2021-04-26 19:36:16'),
+(118, 'header_script', NULL, '2021-04-26 20:09:50', '2021-04-26 20:09:50'),
+(119, 'footer_script', '<script src=\"support/js/min/jquery.min.js\"></script>\r\n<script id=\"sbinit\" src=\"support/js/main.js\"></script>', '2021-04-26 20:09:50', '2021-04-26 20:42:31'),
+(120, 'products_name', 'Drugs', '2019-06-11 09:46:18', '2019-06-11 09:46:18');
 
 -- --------------------------------------------------------
 
@@ -361,21 +545,18 @@ CREATE TABLE `carts` (
   `id` int(11) UNSIGNED NOT NULL,
   `owner_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `temp_user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `address_id` int(11) NOT NULL DEFAULT '0',
+  `address_id` int(11) NOT NULL DEFAULT 0,
   `product_id` int(11) DEFAULT NULL,
-  `variation` text COLLATE utf8_unicode_ci,
-  `price` double(8,2) DEFAULT '0.00',
-  `tax` double(8,2) DEFAULT '0.00',
-  `shipping_cost` double(8,2) DEFAULT '0.00',
-  `shipping_type` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `pickup_point` int(11) DEFAULT NULL,
-  `discount` double(10,2) NOT NULL DEFAULT '0.00',
+  `variation` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` double(8,2) DEFAULT 0.00,
+  `tax` double(8,2) DEFAULT 0.00,
+  `shipping_cost` double(8,2) DEFAULT 0.00,
+  `discount` double(10,2) NOT NULL DEFAULT 0.00,
   `coupon_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `coupon_applied` tinyint(4) NOT NULL DEFAULT '0',
-  `quantity` int(11) NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `coupon_applied` tinyint(4) NOT NULL DEFAULT 0,
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -386,21 +567,21 @@ CREATE TABLE `carts` (
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `parent_id` int(11) DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '0',
+  `parent_id` int(11) DEFAULT 0,
+  `level` int(11) NOT NULL DEFAULT 0,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `order_level` int(11) NOT NULL DEFAULT '0',
-  `commision_rate` double(8,2) NOT NULL DEFAULT '0.00',
+  `order_level` int(11) NOT NULL DEFAULT 0,
+  `commision_rate` double(8,2) NOT NULL DEFAULT 0.00,
   `banner` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `icon` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `featured` int(1) NOT NULL DEFAULT '0',
-  `top` int(1) NOT NULL DEFAULT '0',
-  `digital` int(1) NOT NULL DEFAULT '0',
+  `featured` int(1) NOT NULL DEFAULT 0,
+  `top` int(1) NOT NULL DEFAULT 0,
+  `digital` int(1) NOT NULL DEFAULT 0,
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `meta_description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -408,9 +589,17 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `parent_id`, `level`, `name`, `order_level`, `commision_rate`, `banner`, `icon`, `featured`, `top`, `digital`, `slug`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
-(1, 0, 0, 'Demo category 1', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/KjJP9wuEZNL184XVUk3S7EiZ8NnBN99kiU4wdvp3.png', 1, 1, 0, 'Demo-category-1', 'Demo category 1', NULL, '2019-08-06 12:06:58', '2019-08-06 06:06:58'),
-(2, 0, 0, 'Demo category 2', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/h9XhWwI401u6sRoLITEk9SUMRAlWN8moGrpPfS6I.png', 1, 0, 0, 'Demo-category-2', 'Demo category 2', NULL, '2019-08-06 12:06:58', '2019-08-06 06:06:58'),
-(3, 0, 0, 'Demo category 3', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/rKAPw5rNlS84JtD9ZQqn366jwE11qyJqbzAe5yaA.png', 1, 1, 0, 'Demo-category-3', 'Demo category 3', NULL, '2019-08-06 12:06:58', '2019-08-06 06:06:58');
+(1, 0, 0, 'Medicine', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/KjJP9wuEZNL184XVUk3S7EiZ8NnBN99kiU4wdvp3.png', 1, 1, 0, 'medicine', 'Medicine', NULL, '2021-04-26 18:28:28', '2021-04-26 18:28:28'),
+(2, 0, 0, 'Pharmaceuticals', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/h9XhWwI401u6sRoLITEk9SUMRAlWN8moGrpPfS6I.png', 1, 0, 0, 'pharmaceuticals', 'Pharmaceuticals', 'Pharmaceuticals', '2021-04-26 18:29:20', '2021-04-26 18:29:20'),
+(3, 0, 0, 'Drug Classes', 0, 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/rKAPw5rNlS84JtD9ZQqn366jwE11qyJqbzAe5yaA.png', 1, 1, 0, 'drug-classes', 'Drug Classes', 'Drug Classes', '2021-04-26 18:30:05', '2021-04-26 18:30:05'),
+(4, 0, 0, 'More', 0, 0.00, NULL, NULL, 1, 0, 0, 'more', 'More', 'More', '2021-04-26 18:32:25', '2021-04-26 18:32:25'),
+(6, 1, 1, 'Generics (Allopathic)', 0, 0.00, NULL, NULL, 0, 0, 0, 'generics-allopathic', 'Generics Allopathic', 'Generics Allopathic', '2021-04-26 18:38:09', '2021-04-26 18:38:09'),
+(7, 1, 1, 'Generics (Herbal)', 0, 0.00, NULL, NULL, 0, 0, 0, 'generics-herbal', 'Generics Herbal', 'Generics Herbal', '2021-04-26 18:37:50', '2021-04-26 18:37:50'),
+(8, 1, 1, 'Brands', 0, 0.00, NULL, NULL, 0, 0, 0, 'brands', 'brands', 'brands', '2021-04-26 18:37:34', '2021-04-26 18:37:34'),
+(9, 1, 1, 'Dosage Forms', 0, 0.00, NULL, NULL, 0, 0, 0, 'dosage-forms', 'Dosage Forms', 'Dosage Forms', '2021-04-26 18:39:04', '2021-04-26 18:39:04'),
+(10, 4, 1, 'News', 0, 0.00, NULL, NULL, 0, 0, 0, 'news', 'News', 'News', '2021-04-26 18:41:31', '2021-04-26 18:41:31'),
+(11, 4, 1, 'Pharma Jobs', 0, 0.00, NULL, NULL, 0, 0, 0, 'pharma-jobs', 'Pharma Jobs', 'Pharma Jobs', '2021-04-26 18:41:17', '2021-04-26 18:41:17'),
+(12, 4, 1, 'Documents', 0, 0.00, NULL, NULL, 0, 0, 0, 'documents', 'Documents', 'Documents', '2021-04-26 18:40:57', '2021-04-26 18:40:57');
 
 -- --------------------------------------------------------
 
@@ -423,9 +612,26 @@ CREATE TABLE `category_translations` (
   `category_id` bigint(20) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `category_translations`
+--
+
+INSERT INTO `category_translations` (`id`, `category_id`, `name`, `lang`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Medicine', 'en', '2021-04-26 18:28:28', '2021-04-26 18:28:28'),
+(2, 2, 'Pharmaceuticals', 'en', '2021-04-26 18:29:20', '2021-04-26 18:29:20'),
+(3, 3, 'Drug Classes', 'en', '2021-04-26 18:30:05', '2021-04-26 18:30:05'),
+(4, 4, 'More', 'en', '2021-04-26 18:31:12', '2021-04-26 18:31:12'),
+(6, 6, 'Generics (Allopathic)', 'en', '2021-04-26 18:34:43', '2021-04-26 18:34:43'),
+(7, 7, 'Generics (Herbal)', 'en', '2021-04-26 18:35:24', '2021-04-26 18:35:24'),
+(8, 8, 'Brands', 'en', '2021-04-26 18:36:10', '2021-04-26 18:36:10'),
+(9, 9, 'Dosage Forms', 'en', '2021-04-26 18:37:07', '2021-04-26 18:37:07'),
+(10, 10, 'News', 'en', '2021-04-26 18:39:49', '2021-04-26 18:39:49'),
+(11, 11, 'Pharma Jobs', 'en', '2021-04-26 18:40:30', '2021-04-26 18:40:30'),
+(12, 12, 'Documents', 'en', '2021-04-26 18:40:48', '2021-04-26 18:40:48');
 
 -- --------------------------------------------------------
 
@@ -437,9 +643,9 @@ CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cost` double(20,2) NOT NULL DEFAULT '0.00',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `cost` double(20,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -453,8 +659,8 @@ CREATE TABLE `city_translations` (
   `city_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -467,8 +673,8 @@ CREATE TABLE `colors` (
   `id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   `code` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -633,8 +839,8 @@ CREATE TABLE `commission_histories` (
   `seller_id` int(11) NOT NULL,
   `admin_commission` double(25,2) NOT NULL,
   `seller_earning` double(25,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -648,10 +854,10 @@ CREATE TABLE `conversations` (
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `title` varchar(1000) COLLATE utf32_unicode_ci DEFAULT NULL,
-  `sender_viewed` int(1) NOT NULL DEFAULT '1',
-  `receiver_viewed` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `sender_viewed` int(1) NOT NULL DEFAULT 1,
+  `receiver_viewed` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
@@ -664,7 +870,7 @@ CREATE TABLE `countries` (
   `id` int(11) NOT NULL,
   `code` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `status` int(1) NOT NULL DEFAULT '1',
+  `status` int(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -674,252 +880,7 @@ CREATE TABLE `countries` (
 --
 
 INSERT INTO `countries` (`id`, `code`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'AF', 'Afghanistan', 1, NULL, NULL),
-(2, 'AL', 'Albania', 1, NULL, NULL),
-(3, 'DZ', 'Algeria', 1, NULL, NULL),
-(4, 'DS', 'American Samoa', 1, NULL, NULL),
-(5, 'AD', 'Andorra', 1, NULL, NULL),
-(6, 'AO', 'Angola', 1, NULL, NULL),
-(7, 'AI', 'Anguilla', 1, NULL, NULL),
-(8, 'AQ', 'Antarctica', 1, NULL, NULL),
-(9, 'AG', 'Antigua and Barbuda', 1, NULL, NULL),
-(10, 'AR', 'Argentina', 1, NULL, NULL),
-(11, 'AM', 'Armenia', 1, NULL, NULL),
-(12, 'AW', 'Aruba', 1, NULL, NULL),
-(13, 'AU', 'Australia', 1, NULL, NULL),
-(14, 'AT', 'Austria', 1, NULL, NULL),
-(15, 'AZ', 'Azerbaijan', 1, NULL, NULL),
-(16, 'BS', 'Bahamas', 1, NULL, NULL),
-(17, 'BH', 'Bahrain', 1, NULL, NULL),
-(18, 'BD', 'Bangladesh', 1, NULL, NULL),
-(19, 'BB', 'Barbados', 1, NULL, NULL),
-(20, 'BY', 'Belarus', 1, NULL, NULL),
-(21, 'BE', 'Belgium', 1, NULL, NULL),
-(22, 'BZ', 'Belize', 1, NULL, NULL),
-(23, 'BJ', 'Benin', 1, NULL, NULL),
-(24, 'BM', 'Bermuda', 1, NULL, NULL),
-(25, 'BT', 'Bhutan', 1, NULL, NULL),
-(26, 'BO', 'Bolivia', 1, NULL, NULL),
-(27, 'BA', 'Bosnia and Herzegovina', 1, NULL, NULL),
-(28, 'BW', 'Botswana', 1, NULL, NULL),
-(29, 'BV', 'Bouvet Island', 1, NULL, NULL),
-(30, 'BR', 'Brazil', 1, NULL, NULL),
-(31, 'IO', 'British Indian Ocean Territory', 1, NULL, NULL),
-(32, 'BN', 'Brunei Darussalam', 1, NULL, NULL),
-(33, 'BG', 'Bulgaria', 1, NULL, NULL),
-(34, 'BF', 'Burkina Faso', 1, NULL, NULL),
-(35, 'BI', 'Burundi', 1, NULL, NULL),
-(36, 'KH', 'Cambodia', 1, NULL, NULL),
-(37, 'CM', 'Cameroon', 1, NULL, NULL),
-(38, 'CA', 'Canada', 1, NULL, NULL),
-(39, 'CV', 'Cape Verde', 1, NULL, NULL),
-(40, 'KY', 'Cayman Islands', 1, NULL, NULL),
-(41, 'CF', 'Central African Republic', 1, NULL, NULL),
-(42, 'TD', 'Chad', 1, NULL, NULL),
-(43, 'CL', 'Chile', 1, NULL, NULL),
-(44, 'CN', 'China', 1, NULL, NULL),
-(45, 'CX', 'Christmas Island', 1, NULL, NULL),
-(46, 'CC', 'Cocos (Keeling) Islands', 1, NULL, NULL),
-(47, 'CO', 'Colombia', 1, NULL, NULL),
-(48, 'KM', 'Comoros', 1, NULL, NULL),
-(49, 'CG', 'Congo', 1, NULL, NULL),
-(50, 'CK', 'Cook Islands', 1, NULL, NULL),
-(51, 'CR', 'Costa Rica', 1, NULL, NULL),
-(52, 'HR', 'Croatia (Hrvatska)', 1, NULL, NULL),
-(53, 'CU', 'Cuba', 1, NULL, NULL),
-(54, 'CY', 'Cyprus', 1, NULL, NULL),
-(55, 'CZ', 'Czech Republic', 1, NULL, NULL),
-(56, 'DK', 'Denmark', 1, NULL, NULL),
-(57, 'DJ', 'Djibouti', 1, NULL, NULL),
-(58, 'DM', 'Dominica', 1, NULL, NULL),
-(59, 'DO', 'Dominican Republic', 1, NULL, NULL),
-(60, 'TP', 'East Timor', 1, NULL, NULL),
-(61, 'EC', 'Ecuador', 1, NULL, NULL),
-(62, 'EG', 'Egypt', 1, NULL, NULL),
-(63, 'SV', 'El Salvador', 1, NULL, NULL),
-(64, 'GQ', 'Equatorial Guinea', 1, NULL, NULL),
-(65, 'ER', 'Eritrea', 1, NULL, NULL),
-(66, 'EE', 'Estonia', 1, NULL, NULL),
-(67, 'ET', 'Ethiopia', 1, NULL, NULL),
-(68, 'FK', 'Falkland Islands (Malvinas)', 1, NULL, NULL),
-(69, 'FO', 'Faroe Islands', 1, NULL, NULL),
-(70, 'FJ', 'Fiji', 1, NULL, NULL),
-(71, 'FI', 'Finland', 1, NULL, NULL),
-(72, 'FR', 'France', 1, NULL, NULL),
-(73, 'FX', 'France, Metropolitan', 1, NULL, NULL),
-(74, 'GF', 'French Guiana', 1, NULL, NULL),
-(75, 'PF', 'French Polynesia', 1, NULL, NULL),
-(76, 'TF', 'French Southern Territories', 1, NULL, NULL),
-(77, 'GA', 'Gabon', 1, NULL, NULL),
-(78, 'GM', 'Gambia', 1, NULL, NULL),
-(79, 'GE', 'Georgia', 1, NULL, NULL),
-(80, 'DE', 'Germany', 1, NULL, NULL),
-(81, 'GH', 'Ghana', 1, NULL, NULL),
-(82, 'GI', 'Gibraltar', 1, NULL, NULL),
-(83, 'GK', 'Guernsey', 1, NULL, NULL),
-(84, 'GR', 'Greece', 1, NULL, NULL),
-(85, 'GL', 'Greenland', 1, NULL, NULL),
-(86, 'GD', 'Grenada', 1, NULL, NULL),
-(87, 'GP', 'Guadeloupe', 1, NULL, NULL),
-(88, 'GU', 'Guam', 1, NULL, NULL),
-(89, 'GT', 'Guatemala', 1, NULL, NULL),
-(90, 'GN', 'Guinea', 1, NULL, NULL),
-(91, 'GW', 'Guinea-Bissau', 1, NULL, NULL),
-(92, 'GY', 'Guyana', 1, NULL, NULL),
-(93, 'HT', 'Haiti', 1, NULL, NULL),
-(94, 'HM', 'Heard and Mc Donald Islands', 1, NULL, NULL),
-(95, 'HN', 'Honduras', 1, NULL, NULL),
-(96, 'HK', 'Hong Kong', 1, NULL, NULL),
-(97, 'HU', 'Hungary', 1, NULL, NULL),
-(98, 'IS', 'Iceland', 1, NULL, NULL),
-(99, 'IN', 'India', 1, NULL, NULL),
-(100, 'IM', 'Isle of Man', 1, NULL, NULL),
-(101, 'ID', 'Indonesia', 1, NULL, NULL),
-(102, 'IR', 'Iran (Islamic Republic of)', 1, NULL, NULL),
-(103, 'IQ', 'Iraq', 1, NULL, NULL),
-(104, 'IE', 'Ireland', 1, NULL, NULL),
-(105, 'IL', 'Israel', 1, NULL, NULL),
-(106, 'IT', 'Italy', 1, NULL, NULL),
-(107, 'CI', 'Ivory Coast', 1, NULL, NULL),
-(108, 'JE', 'Jersey', 1, NULL, NULL),
-(109, 'JM', 'Jamaica', 1, NULL, NULL),
-(110, 'JP', 'Japan', 1, NULL, NULL),
-(111, 'JO', 'Jordan', 1, NULL, NULL),
-(112, 'KZ', 'Kazakhstan', 1, NULL, NULL),
-(113, 'KE', 'Kenya', 1, NULL, NULL),
-(114, 'KI', 'Kiribati', 1, NULL, NULL),
-(115, 'KP', 'Korea, Democratic People\'s Republic of', 1, NULL, NULL),
-(116, 'KR', 'Korea, Republic of', 1, NULL, NULL),
-(117, 'XK', 'Kosovo', 1, NULL, NULL),
-(118, 'KW', 'Kuwait', 1, NULL, NULL),
-(119, 'KG', 'Kyrgyzstan', 1, NULL, NULL),
-(120, 'LA', 'Lao People\'s Democratic Republic', 1, NULL, NULL),
-(121, 'LV', 'Latvia', 1, NULL, NULL),
-(122, 'LB', 'Lebanon', 1, NULL, NULL),
-(123, 'LS', 'Lesotho', 1, NULL, NULL),
-(124, 'LR', 'Liberia', 1, NULL, NULL),
-(125, 'LY', 'Libyan Arab Jamahiriya', 1, NULL, NULL),
-(126, 'LI', 'Liechtenstein', 1, NULL, NULL),
-(127, 'LT', 'Lithuania', 1, NULL, NULL),
-(128, 'LU', 'Luxembourg', 1, NULL, NULL),
-(129, 'MO', 'Macau', 1, NULL, NULL),
-(130, 'MK', 'Macedonia', 1, NULL, NULL),
-(131, 'MG', 'Madagascar', 1, NULL, NULL),
-(132, 'MW', 'Malawi', 1, NULL, NULL),
-(133, 'MY', 'Malaysia', 1, NULL, NULL),
-(134, 'MV', 'Maldives', 1, NULL, NULL),
-(135, 'ML', 'Mali', 1, NULL, NULL),
-(136, 'MT', 'Malta', 1, NULL, NULL),
-(137, 'MH', 'Marshall Islands', 1, NULL, NULL),
-(138, 'MQ', 'Martinique', 1, NULL, NULL),
-(139, 'MR', 'Mauritania', 1, NULL, NULL),
-(140, 'MU', 'Mauritius', 1, NULL, NULL),
-(141, 'TY', 'Mayotte', 1, NULL, NULL),
-(142, 'MX', 'Mexico', 1, NULL, NULL),
-(143, 'FM', 'Micronesia, Federated States of', 1, NULL, NULL),
-(144, 'MD', 'Moldova, Republic of', 1, NULL, NULL),
-(145, 'MC', 'Monaco', 1, NULL, NULL),
-(146, 'MN', 'Mongolia', 1, NULL, NULL),
-(147, 'ME', 'Montenegro', 1, NULL, NULL),
-(148, 'MS', 'Montserrat', 1, NULL, NULL),
-(149, 'MA', 'Morocco', 1, NULL, NULL),
-(150, 'MZ', 'Mozambique', 1, NULL, NULL),
-(151, 'MM', 'Myanmar', 1, NULL, NULL),
-(152, 'NA', 'Namibia', 1, NULL, NULL),
-(153, 'NR', 'Nauru', 1, NULL, NULL),
-(154, 'NP', 'Nepal', 1, NULL, NULL),
-(155, 'NL', 'Netherlands', 1, NULL, NULL),
-(156, 'AN', 'Netherlands Antilles', 1, NULL, NULL),
-(157, 'NC', 'New Caledonia', 1, NULL, NULL),
-(158, 'NZ', 'New Zealand', 1, NULL, NULL),
-(159, 'NI', 'Nicaragua', 1, NULL, NULL),
-(160, 'NE', 'Niger', 1, NULL, NULL),
-(161, 'NG', 'Nigeria', 1, NULL, NULL),
-(162, 'NU', 'Niue', 1, NULL, NULL),
-(163, 'NF', 'Norfolk Island', 1, NULL, NULL),
-(164, 'MP', 'Northern Mariana Islands', 1, NULL, NULL),
-(165, 'NO', 'Norway', 1, NULL, NULL),
-(166, 'OM', 'Oman', 1, NULL, NULL),
-(167, 'PK', 'Pakistan', 1, NULL, NULL),
-(168, 'PW', 'Palau', 1, NULL, NULL),
-(169, 'PS', 'Palestine', 1, NULL, NULL),
-(170, 'PA', 'Panama', 1, NULL, NULL),
-(171, 'PG', 'Papua New Guinea', 1, NULL, NULL),
-(172, 'PY', 'Paraguay', 1, NULL, NULL),
-(173, 'PE', 'Peru', 1, NULL, NULL),
-(174, 'PH', 'Philippines', 1, NULL, NULL),
-(175, 'PN', 'Pitcairn', 1, NULL, NULL),
-(176, 'PL', 'Poland', 1, NULL, NULL),
-(177, 'PT', 'Portugal', 1, NULL, NULL),
-(178, 'PR', 'Puerto Rico', 1, NULL, NULL),
-(179, 'QA', 'Qatar', 1, NULL, NULL),
-(180, 'RE', 'Reunion', 1, NULL, NULL),
-(181, 'RO', 'Romania', 1, NULL, NULL),
-(182, 'RU', 'Russian Federation', 1, NULL, NULL),
-(183, 'RW', 'Rwanda', 1, NULL, NULL),
-(184, 'KN', 'Saint Kitts and Nevis', 1, NULL, NULL),
-(185, 'LC', 'Saint Lucia', 1, NULL, NULL),
-(186, 'VC', 'Saint Vincent and the Grenadines', 1, NULL, NULL),
-(187, 'WS', 'Samoa', 1, NULL, NULL),
-(188, 'SM', 'San Marino', 1, NULL, NULL),
-(189, 'ST', 'Sao Tome and Principe', 1, NULL, NULL),
-(190, 'SA', 'Saudi Arabia', 1, NULL, NULL),
-(191, 'SN', 'Senegal', 1, NULL, NULL),
-(192, 'RS', 'Serbia', 1, NULL, NULL),
-(193, 'SC', 'Seychelles', 1, NULL, NULL),
-(194, 'SL', 'Sierra Leone', 1, NULL, NULL),
-(195, 'SG', 'Singapore', 1, NULL, NULL),
-(196, 'SK', 'Slovakia', 1, NULL, NULL),
-(197, 'SI', 'Slovenia', 1, NULL, NULL),
-(198, 'SB', 'Solomon Islands', 1, NULL, NULL),
-(199, 'SO', 'Somalia', 1, NULL, NULL),
-(200, 'ZA', 'South Africa', 1, NULL, NULL),
-(201, 'GS', 'South Georgia South Sandwich Islands', 1, NULL, NULL),
-(202, 'SS', 'South Sudan', 1, NULL, NULL),
-(203, 'ES', 'Spain', 1, NULL, NULL),
-(204, 'LK', 'Sri Lanka', 1, NULL, NULL),
-(205, 'SH', 'St. Helena', 1, NULL, NULL),
-(206, 'PM', 'St. Pierre and Miquelon', 1, NULL, NULL),
-(207, 'SD', 'Sudan', 1, NULL, NULL),
-(208, 'SR', 'Suriname', 1, NULL, NULL),
-(209, 'SJ', 'Svalbard and Jan Mayen Islands', 1, NULL, NULL),
-(210, 'SZ', 'Swaziland', 1, NULL, NULL),
-(211, 'SE', 'Sweden', 1, NULL, NULL),
-(212, 'CH', 'Switzerland', 1, NULL, NULL),
-(213, 'SY', 'Syrian Arab Republic', 1, NULL, NULL),
-(214, 'TW', 'Taiwan', 1, NULL, NULL),
-(215, 'TJ', 'Tajikistan', 1, NULL, NULL),
-(216, 'TZ', 'Tanzania, United Republic of', 1, NULL, NULL),
-(217, 'TH', 'Thailand', 1, NULL, NULL),
-(218, 'TG', 'Togo', 1, NULL, NULL),
-(219, 'TK', 'Tokelau', 1, NULL, NULL),
-(220, 'TO', 'Tonga', 1, NULL, NULL),
-(221, 'TT', 'Trinidad and Tobago', 1, NULL, NULL),
-(222, 'TN', 'Tunisia', 1, NULL, NULL),
-(223, 'TR', 'Turkey', 1, NULL, NULL),
-(224, 'TM', 'Turkmenistan', 1, NULL, NULL),
-(225, 'TC', 'Turks and Caicos Islands', 1, NULL, NULL),
-(226, 'TV', 'Tuvalu', 1, NULL, NULL),
-(227, 'UG', 'Uganda', 1, NULL, NULL),
-(228, 'UA', 'Ukraine', 1, NULL, NULL),
-(229, 'AE', 'United Arab Emirates', 1, NULL, NULL),
-(230, 'GB', 'United Kingdom', 1, NULL, NULL),
-(231, 'US', 'United States', 1, NULL, NULL),
-(232, 'UM', 'United States minor outlying islands', 1, NULL, NULL),
-(233, 'UY', 'Uruguay', 1, NULL, NULL),
-(234, 'UZ', 'Uzbekistan', 1, NULL, NULL),
-(235, 'VU', 'Vanuatu', 1, NULL, NULL),
-(236, 'VA', 'Vatican City State', 1, NULL, NULL),
-(237, 'VE', 'Venezuela', 1, NULL, NULL),
-(238, 'VN', 'Vietnam', 1, NULL, NULL),
-(239, 'VG', 'Virgin Islands (British)', 1, NULL, NULL),
-(240, 'VI', 'Virgin Islands (U.S.)', 1, NULL, NULL),
-(241, 'WF', 'Wallis and Futuna Islands', 1, NULL, NULL),
-(242, 'EH', 'Western Sahara', 1, NULL, NULL),
-(243, 'YE', 'Yemen', 1, NULL, NULL),
-(244, 'ZR', 'Zaire', 1, NULL, NULL),
-(245, 'ZM', 'Zambia', 1, NULL, NULL),
-(246, 'ZW', 'Zimbabwe', 1, NULL, NULL);
+(18, 'BD', 'Bangladesh', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -936,8 +897,8 @@ CREATE TABLE `coupons` (
   `discount_type` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `start_date` int(15) NOT NULL,
   `end_date` int(15) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -950,8 +911,8 @@ CREATE TABLE `coupon_usages` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `coupon_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -965,10 +926,10 @@ CREATE TABLE `currencies` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `symbol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `exchange_rate` double(10,5) NOT NULL,
-  `status` int(10) NOT NULL DEFAULT '0',
+  `status` int(10) NOT NULL DEFAULT 0,
   `code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -976,29 +937,6 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `symbol`, `exchange_rate`, `status`, `code`, `created_at`, `updated_at`) VALUES
-(1, 'U.S. Dollar', '$', 1.00000, 1, 'USD', '2018-10-09 11:35:08', '2018-10-17 05:50:52'),
-(2, 'Australian Dollar', '$', 1.28000, 1, 'AUD', '2018-10-09 11:35:08', '2019-02-04 05:51:55'),
-(5, 'Brazilian Real', 'R$', 3.25000, 1, 'BRL', '2018-10-09 11:35:08', '2018-10-17 05:51:00'),
-(6, 'Canadian Dollar', '$', 1.27000, 1, 'CAD', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(7, 'Czech Koruna', 'Kč', 20.65000, 1, 'CZK', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(8, 'Danish Krone', 'kr', 6.05000, 1, 'DKK', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(9, 'Euro', '€', 0.85000, 1, 'EUR', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(10, 'Hong Kong Dollar', '$', 7.83000, 1, 'HKD', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(11, 'Hungarian Forint', 'Ft', 255.24000, 1, 'HUF', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(12, 'Israeli New Sheqel', '₪', 3.48000, 1, 'ILS', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(13, 'Japanese Yen', '¥', 107.12000, 1, 'JPY', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(14, 'Malaysian Ringgit', 'RM', 3.91000, 1, 'MYR', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(15, 'Mexican Peso', '$', 18.72000, 1, 'MXN', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(16, 'Norwegian Krone', 'kr', 7.83000, 1, 'NOK', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(17, 'New Zealand Dollar', '$', 1.38000, 1, 'NZD', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(18, 'Philippine Peso', '₱', 52.26000, 1, 'PHP', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(19, 'Polish Zloty', 'zł', 3.39000, 1, 'PLN', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(20, 'Pound Sterling', '£', 0.72000, 1, 'GBP', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(21, 'Russian Ruble', 'руб', 55.93000, 1, 'RUB', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(22, 'Singapore Dollar', '$', 1.32000, 1, 'SGD', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(23, 'Swedish Krona', 'kr', 8.19000, 1, 'SEK', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(24, 'Swiss Franc', 'CHF', 0.94000, 1, 'CHF', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
-(26, 'Thai Baht', '฿', 31.39000, 1, 'THB', '2018-10-09 11:35:08', '2018-10-09 11:35:08'),
 (27, 'Taka', '৳', 84.00000, 1, 'BDT', '2018-10-09 11:35:08', '2018-12-02 05:16:13'),
 (28, 'Indian Rupee', 'Rs', 68.45000, 1, 'Rupee', '2019-07-07 10:33:46', '2019-07-07 10:33:46');
 
@@ -1011,8 +949,8 @@ INSERT INTO `currencies` (`id`, `name`, `symbol`, `exchange_rate`, `status`, `co
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1020,7 +958,10 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `user_id`, `created_at`, `updated_at`) VALUES
-(4, 8, '2019-08-01 10:35:09', '2019-08-01 10:35:09');
+(4, 8, '2019-08-01 10:35:09', '2019-08-01 10:35:09'),
+(6, 13, '2021-05-11 10:09:31', '2021-05-11 10:09:31'),
+(7, 14, '2021-05-11 15:57:19', '2021-05-11 15:57:19'),
+(8, 15, '2021-05-16 08:15:56', '2021-05-16 08:15:56');
 
 -- --------------------------------------------------------
 
@@ -1053,8 +994,8 @@ CREATE TABLE `customer_package_payments` (
   `approval` int(1) NOT NULL,
   `offline_payment` int(1) NOT NULL COMMENT '1=offline payment\r\n2=online paymnet',
   `reciept` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1068,8 +1009,8 @@ CREATE TABLE `customer_package_translations` (
   `customer_package_id` bigint(20) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1081,8 +1022,8 @@ CREATE TABLE `customer_package_translations` (
 CREATE TABLE `customer_products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `published` int(1) NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL DEFAULT '0',
+  `published` int(1) NOT NULL DEFAULT 0,
+  `status` int(1) NOT NULL DEFAULT 0,
   `added_by` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
@@ -1092,20 +1033,20 @@ CREATE TABLE `customer_products` (
   `photos` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `thumbnail_img` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `conditon` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `location` text COLLATE utf8_unicode_ci,
+  `location` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `video_provider` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `video_link` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `unit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tags` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` mediumtext COLLATE utf8_unicode_ci,
-  `unit_price` double(20,2) DEFAULT '0.00',
+  `description` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `unit_price` double(20,2) DEFAULT 0.00,
   `meta_title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_description` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_img` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pdf` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `slug` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1119,10 +1060,10 @@ CREATE TABLE `customer_product_translations` (
   `customer_product_id` bigint(20) NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `unit` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1136,14 +1077,14 @@ CREATE TABLE `flash_deals` (
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `start_date` int(20) DEFAULT NULL,
   `end_date` int(20) DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
-  `featured` int(1) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT 0,
+  `featured` int(1) NOT NULL DEFAULT 0,
   `background_color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `text_color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `banner` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1156,10 +1097,10 @@ CREATE TABLE `flash_deal_products` (
   `id` int(11) NOT NULL,
   `flash_deal_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `discount` double(20,2) DEFAULT '0.00',
+  `discount` double(20,2) DEFAULT 0.00,
   `discount_type` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1173,8 +1114,8 @@ CREATE TABLE `flash_deal_translations` (
   `flash_deal_id` bigint(20) NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1202,8 +1143,8 @@ CREATE TABLE `general_settings` (
   `twitter` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `youtube` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `google_plus` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1223,9 +1164,9 @@ CREATE TABLE `home_categories` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `subsubcategories` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1239,6 +1180,112 @@ INSERT INTO `home_categories` (`id`, `category_id`, `subsubcategories`, `status`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `location_id` int(100) NOT NULL,
+  `added_by` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `digital` int(1) NOT NULL DEFAULT 0,
+  `user_id` int(11) NOT NULL,
+  `company` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `education` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `experience` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salary` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy` int(255) DEFAULT NULL,
+  `employment_status` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` int(10) NOT NULL,
+  `age` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `application_deadline` date DEFAULT NULL,
+  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `short_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banner` int(11) DEFAULT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_img` int(11) DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(191) NOT NULL DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `category_id`, `location_id`, `added_by`, `digital`, `user_id`, `company`, `education`, `experience`, `salary`, `vacancy`, `employment_status`, `address`, `address2`, `gender`, `age`, `application_deadline`, `job_title`, `slug`, `short_description`, `job_description`, `banner`, `meta_title`, `meta_img`, `meta_description`, `meta_keywords`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(46, 5, 11, '', 0, 8, 'Labaid Cancer Hospital', 'MBBS and MPH (Hospital Management), A board certification in family medicine and emergency care.', 'At least 15 year(s)', '10000', 4, 'Full Time', '', NULL, 3, '22 to 20 years', NULL, 'Medical Director', 'medical-director', 'Medical Director', '<div class=\"job_des\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Job Responsibilities</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\"><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Examining and coordinating the facility\'s activities to guarantee medical quality.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Ensuring that the medical staff and facility comply with the rules, regulations and codes.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Assisting with training, continuing education, and promotion of subordinate staff.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Managing the facility\'s budget.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Updating, amending, and replacing medical policies with the advice of the medical board.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Evaluating and managing any disfunction of medical units.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Keeping medical knowledge, experience and licenses up to date.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Monitor and guide the medical teams with guidance for operational excellence.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Assist in train and evaluate performance for medical and non-medical employees.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Coordinate with every department to ensure high quality medical services.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Coordinate with the doctors for patient care.</li></ul></div><div class=\"job_nat\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Employment Status</h4><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px 0px 0px 20px; line-height: 24px; color: rgb(92, 92, 92);\">Full-time</p></div><div class=\"edu_req\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Educational Requirements</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\"><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">MBBS and MPH (Hospital Management), A board certification in family medicine and emergency care.</li></ul></div><div class=\"edu_req\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Experience Requirements</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\"><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">At least 15 year(s)</li></ul></div><div class=\"job_req\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Additional Requirements</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\"><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Work experience of minimum 15 years in hospital industry.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Should have experience of minimum 5 years in hospital administration.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Strong communication, interpersonal, and presentation skill.</li><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">Competencies : Leadership, Teamwork, Communication, Moving Forward in Changing Environment.</li></ul></div><div class=\"job_loc \" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px; line-height: 24px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Job Location</h4><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px 0px 0px 20px; line-height: 24px; color: rgb(92, 92, 92);\">Dhaka (Dhanmondi)</p></div><div class=\"salary_range\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Salary</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\">Negotiable</ul></div><div class=\"oth_ben\" style=\"color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif, solaimanlipi; font-size: 14px;\"><h4 style=\"font-family: inherit; font-weight: bold; line-height: 1.1; color: rgb(92, 92, 92); margin: 20px 0px 6px; font-size: 14px;\">Compensation &amp; Other Benefits</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 40px; padding: 0px;\"><li style=\"color: rgb(92, 92, 92); line-height: 24px; padding-bottom: 5px;\">As per company policy</li></ul></div>', 1, NULL, NULL, NULL, NULL, 1, '2021-05-21 20:29:12', '2021-05-20 10:39:18', '2021-05-21 20:29:12'),
+(47, 10, 11, '', 0, 9, 'MS ToTo', 'BSc in CSE', 'At least 15 year(s)', 'Negotiable', 4, 'Part Time', 'sanarpar collage road', 'army villa', 2, '22 to 28 years', NULL, 'DOT Net developer Needed', 'dot-net-developer-needed', 'NET Software Developer is a software developer who specialises in building software for Microsoft\'s Windows platform. They work with programming languages compatible with Microsoft\'s . NET framework, including VB.NET, C# (C sharp) and F# (F sharp).', '<p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><em style=\"outline: none;\"><span style=\"outline: none; font-weight: 700;\">NOTE: The following information is excerpted from&nbsp;</span></em><span style=\"outline: none; font-weight: 700;\"><em style=\"outline: none;\"><a href=\"http://www.softwarespecialists.com/5-skills-every-net-developer-needs-in-2016/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"outline: none; color: rgb(96, 195, 34);\">5 Skills Every .NET Developer Needs In 2016</a>&nbsp;</em></span><em style=\"outline: none;\"><span style=\"outline: none; font-weight: 700;\">via Software Specialists.&nbsp;</span></em></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">“The most important skills for a great .NET developer include…”</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">1. Database Administration</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\">Data is rapidly becoming one of the&nbsp;<em style=\"outline: none;\">most</em>&nbsp;important aspects of development, and .NET is no exception. .NET developers should be well-versed not only in Microsoft’s own SQL databases but also emerging technology such as NoSQL.</p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">2. Mobile Development</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><img src=\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBMSExMSFBQVFxQVGBIVEhkTEhoZEhcSGhkZGBcXFxkaHywjGh0pHhcXJDYlKi0vNDMzGiI4PjgwPSwyMy8BCwsLDw4PHRISHjIgIiAyMi8yMjIyLzQyMi8yLy8yMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIAKgBLAMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAABQECAwQGBwj/xABHEAACAQIBBwYKBwcDBQEAAAABAgADEQQFBhITITFRQWFxkZLRFBYiMlJTgZOhsTM0QnKywdIVI0NUYuHic6LwBzWjs8Jj/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECBAMFBv/EADIRAAIBAgEICgIDAQEAAAAAAAABAgMRIQQSEzFRUpGhFDIzQWFxgbHR4QXBFULwwjT/2gAMAwEAAhEDEQA/APQIiJ0OYiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIibVHAu221h/V3b5ANWJJDJR5X/wBv95Y+S2G5gekW74uibM0Il9SkyecLfLrlkkgREQBERAEREAREQBERAEREAREQDBrTKa0yyIIMq1CSBM0103ibEEiIiAYncgyzWmK2+WQQX60xrTLIgF+tMa0yyVgF2tMa0y2UgF+uMa0zJh8G9TzV2cTsXr5ZvLkVuVlHQCe6LolJsjdaZejMxCgXJ2ATbq5IqDaCrdGw/Hvm3kfCFQXYWY7ACNoHL1yLoJM2MFgwgBNi3KeQcw75uxEodBMdRuSZJrsbmAUKg7DtHPIrH4Up5a+byjlH9pLSjC+w7jv6JKdiGrnNa0xrTMmMoatyvJvXoP8Az4TBLnMv1pjWmWxALtaY1xlk08oZTpUNHWMRpX0QFJOzfu6RLKLk7LEiUlFXbsb+tMy02uJz/jNhfTbsGZKedOEA89uw0voKu6+D+Dn0ilvLiifiQfjXhPTbsNHjXhPTbsNGgq7r4P4HSKW8uKJp2sLzDrTIl86cIRbTbsNGFy7h6jqiMdJvNuhAJ32vI0NRYuL4MKvTbspLiiW1pjWmWROZ1KzVyni9RSero6WgL2va5JAG3k2mbMis5/qlboX8ay8FeST72Vm7QbWxkGufBB+gHvv8Jk8fT/Lr77/CSOZKg4QbB9JU5OiT+gOA6pslCknbN5s85VqrV87kjj/H0/y6++/wjx9P8uvvv8J2GgOA6o0BwHVIzaW7zZOlq73JHFtnySb6hfff4TNh872e/wC5AA//AG5ezOu0BwHVMyoANw6pDjS3ebJVSq/7ckcl40H1Q95/jHjOfUjt/wCM6/QHAdU5vPNRq6Wz7TfKRGMG7ZpaVSqlfO5IlqL6aq/pBW6xeZJgwX0VP7qfhEzzI9ZuWoTfyZgtYdJvMH+48OiR86vDUgiqo5AOvlPXKtloq5eqgCwFgN1pfE8uztzwxlDF1aNJ1REKKo0FYm6KxJLA7bkyaVKVR2iRVrRpK8j1GJ4t4+ZR9cvuqf6ZTx8yj65fdU/0zR0KptXP4M/T6Xjy+T2qJ4r4+ZR9cvuqf6Y8fMo+uX3VP9MdCqeHP4HT6Xjy+T2aoeSY546c+8oeuX3NP9MePWUPWr7mn+mOg1Nq5/BH8hS2Pl8nsUTzLNbPDF1sXRo1HV0csrDVqpHkkggqBtuBPTZnq0pU3ZmmlWjVjeJF5aTYjdK/mPkZFyYyyfIX735GQ8iOomWsRESSCk5bPAeXQ6Kv5TqZy+d/n4foq/8AzNOSdsvX2Zjy/wD88v8Ad5BaA4DqjQHAdUuie0fMXNmhkqrUXSp0HddoutMstxv2gTJ+wsT/AC1X3LfpkjknOqthqYpItMqCxBcMWuTc7iJu+PmJ9Cj1N+qZpSr3ebFW8zfCnkjinKck+/D6OaoZOqVL6ukz6OxtCmWseBsNkrklR4TQt6R+UkskZxVsKHCKh1hu2mrHbt3WYcZHZK+s0PvH5S03PNndYWw4MpRUFUp5rbd8fDHCx3crETwz6cpIrOf6pW6F/GslZFZz/VK3Qv41nSl14+aKVepLyfsYcyPqg/1Kn5ToJz+ZH1Qf6lT8p0E2T6zPMh1UIiJUsXoJklALSsozqlYTm89Po6X3m+U6Sc3np9HS+83ylodZFZ9Vklgvoqf3U/CJnAmrhGYJRAW4KppG4GiNAWNuXbsknkdahOnqb6KOR+8XZVFtFPaDv3CY5YHorUiQwOSgLNU2neF5B08TJeR74mtZiKFyERlGtUaTk+Wl+TR47jL2r1QSBRuBURQdYovTIGlUtyaJuNHebTmzobs8Oz7/AO44n71P/wBST3GeHZ9/9xxP3qf/AKkmvIe0fl+0YvyHZrz/AEzn53uEyHRxGS6ARFGKdcRUpuFAeoadRgaZblJVtg/p5py+Tcj66hiK+tprqAp0HPlvfhw4DidknK2UTQyfkurTYaylUxL2vt899jDfYgkdBmys72UXin/y3wMVBZt3JYOPLOS4mnlDC01yThaoRRUetWV3CgVGUGpYFt5AsOqdTl+lqKqpQyVRrIURy4wzMNM6VxdVtyA+2R2e+IoPgKDUGGjUrVKugCNJGqK7OpA3WYtJbOXC4utVVsLjKdOnq0BXwor5QLXOiuzcV280zOV7N4K8td/A1xjm3UcbKOq3jtwOXzayrReslBsHh3Fat5zJdkSow8hL/ZUHZKZ34+kKlfCJhaFPQqaIqU00all5NnGR+Q6OpyhQRmXyK6KzK3keS4BIPDZvludjhsbiSCCDVaxBuCOYzSoR0uGy/ft+DK6k9C77balqt5bTLmV9fw33z+Bp7ZPE8yvr+G++fwNPaqjEKxUaRAJUXtc22C53X4zJl3aLy/bNn4/s35/pF008Tk9H3DRbiN3tEo2JrWJFC5CU2A1q7ajHy0vyaI233GXmvV0iNVs1ioDprtpkXNW3MdmjvmM26yErUmRirDaOojiJZJHH6yoik0bEa0k6xToqvm9OmNvNIY1alr6rbohrawefyp/eXRRo2JyWe9TRaiw5A/zWdO1R7n93s0lAOmNqnzm9nDlnK5+fweh/mk0ZL2q9fZmTLOxfp7o5nw5o8OaakT1c5ni6KGw2/Dmjw5pI5KyZhqlMPUraDksCusQbAdmxheboyHg/5n/y0u6VdWxbQR2IgfDmkjkCuXxNG/I35GYsk4ChUFTWVdDRICeWi6Q27fK3+yUzY+s0ukfIyJyvGS8H7FqdOMZxaXevc9KlZSVnin0BSRWc/wBUrdC/jWS0ic5/qlb7q/jWXp9ePmilXqS8n7GHMj6oP9Sp+U6CcDkDOWnhqOram7HSZrqRbbbj0ST8d6XqqnWs9CVOTbwPKjOKSxOrl6CciM9qZ2aqp2lm6udlMD6J+0spKErai8ZxvrOlic5420/Vv2ljxtp+rftLKZkth00kdp0c5vPT6Ol95vlK+NtP1b9pZFZdyyuJVFVGXRJJ0iDe4tyS0ISUlgUnOLi8TpsF9FT+6n4ROpyQtqS85YnrI/Kctgvoqf3U/CJ0mRKl6ZXlUnqO0fG8wTPVh3EnEROZ0E8Tz8w7jKGIJR7MabKdE2ZdWguDyi4I9k9sidqFbRSva5wr0NNHNvY+ctQ/oN2TGpf0W7Jn0bKGaunvd5mT+OW9y+z5z1L+g3ZMpqG9Fuoz6ILXmnkzEGpSVy6uTp+UisqmzEbA23kt7I6e93n9D+OW9y+zwTUv6DdkxqX9Fuoz6GvF46e93n9D+OW9y+zxfMnDucfhyFayszMdE2ChG2k8g3dc9ni8TLXraWV7WNdCjoY5t7iIicTuCL7Jy9p0lepoKzcAT7eSc1LRKSE5DPoXNHof5pOwnH59/wAHoqfNJqyXtV6+zMeWdi/T3RyOrPD4xqzw+MsieoePiX6s8PiI1Z4fES6nhnYXVHI4qhI6wJd4FU9U/u27owJszHqzw+Ikrm0pGJpX4j5GRdOgzX0UZrb9FSbdNpJZsfWaXSPkZWfVfk/YtTTz4+a9z0qVlJWeKe+Ja6ggggEHYQRcEcCJdKQDXTJ1C4/c0vdr3S+rgKKkWw1NuinT/ObCbxNiTnMjNWwjkwtEG/gi+ynSH5zZ/c/yS9inNiIzmTZf5I1mahuODXsU5pnD0uSh1pT75u1t8si7IzUayYamb3oqOlE29Uv8DperTsL3TNKxdiyKTYwWJNNg3JuYcR3zBEgk6ylUDAMpuDumScph8S1M3U9IPmnpEkqeWvSTsn8jKZpfORMxIr9tL6LfDvj9tL6LfDvizJuiVmOoeSR37aT0H+HfLGyuh+y3w74sxdEhNXJpbVLpazSu99cFFTzjbSC7OjmtMIysnot8O+aeS8pU1pKoS1i+xKmsXzidjsbmLMXRORI79rJ6LfDvj9rJ6LfDvizF0SMSO/ayei3w75xmcf8A1FbDYsUqVJalNFGuDEq+sO2yMLgWW28G5PJaLC6PRInJZLz/AMHiLKt0c/YqkKb8FbaG9hvzTexOOd9nmrwH5nlhK4ckjPlPFh/IU+SN54nukfKSsujm3cTj8/P4PQ/zSdfIfL+RjitCzBSmkNq3BBtw6J2yeSjUTeGv2M+UwlOk1HF4e6Z5vE6/xNb1idg98yLmSx/jJ2T3z0OkUt73+DzejVt32+SEydl6pQQU1RCAWN2vfab8hm142VfV0/8Ad3yT8R29anYbvjxIb1qdhu+V0tDaufwW0FfdfL5OdyZlmphxUCqp0zpHSvsO3dY88vzY+s0ukfIydbMhgL61Owe+bGS81zRqpVLqQpvYKbk2IG0nniValmuz1rxJhk9bOV46mtnydLKykrPLPXEpKykAvTeJsTXTeJsQSIiIBgrb5jmStvmOCCsREAREQBERAKREE22ncN8ASsh/GTC+sPYbujxlwvpnsP3Troam6+By09LeXFExNfAn92u0HztyaA3n7PJI/wAZcL6Z7D90spZw4VVC612tfayOW332nRjQ1N18Bp6W8uJNykiPGXC+sPYbujxlwvrD2H7o0NTdfAaelvLiTE5DOLMKrUd8RRqKWcl3pVPJIY79F923gbW4zq8j41K506baQBKtdSLEAE7COBHXNvL+Gq1cNWp0WVaroUUuSFAOxtoBIOjcA8l55+U1ZU5qGrbc2UYxnHO1+R4GR/zeJ33/AE+yu76eGqMWCLp0iTchQQrJfh5SkcNvNI/L+ZvgtPCKtQvia7im1PZoaWjpMyEC+ipsCTxvs3TsciZBo4RRoKDU0bPUI8tr2JA9FbgbBwE0Qkpq8dRzmrYMloiJcoJSViAUmeju9swTPR3e2AZIiIJLKu7qmvNiru6prwQViIgCUiIBem8TYmum8TYgkREQDBW3zHL62+WQQViUiAViUiAJW0o26eXjEuf4jds980UKGlvjaxmyjKVRtdXv9HqNpjreY/3W+RnmfhD+m3aPfO8ySxbCISSToNtJueUSa2TOkk73K0MrVZtWtZHnoiBBnsPWeEtRWUmpeLymcdMzxNuJZQ3e2XyyKPBnY5nY1KVFy1REJc+cwBI0V5DOwwGMFUBlIKm9iu42NjPKMNuMncjZeqYa62DpY2VjbRY7bg8L7xPnPyWTupNuOu/I+l/H1c2lFPVY7HKz0lqU2c0xUs4ps+iH0TbSCsdtt2yWKb7RtHNunC5RyjUxD6dRr2uFAFlUcAJgoV3pm6MVP9Jt18Yo0nCmovuOlSedJs9BlZF5Eyka6ENbWJbStuIO5ubcZJzoVKxKRIAmeju9swTPR3e2AZIiIJLKu7qmvNiru6prwQViUiAZtTzxqeeZYgkxrTsb3mSIgCIiAWOlze8t1PPMsQDFqeeNTzzLEAxannjU88yxAMJo7Dt4zyVdwnr53HoM8gXcJ6GQf29P2eV+S/p6/oT0XIlO+DQ3+w/zaedT0rIC3wdMDeVcD2lp0y7qLzKfje0l5fs81ESX8W8Z6k+8T9UeLeM9SfeJ+qaXVp7y4mNUKtuq+DOeYWMpMuIpsjujCzKzKw4MDYjZzzFILGxSGyXytGmxUECZqeHdmCqt2YgKL7ydgEnSQWDa4lXRqPHNfBmTDbjMssSkyEqwswJBF9xGw7ucS+eVXadSTR7WTpqlFPYJUKSC3ILA+29vkZSbeHq0xRrIxOm5pavZs8kktc8mwzkdyRzTP7519KmesMveZ1+p55w+bdTRxNPn0161P52neyrLIxannjU88yxIJMWp55eq2l0QBERAKOtxaY9TzzLEAxannjVc8yxAEREAREQBERAEREAQTaJqZUwxq0KtNbaVSnURdLzbspAvzbYBsa1fSXtCNavpL2hPKMpZvVMO4puaZJUN5BJFiSOVRwM1P2c39PX/AGk5pXOPYTVSx8pdx+0J5Ep2CYv2c/BeuPAX4DrmmhW0V8L3MuU5PprY2t67DNeek5uVFGEo+Uvmn7Q9Izy/wJ+EocE3D4f2k16+lja1iuT5NoZN3vfwsey61fSXtCQ+JzqwlN2pmoSVJVtFGIuNhANts8x8DbgOo90r4K3/AC/dM8VHvx/3kzU3Luw5/tGfKddalatUXzXqVHW4sdFmJGzoM1Zd4M3NHg55prWVWVrc/oxPI7u7ly+yTyfVpaIFSpoAb7IWO/kAsPjOryU+Cp6NRTUdvss43chsuy04Dwc80eDHmmebUne1vX6NcE4qzd7eH2zvsJVwyvUaoivp1ajeWmkVp7SoXbsYs1yeAmfFNk9qbhKZD6LaBFxZ9uj9rjaedeDHmjwY80zOinLOu+LOyqNK1lwOip4N22Ar2pnpZLdiAXpryXLH8hOW8GPNHgx5p2OZ6PknISUqi1HqoxW+iF2DSta5JO3fOg1q+kvaE8Y8GP8ATLqWCLMqjRuxVRfdcmw5JFi1z2dXB3EHoN5WQGaeRamDSolQoS7Kw1ZJFgLbbgSflSRERBIiIgCIiAIiIAiIgCIiAIiIAiIgCIiAcZnf9Ov+mv4nkFES61FGIiIAiIgCIiAItEQCmiOA6pTQHAdURAGrXgOqU1S8BEQCmpXhGpXh8YiAU1C8/XMuDoDWU9/n0/xCViAenmIiULiIiAIiIAiIgCIiAf/Z\" style=\"width: 300px;\"><span style=\"outline: none; font-weight: 700;\"><br></span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\">Developers who truly want to prepare for the future will develop their mobile application skills, including developing .NET applications for Windows Phone operating systems.</p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">3. ASP.Net&nbsp;MVC</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\">.NET developers who are looking to improve their frameworks and development speed may want to exp lore&nbsp;<a href=\"https://stackify.com/asp-net-razor-pages-vs-mvc/\" style=\"outline: none; color: rgb(96, 195, 34);\">ASP.Net MVC</a>, its advantages, and its disadvantages; even if you ultimately decide to use a different framework, the&nbsp;<em style=\"outline: none;\">knowledge</em>&nbsp;is still incredibly important.</p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">4. Web Development</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\">A .NET developer who knows HTML, CSS, and JavaScript can build&nbsp;<em style=\"outline: none;\">both</em>&nbsp;sides of an application, making them a versatile and useful member of any team. Client-side web knowledge will also help a developer tie in their application back-ends more effectively.</p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><span style=\"outline: none; font-weight: 700;\">5. Microsoft Certification</span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\"><iframe frameborder=\"0\" src=\"//www.youtube.com/embed/-U4bmHHNj_k\" width=\"640\" height=\"360\" class=\"note-video-clip\"></iframe><span style=\"outline: none; font-weight: 700;\"><br></span></p><p style=\"outline: none; margin-right: 0px; margin-bottom: 1em; margin-left: 0px; text-rendering: optimizelegibility; font-size: 21.328px; font-family: ForoSans-Light, sans-serif !important;\">When considering two similar candidates, hiring managers will almost always select the candidate that has advanced certifications. For a .NET developer, a Microsoft Certified Solutions Developer or a Microsoft Most Valuable Professional certification will open quite a lot of doors, especially if the developer doesn’t have formal education or training.</p>', 8, 'dot net', 8, 'NOTE: The following information is excerpted from 5 Skills Every .NET Developer Needs In 2016 via Software Specialists. \r\n\r\n“The most important skills for a great .NET developer include…”\r\n\r\n1. Database Administration\r\n\r\nData is rapidly becoming one of the most important aspects of development, and .NET is no exception. .NET developers should be well-versed not only in Microsoft’s own SQL databases but also emerging technology such as NoSQL.\r\n\r\n2. Mobile Development\r\n\r\nDevelopers who truly want to prepare for the future will develop their mobile application skills, including developing .NET applications for Windows Phone operating systems.\r\n\r\n3. ASP.Net MVC\r\n\r\n.NET developers who are looking to improve their frameworks and development speed may want to exp lore ASP.Net MVC, its advantages, and its disadvantages; even if you ultimately decide to use a different framework, the knowledge is still incredibly important.\r\n\r\n4. Web Development\r\n\r\nA .NET developer who knows HTML, CSS, and JavaScript can build both sides of an application, making them a versatile and useful member of any team. Client-side web knowledge will also help a developer tie in their application back-ends more effectively.\r\n\r\n5. Microsoft Certification\r\n\r\nWhen considering two similar candidates, hiring managers will almost always select the candidate that has advanced certifications. For a .NET developer, a Microsoft Certified Solutions Developer or a Microsoft Most Valuable Professional certification will open quite a lot of doors, especially if the developer doesn’t have formal education or training.', 'dot net', 1, NULL, '2021-05-20 20:51:03', '2021-05-21 19:06:57'),
+(48, 5, 7, NULL, 0, 3, 'Md. Nurul Haque', 'BS in CSE', '2 years', '1,00000', 5, 'Full Time', 'malekpur', 'swgaresg', 3, '22 to 20 years', NULL, 'wow its working', 'wow-its-woaerrking', 'aergaergaergrgaergeaerg', '<p>aergaergaerg</p>', NULL, NULL, NULL, NULL, NULL, 1, '2021-05-21 21:04:18', '2021-05-20 21:52:42', '2021-05-21 21:04:18'),
+(49, 8, 8, NULL, 0, 8, 'selise', 'BS in CSE', '2 years', 'Negotiable', 5, 'Part Time', 'Jerusalem', 'ssssss', 3, '22 to 20 years', NULL, 'NET is a Microsoft framework', 'net-is-a-microsoft-framework', 'sssss', '<p>sssss</p>', 10, NULL, 10, NULL, NULL, 1, NULL, '2021-05-21 20:23:00', '2021-05-21 20:39:44'),
+(50, 5, 7, NULL, 0, 13, 'MS ToTo', 'BS in CSE', '2 years', 'Negotiable', 5, 'Full Time', 'sanarpar collage road', 'sssss', 3, '22 to 20 years', NULL, 'new data', 'new-data', 'ssssss', '<p>sssssss</p>', NULL, NULL, NULL, NULL, NULL, 1, '2021-05-21 20:28:48', '2021-05-21 20:25:44', '2021-05-21 20:28:48'),
+(51, 7, 8, NULL, 0, 9, 'emed', 'MBBS and MPH (Hospital Management), A board certification in family medicine and emergency care.', '2 years', 'Negotiable', 5, 'Part Time', 'sssss', 'ssssss', 3, '22 to 28 years', NULL, 'Website Developer', 'website-developer', 'sssssss', '<p>sssssss</p>', 10, 'sssss', NULL, 'ssssss', 'ssssss', 1, NULL, '2021-05-21 20:46:25', '2021-05-21 21:04:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_categories`
+--
+
+CREATE TABLE `job_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_name` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `job_categories`
+--
+
+INSERT INTO `job_categories` (`id`, `category_name`, `slug`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(4, 'pharmasist', 'pharmasist', '2021-05-12 05:06:46', '2021-05-11 16:00:09', '2021-05-12 05:06:46'),
+(5, 'medical', 'medical', NULL, '2021-05-11 16:49:42', '2021-05-11 16:49:42'),
+(7, 'pharmasist', 'pharmasist', NULL, '2021-05-12 04:52:52', '2021-05-14 12:59:48'),
+(8, 'Software', 'Software', NULL, '2021-05-14 14:36:03', '2021-05-14 14:36:03'),
+(9, 'python', 'python', NULL, '2021-05-16 11:54:35', '2021-05-16 11:54:35'),
+(10, 'DOT NET', 'DOT-NET', NULL, '2021-05-20 20:38:44', '2021-05-21 21:03:29'),
+(11, 'Flutter', 'Flutter', NULL, '2021-05-21 21:01:18', '2021-05-21 21:01:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_locations`
+--
+
+CREATE TABLE `job_locations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `job_locations`
+--
+
+INSERT INTO `job_locations` (`id`, `location`, `slug`, `created_at`, `updated_at`) VALUES
+(4, 'Dhaka', 'Dhaka', '2021-05-17 16:52:38', '2021-05-17 16:52:38'),
+(5, 'Chittagong', 'Chittagong', '2021-05-17 16:52:49', '2021-05-17 16:52:49'),
+(7, 'Rajshahi', 'Rajshahi', '2021-05-18 08:56:08', '2021-05-18 08:56:08'),
+(8, 'Barishal', 'Barishal', '2021-05-18 08:57:27', '2021-05-18 08:57:27'),
+(9, 'Khulna', 'Khulna', '2021-05-18 08:59:39', '2021-05-18 08:59:39'),
+(10, 'Rangpur', 'Rangpur', '2021-05-18 09:00:52', '2021-05-18 09:00:52'),
+(11, 'Sylhet', 'Sylhet', '2021-05-20 18:26:13', '2021-05-20 18:26:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `languages`
 --
 
@@ -1246,9 +1293,9 @@ CREATE TABLE `languages` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `rtl` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `rtl` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1257,8 +1304,7 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` (`id`, `name`, `code`, `rtl`, `created_at`, `updated_at`) VALUES
 (1, 'English', 'en', 0, '2019-01-20 12:13:20', '2019-01-20 12:13:20'),
-(3, 'Bangla', 'bd', 0, '2019-02-17 06:35:37', '2019-02-18 06:49:51'),
-(4, 'Arabic', 'sa', 1, '2019-04-28 18:34:12', '2019-04-28 18:34:12');
+(3, 'Bangla', 'bd', 0, '2019-02-17 06:35:37', '2019-02-18 06:49:51');
 
 -- --------------------------------------------------------
 
@@ -1270,7 +1316,7 @@ CREATE TABLE `links` (
   `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1284,9 +1330,9 @@ CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
   `conversation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `message` text COLLATE utf32_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `message` text COLLATE utf32_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1307,7 +1353,10 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1);
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2021_05_09_000101_create_jobs_table', 2),
+(4, '2021_05_11_151214_create_job_categories_table', 3),
+(5, '2021_05_17_202755_create_job_locations_table', 4);
 
 -- --------------------------------------------------------
 
@@ -1320,7 +1369,7 @@ CREATE TABLE `oauth_access_tokens` (
   `user_id` int(11) DEFAULT NULL,
   `client_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1361,7 +1410,7 @@ CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
   `client_id` int(10) UNSIGNED NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1437,21 +1486,21 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `guest_id` int(11) DEFAULT NULL,
   `seller_id` int(11) DEFAULT NULL,
-  `shipping_address` longtext COLLATE utf8_unicode_ci,
+  `shipping_address` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `delivery_status` varchar(20) COLLATE utf8_unicode_ci DEFAULT 'pending',
   `payment_type` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_status` varchar(20) COLLATE utf8_unicode_ci DEFAULT 'unpaid',
-  `payment_details` longtext COLLATE utf8_unicode_ci,
+  `payment_details` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `grand_total` double(20,2) DEFAULT NULL,
-  `coupon_discount` double(20,2) NOT NULL DEFAULT '0.00',
-  `code` mediumtext COLLATE utf8_unicode_ci,
+  `coupon_discount` double(20,2) NOT NULL DEFAULT 0.00,
+  `code` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `date` int(20) NOT NULL,
-  `viewed` int(1) NOT NULL DEFAULT '0',
-  `delivery_viewed` int(1) NOT NULL DEFAULT '1',
-  `payment_status_viewed` int(1) DEFAULT '1',
-  `commission_calculated` int(11) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `viewed` int(1) NOT NULL DEFAULT 0,
+  `delivery_viewed` int(1) NOT NULL DEFAULT 1,
+  `payment_status_viewed` int(1) DEFAULT 1,
+  `commission_calculated` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1465,19 +1514,47 @@ CREATE TABLE `order_details` (
   `order_id` int(11) NOT NULL,
   `seller_id` int(11) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
-  `variation` longtext COLLATE utf8_unicode_ci,
+  `variation` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` double(20,2) DEFAULT NULL,
-  `tax` double(20,2) NOT NULL DEFAULT '0.00',
-  `shipping_cost` double(20,2) NOT NULL DEFAULT '0.00',
+  `tax` double(20,2) NOT NULL DEFAULT 0.00,
+  `shipping_cost` double(20,2) NOT NULL DEFAULT 0.00,
   `quantity` int(11) DEFAULT NULL,
   `payment_status` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'unpaid',
   `delivery_status` varchar(20) COLLATE utf8_unicode_ci DEFAULT 'pending',
   `shipping_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pickup_point_id` int(11) DEFAULT NULL,
   `product_referral_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otp_configurations`
+--
+
+CREATE TABLE `otp_configurations` (
+  `id` int(11) NOT NULL,
+  `type` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `otp_configurations`
+--
+
+INSERT INTO `otp_configurations` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'nexmo', '0', '2020-03-22 09:19:07', '2021-05-11 16:11:47'),
+(2, 'otp_for_order', '1', '2020-03-22 09:19:07', '2020-03-22 09:19:07'),
+(3, 'otp_for_delivery_status', '1', '2020-03-22 09:19:37', '2020-03-22 09:19:37'),
+(4, 'otp_for_paid_status', '0', '2020-03-22 09:19:37', '2020-03-22 09:19:37'),
+(5, 'twillo', '1', '2020-03-22 09:54:03', '2021-05-11 16:11:46'),
+(6, 'ssl_wireless', '0', '2020-03-22 09:54:03', '2020-03-22 03:54:20'),
+(7, 'fast2sms', '0', '2020-03-22 09:54:03', '2020-03-22 03:54:20'),
+(8, 'mimo', '0', '2020-12-27 09:54:03', '2020-12-28 03:54:20');
 
 -- --------------------------------------------------------
 
@@ -1490,13 +1567,13 @@ CREATE TABLE `pages` (
   `type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
-  `meta_title` text COLLATE utf8_unicode_ci,
+  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_description` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `keywords` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1509,7 +1586,8 @@ INSERT INTO `pages` (`id`, `type`, `title`, `slug`, `content`, `meta_title`, `me
 (3, 'return_policy_page', 'Return Policy Page', 'returnpolicy', NULL, NULL, NULL, NULL, NULL, '2020-11-04 10:14:41', '2020-11-04 10:14:41'),
 (4, 'support_policy_page', 'Support Policy Page', 'supportpolicy', NULL, NULL, NULL, NULL, NULL, '2020-11-04 10:14:59', '2020-11-04 10:14:59'),
 (5, 'terms_conditions_page', 'Term Conditions Page', 'terms', NULL, NULL, NULL, NULL, NULL, '2020-11-04 10:15:29', '2020-11-04 10:15:29'),
-(6, 'privacy_policy_page', 'Privacy Policy Page', 'privacypolicy', NULL, NULL, NULL, NULL, NULL, '2020-11-04 10:15:55', '2020-11-04 10:15:55');
+(6, 'privacy_policy_page', 'Privacy Policy Page', 'privacypolicy', NULL, NULL, NULL, NULL, NULL, '2020-11-04 10:15:55', '2020-11-04 10:15:55'),
+(7, 'custom_page', 'Contact Us', 'contact', '<p>demo!</p>', 'Contact', 'Contact', 'Contact', NULL, '2021-04-26 19:34:50', '2021-04-26 19:34:50');
 
 -- --------------------------------------------------------
 
@@ -1523,9 +1601,16 @@ CREATE TABLE `page_translations` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `page_translations`
+--
+
+INSERT INTO `page_translations` (`id`, `page_id`, `title`, `content`, `lang`, `created_at`, `updated_at`) VALUES
+(1, 7, 'Contact Us', '<p>demo!</p>', 'en', '2021-04-26 19:34:50', '2021-04-26 19:34:50');
 
 -- --------------------------------------------------------
 
@@ -1548,12 +1633,12 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `payments` (
   `id` int(11) NOT NULL,
   `seller_id` int(11) NOT NULL,
-  `amount` double(20,2) NOT NULL DEFAULT '0.00',
-  `payment_details` longtext COLLATE utf8_unicode_ci,
+  `amount` double(20,2) NOT NULL DEFAULT 0.00,
+  `payment_details` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `txn_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1570,8 +1655,8 @@ CREATE TABLE `pickup_points` (
   `phone` varchar(15) NOT NULL,
   `pick_up_status` int(1) DEFAULT NULL,
   `cash_on_pickup_status` int(1) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1586,8 +1671,8 @@ CREATE TABLE `pickup_point_translations` (
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1599,9 +1684,9 @@ CREATE TABLE `pickup_point_translations` (
 CREATE TABLE `policies` (
   `id` int(11) NOT NULL,
   `name` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1627,52 +1712,61 @@ CREATE TABLE `products` (
   `added_by` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'admin',
   `user_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
+  `subcategory_id` int(11) DEFAULT NULL,
+  `subsubcategory_id` int(11) DEFAULT NULL,
   `brand_id` int(11) DEFAULT NULL,
   `photos` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `thumbnail_img` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `video_provider` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `video_link` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tags` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `unit_price` double(20,2) NOT NULL,
-  `purchase_price` double(20,2) DEFAULT NULL,
-  `variant_product` int(1) NOT NULL DEFAULT '0',
+  `purchase_price` double(20,2) NOT NULL,
+  `variant_product` int(1) NOT NULL DEFAULT 0,
   `attributes` varchar(1000) COLLATE utf8_unicode_ci NOT NULL DEFAULT '[]',
-  `choice_options` mediumtext COLLATE utf8_unicode_ci,
-  `colors` mediumtext COLLATE utf8_unicode_ci,
-  `variations` text COLLATE utf8_unicode_ci,
-  `todays_deal` int(11) NOT NULL DEFAULT '0',
-  `published` int(11) NOT NULL DEFAULT '1',
+  `choice_options` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `colors` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `variations` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `todays_deal` int(11) NOT NULL DEFAULT 0,
+  `published` int(11) NOT NULL DEFAULT 1,
   `stock_visibility_state` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'quantity',
-  `cash_on_delivery` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 = On, 0 = Off',
-  `featured` int(11) NOT NULL DEFAULT '0',
-  `seller_featured` int(11) NOT NULL DEFAULT '0',
-  `current_stock` int(10) NOT NULL DEFAULT '0',
+  `cash_on_delivery` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 = On, 0 = Off',
+  `featured` int(11) NOT NULL DEFAULT 0,
+  `seller_featured` int(11) NOT NULL DEFAULT 0,
+  `current_stock` int(10) NOT NULL DEFAULT 0,
   `unit` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `min_qty` int(11) NOT NULL DEFAULT '1',
+  `min_qty` int(11) NOT NULL DEFAULT 1,
   `low_stock_quantity` int(11) DEFAULT NULL,
   `discount` double(20,2) DEFAULT NULL,
   `discount_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tax` double(20,2) DEFAULT NULL,
   `tax_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `shipping_type` varchar(20) CHARACTER SET latin1 DEFAULT 'flat_rate',
-  `shipping_cost` text COLLATE utf8_unicode_ci,
-  `is_quantity_multiplied` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = Mutiplied with shipping cost',
+  `shipping_cost` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_quantity_multiplied` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1 = Mutiplied with shipping cost',
   `est_shipping_days` int(11) DEFAULT NULL,
-  `num_of_sale` int(11) NOT NULL DEFAULT '0',
-  `meta_title` mediumtext COLLATE utf8_unicode_ci,
-  `meta_description` longtext COLLATE utf8_unicode_ci,
+  `num_of_sale` int(11) NOT NULL DEFAULT 0,
+  `meta_title` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pdf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `slug` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `rating` double(8,2) NOT NULL DEFAULT '0.00',
+  `rating` double(8,2) NOT NULL DEFAULT 0.00,
   `barcode` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `digital` int(1) NOT NULL DEFAULT '0',
+  `digital` int(1) NOT NULL DEFAULT 0,
   `file_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `file_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `added_by`, `user_id`, `category_id`, `subcategory_id`, `subsubcategory_id`, `brand_id`, `photos`, `thumbnail_img`, `video_provider`, `video_link`, `tags`, `description`, `unit_price`, `purchase_price`, `variant_product`, `attributes`, `choice_options`, `colors`, `variations`, `todays_deal`, `published`, `stock_visibility_state`, `cash_on_delivery`, `featured`, `seller_featured`, `current_stock`, `unit`, `min_qty`, `low_stock_quantity`, `discount`, `discount_type`, `tax`, `tax_type`, `shipping_type`, `shipping_cost`, `is_quantity_multiplied`, `est_shipping_days`, `num_of_sale`, `meta_title`, `meta_description`, `meta_img`, `pdf`, `slug`, `rating`, `barcode`, `digital`, `file_name`, `file_path`, `created_at`, `updated_at`) VALUES
+(1, 'napa', 'seller', 3, 1, NULL, NULL, 1, '5', NULL, 'youtube', NULL, 'napa', '<p>asedrghaderhaerhaswrehasas</p>', 10.00, 9.88, 0, '[]', '[]', '[]', NULL, 1, 1, 'quantity', 1, 1, 1, 10, '500mg', 1, 1, 1.20, 'amount', NULL, NULL, 'free', '0', 0, 1, 0, 'napa', 'napa', NULL, NULL, 'napa-hEo7Q', 0.00, NULL, 0, NULL, NULL, '2021-05-15 19:27:01', '2021-05-21 19:19:57');
 
 -- --------------------------------------------------------
 
@@ -1683,14 +1777,21 @@ CREATE TABLE `products` (
 CREATE TABLE `product_stocks` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `variant` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `variant` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sku` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `price` double(20,2) NOT NULL DEFAULT '0.00',
-  `qty` int(11) NOT NULL DEFAULT '0',
+  `price` double(20,2) NOT NULL DEFAULT 0.00,
+  `qty` int(11) NOT NULL DEFAULT 0,
   `image` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_stocks`
+--
+
+INSERT INTO `product_stocks` (`id`, `product_id`, `variant`, `sku`, `price`, `qty`, `image`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, NULL, 10.00, 10, NULL, '2021-05-15 19:27:01', '2021-05-15 19:27:01');
 
 -- --------------------------------------------------------
 
@@ -1704,9 +1805,16 @@ CREATE TABLE `product_taxes` (
   `tax_id` int(11) NOT NULL,
   `tax` double(20,2) NOT NULL,
   `tax_type` varchar(10) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `product_taxes`
+--
+
+INSERT INTO `product_taxes` (`id`, `product_id`, `tax_id`, `tax`, `tax_type`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 0.00, 'amount', '2021-05-15 19:27:01', '2021-05-15 19:27:01');
 
 -- --------------------------------------------------------
 
@@ -1719,11 +1827,18 @@ CREATE TABLE `product_translations` (
   `product_id` bigint(20) NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `unit` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_translations`
+--
+
+INSERT INTO `product_translations` (`id`, `product_id`, `name`, `unit`, `description`, `lang`, `created_at`, `updated_at`) VALUES
+(1, 1, 'napa', '500mg', '<p>asedrghaderhaerhaswrehasas</p>', 'en', '2021-05-15 19:27:01', '2021-05-15 19:27:01');
 
 -- --------------------------------------------------------
 
@@ -1735,12 +1850,12 @@ CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `rating` int(11) NOT NULL DEFAULT '0',
+  `rating` int(11) NOT NULL DEFAULT 0,
   `comment` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
-  `viewed` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(1) NOT NULL DEFAULT 1,
+  `viewed` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1753,8 +1868,8 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `permissions` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1776,8 +1891,105 @@ CREATE TABLE `role_translations` (
   `role_id` bigint(20) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sb_conversations`
+--
+
+CREATE TABLE `sb_conversations` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creation_time` datetime NOT NULL,
+  `status_code` tinyint(4) DEFAULT 0,
+  `department` tinyint(4) DEFAULT NULL,
+  `agent_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sb_messages`
+--
+
+CREATE TABLE `sb_messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `message` text COLLATE utf8mb4_bin NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `status_code` tinyint(4) DEFAULT 0,
+  `attachments` text COLLATE utf8mb4_bin DEFAULT NULL,
+  `payload` text COLLATE utf8mb4_bin DEFAULT NULL,
+  `conversation_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sb_settings`
+--
+
+CREATE TABLE `sb_settings` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `sb_settings`
+--
+
+INSERT INTO `sb_settings` (`name`, `value`) VALUES
+('cron', '23'),
+('emails', '{\"email-subscribe\":[{\"email-subscribe-subject\":[\"\",\"text\"],\"email-subscribe-content\":[\"\",\"textarea\"]},\"multi-input\"],\"email-user\":[{\"email-user-subject\":[\"\",\"text\"],\"email-user-content\":[\"\",\"textarea\"]},\"multi-input\"],\"email-agent\":[{\"email-agent-subject\":[\"\",\"text\"],\"email-agent-content\":[\"\",\"textarea\"]},\"multi-input\"]}'),
+('rich-messages', '{\"rich-messages\":[\"repeater\"]}'),
+('settings', '{\"chat-manual-init\":[false,\"checkbox\"],\"chat-login-init\":[false,\"checkbox\"],\"init-dashboard\":[false,\"checkbox\"],\"disable-dashboard\":[false,\"checkbox\"],\"chat-timetable-disable\":[false,\"checkbox\"],\"chat-offline-disable\":[false,\"checkbox\"],\"front-auto-translations\":[false,\"checkbox\"],\"auto-open\":[false,\"checkbox\"],\"disable-uploads\":[false,\"checkbox\"],\"articles-active\":[false,\"checkbox\"],\"articles-title\":[\"\",\"text\"],\"chat-timetable\":[{\"chat-timetable-active\":[false,\"checkbox\"],\"chat-timetable-hide\":[false,\"checkbox\"],\"chat-timetable-title\":[\"\",\"text\"],\"chat-timetable-msg\":[\"\",\"textarea\"]},\"multi-input\"],\"privacy\":[{\"privacy-active\":[false,\"checkbox\"],\"privacy-title\":[\"\",\"text\"],\"privacy-msg\":[\"\",\"textarea\"],\"privacy-msg-decline\":[\"\",\"textarea\"],\"privacy-link\":[\"\",\"text\"],\"privacy-link-text\":[\"\",\"text\"],\"privacy-btn-approve\":[\"\",\"text\"],\"privacy-btn-decline\":[\"\",\"text\"]},\"multi-input\"],\"popup-message\":[{\"popup-active\":[false,\"checkbox\"],\"popup-mobile-hidden\":[false,\"checkbox\"],\"popup-image\":[\"\",\"upload-image\"],\"popup-title\":[\"\",\"text\"],\"popup-msg\":[\"\",\"textarea\"]},\"multi-input\"],\"welcome-message\":[{\"welcome-active\":[false,\"checkbox\"],\"welcome-open\":[false,\"checkbox\"],\"welcome-sound\":[false,\"checkbox\"],\"welcome-trigger\":[\"load\",\"select\"],\"welcome-delay\":[\"\",\"number\"],\"welcome-msg\":[\"\",\"textarea\"]},\"multi-input\"],\"follow-message\":[{\"follow-active\":[false,\"checkbox\"],\"follow-name\":[false,\"checkbox\"],\"follow-last-name\":[false,\"checkbox\"],\"follow-title\":[\"\",\"text\"],\"follow-delay\":[\"\",\"number\"],\"follow-msg\":[\"\",\"textarea\"],\"follow-success\":[\"\",\"textarea\"],\"follow-placeholder\":[\"\",\"text\"]},\"multi-input\"],\"close-message\":[{\"close-active\":[false,\"checkbox\"],\"close-msg\":[\"\",\"textarea\"]},\"multi-input\"],\"subscribe-message\":[{\"subscribe-active\":[false,\"checkbox\"],\"subscribe-sound\":[false,\"checkbox\"],\"subscribe-delay\":[\"\",\"number\"],\"subscribe-title\":[\"\",\"text\"],\"subscribe-msg\":[\"\",\"textarea\"],\"subscribe-msg-success\":[\"\",\"textarea\"]},\"multi-input\"],\"admin-title\":[\"yes\",\"text\"],\"login-icon\":[\"\",\"upload-image\"],\"login-message\":[\"hi\",\"text\"],\"collapse\":[false,\"checkbox\"],\"admin-auto-translations\":[false,\"checkbox\"],\"admin-auto-archive\":[false,\"checkbox\"],\"admin-agents-users-area\":[true,\"checkbox\"],\"chat-sound\":[\"n\",\"select\"],\"chat-sound-admin\":[\"n\",\"select\"],\"notify-agent-email\":[false,\"checkbox\"],\"notify-user-email\":[false,\"checkbox\"],\"desktop-notifications\":[\"\",\"select\"],\"flash-notifications\":[\"\",\"select\"],\"push-notifications\":[{\"push-notifications-active\":[false,\"checkbox\"],\"push-notifications-id\":[\"\",\"text\"],\"push-notifications-key\":[\"\",\"password\"]},\"multi-input\"],\"email-server\":[{\"email-server-host\":[\"\",\"text\"],\"email-server-user\":[\"\",\"text\"],\"email-server-password\":[\"\",\"password\"],\"email-server-port\":[\"\",\"number\"],\"email-server-from\":[\"\",\"text\"],\"email-sender-name\":[\"\",\"text\"]},\"multi-input\"],\"notifications-icon\":[\"\",\"upload-image\"],\"visitors-registration\":[false,\"checkbox\"],\"registration-required\":[\"\",\"select\"],\"registration-timetable\":[false,\"checkbox\"],\"registration-offline\":[false,\"checkbox\"],\"registration-link\":[\"\",\"text\"],\"registration\":[{\"registration-title\":[\"\",\"text\"],\"registration-msg\":[\"\",\"textarea\"],\"registration-success\":[\"\",\"textarea\"],\"registration-btn-text\":[\"\",\"text\"],\"registration-terms-link\":[\"\",\"text\"],\"registration-privacy-link\":[\"\",\"text\"]},\"multi-input\"],\"login\":[{\"login-title\":[\"\",\"text\"],\"login-msg\":[\"\",\"textarea\"]},\"multi-input\"],\"registration-fields\":[{\"reg-phone\":[false,\"checkbox\"],\"reg-city\":[false,\"checkbox\"],\"reg-country\":[false,\"checkbox\"],\"reg-language\":[false,\"checkbox\"],\"reg-birthday\":[false,\"checkbox\"],\"reg-company\":[false,\"checkbox\"],\"reg-facebook\":[false,\"checkbox\"],\"reg-twitter\":[false,\"checkbox\"],\"reg-linkedin\":[false,\"checkbox\"],\"reg-website\":[false,\"checkbox\"]},\"multi-input\"],\"registration-profile-img\":[false,\"checkbox\"],\"registration-last-name\":[false,\"checkbox\"],\"registration-password\":[false,\"checkbox\"],\"user-additional-fields\":[\"repeater\"],\"registration-extra\":[false,\"checkbox\"],\"visitor-prefix\":[\"\",\"text\"],\"visitor-default-name\":[\"\",\"text\"],\"visitor-autodata\":[false,\"checkbox\"],\"duplicate-emails\":[false,\"checkbox\"],\"bot-name\":[\"\",\"text\"],\"bot-image\":[\"\",\"upload-image\"],\"color-1\":[\"\",\"color\"],\"color-2\":[\"\",\"color\"],\"color-3\":[\"\",\"color\"],\"chat-position\":[\"right\",\"select\"],\"rtl\":[false,\"checkbox\"],\"display-users-thumb\":[false,\"checkbox\"],\"hide-agents-thumb\":[false,\"checkbox\"],\"header-headline\":[\"\",\"text\"],\"header-msg\":[\"\",\"text\"],\"header-type\":[\"agents\",\"select\"],\"header-name\":[false,\"checkbox\"],\"brand-img\":[\"\",\"upload-image\"],\"header-img\":[\"\",\"upload-image\"],\"chat-icon\":[\"http:\\/\\/localhost\\/ecom\\/support\\/uploads\\/26-04-21\\/logo.png\",\"upload-image\"],\"envato-purchase-code\":[\"nulled\",\"text\"],\"webhooks\":[{\"webhooks-active\":[false,\"checkbox\"],\"webhooks-url\":[\"\",\"text\"],\"webhooks-key\":[\"\",\"password\"]},\"multi-input\"],\"auto-updates\":[false,\"checkbox\"],\"timetable\":[{\"monday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"tuesday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"wednesday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"thursday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"friday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"saturday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]],\"sunday\":[[\"\",\"\"],[\"\",\"\"],[\"\",\"\"],[\"\",\"\"]]},\"timetable\"],\"timetable-utc\":[\"\",\"number\"],\"departments\":[\"repeater\"],\"departments-settings\":[{\"departments-dashboard\":[true,\"checkbox\"],\"departments-images\":[true,\"checkbox\"],\"departments-label\":[\"\",\"text\"],\"departments-single-label\":[\"\",\"text\"],\"departments-title\":[\"\",\"text\"]},\"multi-input\"],\"queue\":[{\"queue-active\":[true,\"checkbox\"],\"queue-concurrent-chats\":[\"\",\"number\"],\"queue-response-time\":[\"\",\"number\"],\"queue-message\":[\"\",\"textarea\"],\"queue-message-success\":[\"\",\"textarea\"]},\"multi-input\"],\"routing\":[true,\"checkbox\"],\"saved-replies\":[\"repeater\"]}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sb_users`
+--
+
+CREATE TABLE `sb_users` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `profile_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `token` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `last_activity` datetime DEFAULT NULL,
+  `typing` int(11) DEFAULT -1,
+  `department` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `sb_users`
+--
+
+INSERT INTO `sb_users` (`id`, `first_name`, `last_name`, `password`, `email`, `profile_image`, `user_type`, `creation_time`, `token`, `last_activity`, `typing`, `department`) VALUES
+(1, 'Mehedi', 'Hasan', '$2y$10$ECmgRs.Lqz1C0OkW4cTt2uzwvnIHn9sSiJIqxnyUR7NxP4wbWpimy', 'mehidy.gb@gmail.com', 'http://localhost/ecom/support/media/user.svg', 'admin', '2021-04-26 19:58:25', '0050220aea1004e21edb8ea511bd25291fba1cca', '2021-04-26 21:12:54', -1, NULL),
+(2, 'Bot', '', '', NULL, 'http://localhost/ecom/support/media/user.svg', 'bot', '2021-04-26 19:58:27', '29064d81af774aafd12fa3bd4f68aaaedaf19ce7', '2021-04-26 19:58:27', -1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sb_users_data`
+--
+
+CREATE TABLE `sb_users_data` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1789,9 +2001,9 @@ CREATE TABLE `role_translations` (
 CREATE TABLE `searches` (
   `id` int(11) NOT NULL,
   `query` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
-  `count` int(11) NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `count` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1811,25 +2023,48 @@ INSERT INTO `searches` (`id`, `query`, `count`, `created_at`, `updated_at`) VALU
 CREATE TABLE `sellers` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `verification_status` int(1) NOT NULL DEFAULT '0',
-  `verification_info` longtext COLLATE utf8_unicode_ci,
-  `cash_on_delivery_status` int(1) NOT NULL DEFAULT '0',
-  `admin_to_pay` double(20,2) NOT NULL DEFAULT '0.00',
+  `seller_package_id` int(11) DEFAULT NULL,
+  `remaining_uploads` int(11) NOT NULL DEFAULT 0,
+  `remaining_digital_uploads` int(11) NOT NULL DEFAULT 0,
+  `invalid_at` date DEFAULT NULL,
+  `verification_status` int(1) NOT NULL DEFAULT 0,
+  `verification_info` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cash_on_delivery_status` int(1) NOT NULL DEFAULT 0,
+  `admin_to_pay` double(20,2) NOT NULL DEFAULT 0.00,
   `bank_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_acc_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_acc_no` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_routing_no` int(50) DEFAULT NULL,
-  `bank_payment_status` int(11) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `bank_payment_status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `sellers`
 --
 
-INSERT INTO `sellers` (`id`, `user_id`, `verification_status`, `verification_info`, `cash_on_delivery_status`, `admin_to_pay`, `bank_name`, `bank_acc_name`, `bank_acc_no`, `bank_routing_no`, `bank_payment_status`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, '[{\"type\":\"text\",\"label\":\"Name\",\"value\":\"Mr. Seller\"},{\"type\":\"select\",\"label\":\"Marital Status\",\"value\":\"Married\"},{\"type\":\"multi_select\",\"label\":\"Company\",\"value\":\"[\\\"Company\\\"]\"},{\"type\":\"select\",\"label\":\"Gender\",\"value\":\"Male\"},{\"type\":\"file\",\"label\":\"Image\",\"value\":\"uploads\\/verification_form\\/CRWqFifcbKqibNzllBhEyUSkV6m1viknGXMEhtiW.png\"}]', 1, 78.40, NULL, NULL, NULL, NULL, 0, '2018-10-07 04:42:57', '2020-01-26 04:21:11');
+INSERT INTO `sellers` (`id`, `user_id`, `seller_package_id`, `remaining_uploads`, `remaining_digital_uploads`, `invalid_at`, `verification_status`, `verification_info`, `cash_on_delivery_status`, `admin_to_pay`, `bank_name`, `bank_acc_name`, `bank_acc_no`, `bank_routing_no`, `bank_payment_status`, `created_at`, `updated_at`) VALUES
+(1, 3, NULL, 0, 0, NULL, 1, '[{\"type\":\"text\",\"label\":\"Name\",\"value\":\"Mr. Seller\"},{\"type\":\"select\",\"label\":\"Marital Status\",\"value\":\"Married\"},{\"type\":\"multi_select\",\"label\":\"Company\",\"value\":\"[\\\"Company\\\"]\"},{\"type\":\"select\",\"label\":\"Gender\",\"value\":\"Male\"},{\"type\":\"file\",\"label\":\"Image\",\"value\":\"uploads\\/verification_form\\/CRWqFifcbKqibNzllBhEyUSkV6m1viknGXMEhtiW.png\"}]', 1, 78.40, NULL, NULL, NULL, NULL, 0, '2018-10-07 04:42:57', '2021-05-19 07:42:49'),
+(2, 12, NULL, 0, 0, NULL, 1, NULL, 0, 0.00, NULL, NULL, NULL, NULL, 0, '2021-05-15 19:51:29', '2021-05-15 19:52:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller_packages`
+--
+
+CREATE TABLE `seller_packages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` double(11,2) NOT NULL DEFAULT 0.00,
+  `product_upload` int(11) NOT NULL DEFAULT 0,
+  `digital_product_upload` int(11) NOT NULL DEFAULT 0,
+  `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `duration` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1841,11 +2076,11 @@ CREATE TABLE `seller_withdraw_requests` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `amount` double(20,2) DEFAULT NULL,
-  `message` longtext CHARACTER SET utf8,
+  `message` longtext DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   `viewed` int(1) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1861,7 +2096,7 @@ CREATE TABLE `seo_settings` (
   `revisit` int(11) NOT NULL,
   `sitemap_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1870,7 +2105,7 @@ CREATE TABLE `seo_settings` (
 --
 
 INSERT INTO `seo_settings` (`id`, `keyword`, `author`, `revisit`, `sitemap_link`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'bootstrap,responsive,template,developer', 'Active IT Zone', 11, 'https://www.activeitzone.com', 'Active E-commerce CMS Multi vendor system is such a platform to build a border less marketplace both for physical and digital goods.', '2019-08-08 08:56:11', '2019-08-08 02:56:11');
+(1, 'bootstrap,responsive,template,developer', 'ProspectBD', 11, 'https://www.prospectbd.com', 'prospectbd ecommerce CMS Multi vendor system is such a platform to build a border less marketplace both for physical and digital goods.', '2019-08-08 08:56:11', '2019-08-08 02:56:11');
 
 -- --------------------------------------------------------
 
@@ -1883,7 +2118,7 @@ CREATE TABLE `shops` (
   `user_id` int(11) NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sliders` longtext COLLATE utf8_unicode_ci,
+  `sliders` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `google` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1891,11 +2126,11 @@ CREATE TABLE `shops` (
   `youtube` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci,
-  `pick_up_point_id` text COLLATE utf8_unicode_ci,
-  `shipping_cost` double(20,2) NOT NULL DEFAULT '0.00',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `meta_description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pick_up_point_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shipping_cost` double(20,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1903,7 +2138,8 @@ CREATE TABLE `shops` (
 --
 
 INSERT INTO `shops` (`id`, `user_id`, `name`, `logo`, `sliders`, `address`, `facebook`, `google`, `twitter`, `youtube`, `slug`, `meta_title`, `meta_description`, `pick_up_point_id`, `shipping_cost`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Demo Seller Shop', NULL, NULL, 'House : Demo, Road : Demo, Section : Demo', 'www.facebook.com', 'www.google.com', 'www.twitter.com', 'www.youtube.com', 'Demo-Seller-Shop-1', 'Demo Seller Shop Title', 'Demo description', NULL, 0.00, '2018-11-27 10:23:13', '2019-08-06 06:43:16');
+(1, 3, 'Demo Seller Shop', NULL, NULL, 'House : Demo, Road : Demo, Section : Demo', 'www.facebook.com', 'www.google.com', 'www.twitter.com', 'www.youtube.com', 'Demo-Seller-Shop-1', 'Demo Seller Shop Title', 'Demo description', NULL, 0.00, '2018-11-27 10:23:13', '2019-08-06 06:43:16'),
+(2, 12, 'demo', NULL, NULL, 'Sarulia Demra Dhaka 1361 Bangladesh', NULL, NULL, NULL, NULL, 'demo-', NULL, NULL, NULL, 0.00, '2021-05-15 19:51:29', '2021-05-15 19:51:29');
 
 -- --------------------------------------------------------
 
@@ -1914,10 +2150,10 @@ INSERT INTO `shops` (`id`, `user_id`, `name`, `logo`, `sliders`, `address`, `fac
 CREATE TABLE `sliders` (
   `id` int(11) NOT NULL,
   `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
+  `published` int(1) NOT NULL DEFAULT 1,
   `link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1938,9 +2174,17 @@ CREATE TABLE `staff` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(1, 10, 2, '2021-04-25 14:32:35', '2021-04-25 14:32:35'),
+(2, 11, 1, '2021-04-25 14:33:06', '2021-04-25 14:33:06');
 
 -- --------------------------------------------------------
 
@@ -1951,8 +2195,8 @@ CREATE TABLE `staff` (
 CREATE TABLE `subscribers` (
   `id` int(11) NOT NULL,
   `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1964,9 +2208,9 @@ CREATE TABLE `subscribers` (
 CREATE TABLE `taxes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `tax_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0 = Inactive, 1 = Active',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `tax_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0 = Inactive, 1 = Active',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1987,13 +2231,13 @@ CREATE TABLE `tickets` (
   `code` int(6) NOT NULL,
   `user_id` int(11) NOT NULL,
   `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `details` longtext COLLATE utf8_unicode_ci,
-  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `details` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `status` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'pending',
-  `viewed` int(1) NOT NULL DEFAULT '0',
-  `client_viewed` int(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `viewed` int(1) NOT NULL DEFAULT 0,
+  `client_viewed` int(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2007,9 +2251,9 @@ CREATE TABLE `ticket_replies` (
   `ticket_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `reply` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2021,10 +2265,10 @@ CREATE TABLE `ticket_replies` (
 CREATE TABLE `translations` (
   `id` int(11) NOT NULL,
   `lang` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lang_key` text COLLATE utf8_unicode_ci,
-  `lang_value` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `lang_key` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lang_value` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3137,7 +3381,460 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 (1382, 'en', 'This version is not capable of installing Addons, Please update.', 'This version is not capable of installing Addons, Please update.', '2020-11-17 06:59:11', '2020-11-17 06:59:11'),
 (1383, 'en', 'Browse All Categories', 'Browse All Categories', '2021-02-09 09:01:58', '2021-02-09 09:01:58'),
 (1384, 'en', 'Find Our Locations', 'Find Our Locations', '2021-02-09 09:01:58', '2021-02-09 09:01:58'),
-(1385, 'en', 'To Get More Emersive', 'To Get More Emersive', '2021-02-09 09:01:58', '2021-02-09 09:01:58');
+(1385, 'en', 'To Get More Emersive', 'To Get More Emersive', '2021-02-09 09:01:58', '2021-02-09 09:01:58'),
+(1386, 'en', 'Nothing found', 'Nothing found', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1387, 'en', 'File selected', 'File selected', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1388, 'en', 'Files selected', 'Files selected', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1389, 'en', 'Add more files', 'Add more files', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1390, 'en', 'Adding more files', 'Adding more files', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1391, 'en', 'Drop files here, paste or', 'Drop files here, paste or', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1392, 'en', 'Upload complete', 'Upload complete', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1393, 'en', 'Upload paused', 'Upload paused', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1394, 'en', 'Resume upload', 'Resume upload', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1395, 'en', 'Pause upload', 'Pause upload', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1396, 'en', 'Retry upload', 'Retry upload', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1397, 'en', 'Cancel upload', 'Cancel upload', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1398, 'en', 'Uploading', 'Uploading', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1399, 'en', 'Processing', 'Processing', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1400, 'en', 'Complete', 'Complete', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1401, 'en', 'Files', 'Files', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1402, 'en', 'Blogs', 'Blogs', '2021-04-25 14:10:24', '2021-04-25 14:10:24'),
+(1403, 'en', 'View All Sellers', 'View All Sellers', '2021-04-25 14:10:26', '2021-04-25 14:10:26'),
+(1404, 'en', 'Please Configure SMTP Setting to work all email sending functionality', 'Please Configure SMTP Setting to work all email sending functionality', '2021-04-25 14:11:29', '2021-04-25 14:11:29'),
+(1405, 'en', 'Order', 'Order', '2021-04-25 14:11:29', '2021-04-25 14:11:29'),
+(1406, 'en', 'Search in menu', 'Search in menu', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1407, 'en', 'Uploaded Files', 'Uploaded Files', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1408, 'en', 'Commission History', 'Commission History', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1409, 'en', 'Wallet Recharge History', 'Wallet Recharge History', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1410, 'en', 'Blog System', 'Blog System', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1411, 'en', 'All Posts', 'All Posts', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1412, 'en', 'Vat & TAX', 'Vat & TAX', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1413, 'en', 'Facebook Comment', 'Facebook Comment', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1414, 'en', 'Shipping Cities', 'Shipping Cities', '2021-04-25 14:11:30', '2021-04-25 14:11:30'),
+(1415, 'en', 'System', 'System', '2021-04-25 14:11:31', '2021-04-25 14:11:31'),
+(1416, 'en', 'Server status', 'Server status', '2021-04-25 14:11:31', '2021-04-25 14:11:31'),
+(1417, 'en', 'Install/Update Addon', 'Install/Update Addon', '2021-04-25 14:11:56', '2021-04-25 14:11:56'),
+(1418, 'en', 'No Addon Installed', 'No Addon Installed', '2021-04-25 14:11:56', '2021-04-25 14:11:56'),
+(1419, 'en', 'Install/Update', 'Install/Update', '2021-04-25 14:11:58', '2021-04-25 14:11:58'),
+(1421, 'en', 'Affiliate Logs', 'Affiliate Logs', '2021-04-25 14:12:39', '2021-04-25 14:12:39'),
+(1424, 'en', 'System Default Currency', 'System Default Currency', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1425, 'en', 'Set Currency Formats', 'Set Currency Formats', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1426, 'en', 'Symbol Format', 'Symbol Format', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1427, 'en', 'Decimal Separator', 'Decimal Separator', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1428, 'en', 'No of decimals', 'No of decimals', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1429, 'en', 'All Currencies', 'All Currencies', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1430, 'en', 'Add New Currency', 'Add New Currency', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1431, 'en', 'Currency name', 'Currency name', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1432, 'en', 'Currency symbol', 'Currency symbol', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1433, 'en', 'Currency code', 'Currency code', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1434, 'en', 'Currency Status updated successfully', 'Currency Status updated successfully', '2021-04-25 14:24:45', '2021-04-25 14:24:45'),
+(1435, 'en', 'Bkash Credential', 'Bkash Credential', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1436, 'en', 'BKASH CHECKOUT APP KEY', 'BKASH CHECKOUT APP KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1437, 'en', 'BKASH CHECKOUT APP SECRET', 'BKASH CHECKOUT APP SECRET', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1438, 'en', 'BKASH CHECKOUT USER NAME', 'BKASH CHECKOUT USER NAME', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1439, 'en', 'BKASH CHECKOUT PASSWORD', 'BKASH CHECKOUT PASSWORD', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1440, 'en', 'Bkash Sandbox Mode', 'Bkash Sandbox Mode', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1441, 'en', 'Nagad Credential', 'Nagad Credential', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1442, 'en', 'NAGAD MODE', 'NAGAD MODE', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1443, 'en', 'NAGAD MERCHANT ID', 'NAGAD MERCHANT ID', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1444, 'en', 'NAGAD MERCHANT NUMBER', 'NAGAD MERCHANT NUMBER', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1445, 'en', 'NAGAD PG PUBLIC KEY', 'NAGAD PG PUBLIC KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1446, 'en', 'NAGAD MERCHANT PRIVATE KEY', 'NAGAD MERCHANT PRIVATE KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1447, 'en', 'PAYSTACK CURRENCY CODE', 'PAYSTACK CURRENCY CODE', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1448, 'en', 'Iyzico Credential', 'Iyzico Credential', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1449, 'en', 'IYZICO_API_KEY', 'IYZICO_API_KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1450, 'en', 'IYZICO API KEY', 'IYZICO API KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1451, 'en', 'IYZICO_SECRET_KEY', 'IYZICO_SECRET_KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1452, 'en', 'IYZICO SECRET KEY', 'IYZICO SECRET KEY', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1453, 'en', 'IYZICO Sandbox Mode', 'IYZICO Sandbox Mode', '2021-04-25 14:25:02', '2021-04-25 14:25:02'),
+(1454, 'en', 'MIMO OTP', 'MIMO OTP', '2021-04-25 14:28:25', '2021-04-25 14:28:25'),
+(1455, 'en', 'HTTPS Activation', 'HTTPS Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1456, 'en', 'Maintenance Mode Activation', 'Maintenance Mode Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1457, 'en', 'Disable image optimization?', 'Disable image optimization?', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1458, 'en', 'Business Related', 'Business Related', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1459, 'en', 'Vendor System Activation', 'Vendor System Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1460, 'en', 'Classified Product', 'Classified Product', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1461, 'en', 'Wallet System Activation', 'Wallet System Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1462, 'en', 'Coupon System Activation', 'Coupon System Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1463, 'en', 'Pickup Point Activation', 'Pickup Point Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1464, 'en', 'Conversation Activation', 'Conversation Activation', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1465, 'en', 'Seller Product Manage By Admin', 'Seller Product Manage By Admin', '2021-04-25 14:29:06', '2021-04-25 14:29:06'),
+(1466, 'en', 'After activate this option Cash On Delivery of Seller product will be managed by Admin', 'After activate this option Cash On Delivery of Seller product will be managed by Admin', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1467, 'en', 'Category-based Commission', 'Category-based Commission', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1468, 'en', 'After activate this option Seller commision will be disabled and You need to set commission on each category otherwise Admin will not get any commision', 'After activate this option Seller commision will be disabled and You need to set commission on each category otherwise Admin will not get any commision', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1469, 'en', 'Set Commisssion Now', 'Set Commisssion Now', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1470, 'en', 'Email Verification', 'Email Verification', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1471, 'en', 'Payment Related', 'Payment Related', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1472, 'en', 'Paypal Payment Activation', 'Paypal Payment Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1473, 'en', 'You need to configure Paypal correctly to enable this feature', 'You need to configure Paypal correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1474, 'en', 'Stripe Payment Activation', 'Stripe Payment Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1475, 'en', 'SSlCommerz Activation', 'SSlCommerz Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1476, 'en', 'Instamojo Payment Activation', 'Instamojo Payment Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1477, 'en', 'You need to configure Instamojo Payment correctly to enable this feature', 'You need to configure Instamojo Payment correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1478, 'en', 'Razor Pay Activation', 'Razor Pay Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1479, 'en', 'You need to configure Razor correctly to enable this feature', 'You need to configure Razor correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1480, 'en', 'PayStack Activation', 'PayStack Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1481, 'en', 'You need to configure PayStack correctly to enable this feature', 'You need to configure PayStack correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1482, 'en', 'VoguePay Activation', 'VoguePay Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1483, 'en', 'You need to configure VoguePay correctly to enable this feature', 'You need to configure VoguePay correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1484, 'en', 'Payhere Activation', 'Payhere Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1485, 'en', 'Ngenius Activation', 'Ngenius Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1486, 'en', 'You need to configure Ngenius correctly to enable this feature', 'You need to configure Ngenius correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1487, 'en', 'Iyzico Activation', 'Iyzico Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1488, 'en', 'You need to configure iyzico correctly to enable this feature', 'You need to configure iyzico correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1489, 'en', 'Bkash Activation', 'Bkash Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1490, 'en', 'You need to configure bkash correctly to enable this feature', 'You need to configure bkash correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1491, 'en', 'Nagad Activation', 'Nagad Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1492, 'en', 'You need to configure nagad correctly to enable this feature', 'You need to configure nagad correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1493, 'en', 'Cash Payment Activation', 'Cash Payment Activation', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1494, 'en', 'Social Media Login', 'Social Media Login', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1495, 'en', 'Facebook login', 'Facebook login', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1496, 'en', 'You need to configure Facebook Client correctly to enable this feature', 'You need to configure Facebook Client correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1497, 'en', 'Google login', 'Google login', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1498, 'en', 'You need to configure Google Client correctly to enable this feature', 'You need to configure Google Client correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1499, 'en', 'Twitter login', 'Twitter login', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1500, 'en', 'You need to configure Twitter Client correctly to enable this feature', 'You need to configure Twitter Client correctly to enable this feature', '2021-04-25 14:29:07', '2021-04-25 14:29:07'),
+(1501, 'en', 'We are Under Maintenance.', 'We are Under Maintenance.', '2021-04-25 14:30:18', '2021-04-25 14:30:18'),
+(1502, 'en', 'We will be back soon!', 'We will be back soon!', '2021-04-25 14:30:18', '2021-04-25 14:30:18'),
+(1503, 'en', 'All Taxes', 'All Taxes', '2021-04-25 14:30:41', '2021-04-25 14:30:41'),
+(1504, 'en', 'Add New Tax', 'Add New Tax', '2021-04-25 14:30:41', '2021-04-25 14:30:41'),
+(1505, 'en', 'Tax Type', 'Tax Type', '2021-04-25 14:30:41', '2021-04-25 14:30:41'),
+(1506, 'en', 'Tax Name', 'Tax Name', '2021-04-25 14:30:41', '2021-04-25 14:30:41'),
+(1507, 'en', 'Tax status updated successfully', 'Tax status updated successfully', '2021-04-25 14:30:41', '2021-04-25 14:30:41'),
+(1508, 'en', 'Facebook Pixel Setting', 'Facebook Pixel Setting', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1509, 'en', 'Facebook Pixel', 'Facebook Pixel', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1510, 'en', 'Facebook Pixel ID', 'Facebook Pixel ID', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1511, 'en', 'Please be carefull when you are configuring Facebook pixel.', 'Please be carefull when you are configuring Facebook pixel.', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1512, 'en', 'Log in to Facebook and go to your Ads Manager account', 'Log in to Facebook and go to your Ads Manager account', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1513, 'en', 'Open the Navigation Bar and select Events Manager', 'Open the Navigation Bar and select Events Manager', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1514, 'en', 'Copy your Pixel ID from underneath your Site Name and paste the number into Facebook Pixel ID field', 'Copy your Pixel ID from underneath your Site Name and paste the number into Facebook Pixel ID field', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1515, 'en', 'Google Analytics Setting', 'Google Analytics Setting', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1516, 'en', 'Google Analytics', 'Google Analytics', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1517, 'en', 'Tracking ID', 'Tracking ID', '2021-04-25 14:31:00', '2021-04-25 14:31:00'),
+(1518, 'en', 'At the very bottom, you can find the “Facebook Page ID”', 'At the very bottom, you can find the “Facebook Page ID”', '2021-04-25 14:31:08', '2021-04-25 14:31:08'),
+(1519, 'en', 'Go to Settings of your page and find the option of \"Advance Messaging\"', 'Go to Settings of your page and find the option of \"Advance Messaging\"', '2021-04-25 14:31:08', '2021-04-25 14:31:08'),
+(1520, 'en', 'Scroll down that page and you will get \"white listed domain\"', 'Scroll down that page and you will get \"white listed domain\"', '2021-04-25 14:31:08', '2021-04-25 14:31:08'),
+(1521, 'en', 'Facebook Comment Setting', 'Facebook Comment Setting', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1522, 'en', 'Facebook App ID', 'Facebook App ID', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1523, 'en', 'Please be carefull when you are configuring Facebook Comment. For incorrect configuration you will not get comment section on your user-end site.', 'Please be carefull when you are configuring Facebook Comment. For incorrect configuration you will not get comment section on your user-end site.', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1524, 'en', 'After then go to this URL https://developers.facebook.com/apps/', 'After then go to this URL https://developers.facebook.com/apps/', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1525, 'en', 'Create Your App', 'Create Your App', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1526, 'en', 'In Dashboard page you will get your App ID', 'In Dashboard page you will get your App ID', '2021-04-25 14:31:14', '2021-04-25 14:31:14'),
+(1527, 'en', 'Area Wise Flat Shipping Cost', 'Area Wise Flat Shipping Cost', '2021-04-25 14:31:20', '2021-04-25 14:31:20'),
+(1528, 'en', 'Seller Wise Flat Shipping Cost calulation: Fixed rate for each seller. If customers purchase 2 product from two seller shipping cost is calculated by addition of each seller flat shipping cost', 'Seller Wise Flat Shipping Cost calulation: Fixed rate for each seller. If customers purchase 2 product from two seller shipping cost is calculated by addition of each seller flat shipping cost', '2021-04-25 14:31:20', '2021-04-25 14:31:20'),
+(1529, 'en', 'Area Wise Flat Shipping Cost calulation: Fixed rate for each area. If customers purchase multiple products from one seller shipping cost is calculated by the customer shipping area. To configure area wise shipping cost go to ', 'Area Wise Flat Shipping Cost calulation: Fixed rate for each area. If customers purchase multiple products from one seller shipping cost is calculated by the customer shipping area. To configure area wise shipping cost go to ', '2021-04-25 14:31:20', '2021-04-25 14:31:20'),
+(1530, 'en', '1. Flat rate shipping cost is applicable if Flat rate shipping is enabled.', '1. Flat rate shipping cost is applicable if Flat rate shipping is enabled.', '2021-04-25 14:31:20', '2021-04-25 14:31:20'),
+(1531, 'en', '1. Shipping cost for admin is applicable if Seller wise shipping cost is enabled.', '1. Shipping cost for admin is applicable if Seller wise shipping cost is enabled.', '2021-04-25 14:31:20', '2021-04-25 14:31:20'),
+(1532, 'en', 'All cities', 'All cities', '2021-04-25 14:31:28', '2021-04-25 14:31:28'),
+(1533, 'en', 'Cities', 'Cities', '2021-04-25 14:31:28', '2021-04-25 14:31:28'),
+(1534, 'en', 'Cost', 'Cost', '2021-04-25 14:31:28', '2021-04-25 14:31:28'),
+(1535, 'en', 'Add New city', 'Add New city', '2021-04-25 14:31:28', '2021-04-25 14:31:28'),
+(1536, 'en', 'Staff Information', 'Staff Information', '2021-04-25 14:31:36', '2021-04-25 14:31:36'),
+(1537, 'en', 'Staff has been inserted successfully', 'Staff has been inserted successfully', '2021-04-25 14:32:35', '2021-04-25 14:32:35'),
+(1538, 'en', 'Role Information', 'Role Information', '2021-04-25 14:33:30', '2021-04-25 14:33:30'),
+(1539, 'en', 'Translatable', 'Translatable', '2021-04-25 14:33:30', '2021-04-25 14:33:30'),
+(1540, 'en', 'Permissions', 'Permissions', '2021-04-25 14:33:30', '2021-04-25 14:33:30'),
+(1541, 'en', 'Server information', 'Server information', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1542, 'en', 'Current Version', 'Current Version', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1543, 'en', 'Required Version', 'Required Version', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1544, 'en', 'php.ini Config', 'php.ini Config', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1545, 'en', 'Config Name', 'Config Name', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1546, 'en', 'Current', 'Current', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1547, 'en', 'Recommended', 'Recommended', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1548, 'en', 'Extensions information', 'Extensions information', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1549, 'en', 'Extension Name', 'Extension Name', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1550, 'en', 'Filesystem Permissions', 'Filesystem Permissions', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1551, 'en', 'File or Folder', 'File or Folder', '2021-04-25 14:34:00', '2021-04-25 14:34:00'),
+(1552, 'en', 'MIMO Credential', 'MIMO Credential', '2021-04-25 14:34:39', '2021-04-25 14:34:39'),
+(1553, 'en', 'MIMO_USERNAME', 'MIMO_USERNAME', '2021-04-25 14:34:39', '2021-04-25 14:34:39'),
+(1554, 'en', 'MIMO_PASSWORD', 'MIMO_PASSWORD', '2021-04-25 14:34:39', '2021-04-25 14:34:39'),
+(1555, 'en', 'MIMO_SENDER_ID', 'MIMO_SENDER_ID', '2021-04-25 14:34:39', '2021-04-25 14:34:39'),
+(1556, 'en', 'Affiliate Withdraw Request', 'Affiliate Withdraw Request', '2021-04-25 14:34:45', '2021-04-25 14:34:45'),
+(1557, 'en', 'Affiliate Withdraw Request Reject', 'Affiliate Withdraw Request Reject', '2021-04-25 14:34:45', '2021-04-25 14:34:45'),
+(1558, 'en', 'Are you sure, You want to reject this?', 'Are you sure, You want to reject this?', '2021-04-25 14:34:45', '2021-04-25 14:34:45'),
+(1559, 'en', 'Referred By', 'Referred By', '2021-04-25 14:34:47', '2021-04-25 14:34:47'),
+(1560, 'en', 'Referral User', 'Referral User', '2021-04-25 14:34:47', '2021-04-25 14:34:47'),
+(1561, 'en', 'Referral Type', 'Referral Type', '2021-04-25 14:34:47', '2021-04-25 14:34:47'),
+(1562, 'en', 'Refferal Users', 'Refferal Users', '2021-04-25 14:34:50', '2021-04-25 14:34:50'),
+(1563, 'en', 'Reffered By', 'Reffered By', '2021-04-25 14:34:50', '2021-04-25 14:34:50'),
+(1564, 'en', 'Approved sellers updated successfully', 'Approved sellers updated successfully', '2021-04-25 14:34:53', '2021-04-25 14:34:53'),
+(1565, 'en', 'Basic Affiliate', 'Basic Affiliate', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1566, 'en', 'User Registration & First Purchase', 'User Registration & First Purchase', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1567, 'en', 'Product Sharing Affiliate', 'Product Sharing Affiliate', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1568, 'en', 'Product Sharing and Purchasing', 'Product Sharing and Purchasing', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1569, 'en', 'Product Sharing Affiliate (Category Wise)', 'Product Sharing Affiliate (Category Wise)', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1570, 'en', 'N:B: You can not enable Single Product Sharing Affiliate and Category Wise Affiliate at a time.', 'N:B: You can not enable Single Product Sharing Affiliate and Category Wise Affiliate at a time.', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1571, 'en', 'Affiliate Link Validatin Time (Days)', 'Affiliate Link Validatin Time (Days)', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1572, 'en', 'Validation Time', 'Validation Time', '2021-04-25 14:34:55', '2021-04-25 14:34:55'),
+(1573, 'en', 'Support Desk', 'Support Desk', '2021-04-25 14:35:03', '2021-04-25 14:35:03'),
+(1574, 'en', 'Type ticket code & Enter', 'Type ticket code & Enter', '2021-04-25 14:35:03', '2021-04-25 14:35:03'),
+(1575, 'en', 'User', 'User', '2021-04-25 14:35:03', '2021-04-25 14:35:03'),
+(1576, 'en', 'Last reply', 'Last reply', '2021-04-25 14:35:03', '2021-04-25 14:35:03'),
+(1577, 'en', 'All Flash Deals', 'All Flash Deals', '2021-04-25 14:35:10', '2021-04-25 14:35:10'),
+(1578, 'en', 'Create New Flash Deal', 'Create New Flash Deal', '2021-04-25 14:35:10', '2021-04-25 14:35:10'),
+(1579, 'en', 'Emails', 'Emails', '2021-04-25 14:35:13', '2021-04-25 14:35:13'),
+(1580, 'en', 'Users', 'Users', '2021-04-25 14:35:13', '2021-04-25 14:35:13'),
+(1581, 'en', 'Newsletter subject', 'Newsletter subject', '2021-04-25 14:35:13', '2021-04-25 14:35:13'),
+(1582, 'en', 'Newsletter content', 'Newsletter content', '2021-04-25 14:35:13', '2021-04-25 14:35:13'),
+(1583, 'en', 'Add New Post', 'Add New Post', '2021-04-25 14:35:44', '2021-04-25 14:35:44'),
+(1584, 'en', 'All blog posts', 'All blog posts', '2021-04-25 14:35:44', '2021-04-25 14:35:44'),
+(1585, 'en', 'Short Description', 'Short Description', '2021-04-25 14:35:44', '2021-04-25 14:35:44'),
+(1586, 'en', 'Change blog status successfully', 'Change blog status successfully', '2021-04-25 14:35:44', '2021-04-25 14:35:44'),
+(1587, 'en', 'All Blog Categories', 'All Blog Categories', '2021-04-25 14:35:47', '2021-04-25 14:35:47'),
+(1588, 'en', 'Blog Categories', 'Blog Categories', '2021-04-25 14:35:47', '2021-04-25 14:35:47'),
+(1589, 'en', 'Product Wish Report', 'Product Wish Report', '2021-04-25 14:36:10', '2021-04-25 14:36:10'),
+(1590, 'en', 'Number of Wish', 'Number of Wish', '2021-04-25 14:36:10', '2021-04-25 14:36:10'),
+(1591, 'en', 'Commission History report', 'Commission History report', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1592, 'en', 'Choose Seller', 'Choose Seller', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1593, 'en', 'Daterange', 'Daterange', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1594, 'en', 'Admin Commission', 'Admin Commission', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1595, 'en', 'Seller Earning', 'Seller Earning', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1596, 'en', 'Created At', 'Created At', '2021-04-25 14:36:19', '2021-04-25 14:36:19'),
+(1597, 'en', 'Wallet Transaction Report', 'Wallet Transaction Report', '2021-04-25 14:36:32', '2021-04-25 14:36:32'),
+(1598, 'en', 'Wallet Transaction', 'Wallet Transaction', '2021-04-25 14:36:32', '2021-04-25 14:36:32'),
+(1599, 'en', 'Choose User', 'Choose User', '2021-04-25 14:36:32', '2021-04-25 14:36:32'),
+(1600, 'en', 'All uploaded files', 'All uploaded files', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1601, 'en', 'Upload New File', 'Upload New File', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1602, 'en', 'All files', 'All files', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1603, 'en', 'Search your files', 'Search your files', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1604, 'en', 'Search', 'Search', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1605, 'en', 'Are you sure to delete this file?', 'Are you sure to delete this file?', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1606, 'en', 'File Info', 'File Info', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1607, 'en', 'Link copied to clipboard', 'Link copied to clipboard', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1608, 'en', 'Oops, unable to copy', 'Oops, unable to copy', '2021-04-25 14:36:38', '2021-04-25 14:36:38'),
+(1609, 'en', 'Add New Seller', 'Add New Seller', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1610, 'en', 'Filter by Approval', 'Filter by Approval', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1611, 'en', 'Non-Approved', 'Non-Approved', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1612, 'en', 'Type name or email & Enter', 'Type name or email & Enter', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1613, 'en', 'Due to seller', 'Due to seller', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1614, 'en', 'Log in as this Seller', 'Log in as this Seller', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1615, 'en', 'Go to Payment', 'Go to Payment', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1616, 'en', 'Ban this seller', 'Ban this seller', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1617, 'en', 'Do you really want to ban this seller?', 'Do you really want to ban this seller?', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1618, 'en', 'Proceed!', 'Proceed!', '2021-04-25 14:36:42', '2021-04-25 14:36:42'),
+(1619, 'en', 'Seller Payments', 'Seller Payments', '2021-04-25 14:36:44', '2021-04-25 14:36:44'),
+(1620, 'en', 'Seller', 'Seller', '2021-04-25 14:36:44', '2021-04-25 14:36:44'),
+(1621, 'en', 'Payment Details', 'Payment Details', '2021-04-25 14:36:44', '2021-04-25 14:36:44'),
+(1622, 'en', 'Seller Withdraw Request', 'Seller Withdraw Request', '2021-04-25 14:36:47', '2021-04-25 14:36:47'),
+(1623, 'en', 'Total Amount to Pay', 'Total Amount to Pay', '2021-04-25 14:36:47', '2021-04-25 14:36:47'),
+(1624, 'en', 'Requested Amount', 'Requested Amount', '2021-04-25 14:36:47', '2021-04-25 14:36:47'),
+(1625, 'en', 'of seller product price will be deducted from seller earnings', 'of seller product price will be deducted from seller earnings', '2021-04-25 14:36:49', '2021-04-25 14:36:49'),
+(1626, 'en', 'This commission only works when Category Based Commission is turned off from Business Settings', 'This commission only works when Category Based Commission is turned off from Business Settings', '2021-04-25 14:36:49', '2021-04-25 14:36:49'),
+(1627, 'en', 'Commission doesn\'t work if seller package system add-on is activated', 'Commission doesn\'t work if seller package system add-on is activated', '2021-04-25 14:36:49', '2021-04-25 14:36:49'),
+(1628, 'en', 'Update your system', 'Update your system', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1629, 'en', 'Current verion', 'Current verion', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1630, 'en', 'Make sure your server has matched with all requirements.', 'Make sure your server has matched with all requirements.', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1631, 'en', 'Check Here', 'Check Here', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1632, 'en', 'Download latest version from codecanyon.', 'Download latest version from codecanyon.', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1633, 'en', 'Extract downloaded zip. You will find updates.zip file in those extraced files.', 'Extract downloaded zip. You will find updates.zip file in those extraced files.', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1634, 'en', 'Upload that zip file here and click update now.', 'Upload that zip file here and click update now.', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1635, 'en', 'If you are using any addon make sure to update those addons after updating.', 'If you are using any addon make sure to update those addons after updating.', '2021-04-25 15:25:29', '2021-04-25 15:25:29'),
+(1636, 'en', 'Contact The Site Developer call:01902549358 ', 'Contact The Site Developer call:01902549358 ', '2021-04-25 15:29:48', '2021-04-25 15:29:48'),
+(1637, 'en', 'Contact The Site Developer <b>call:01902549358</b> ', 'Contact The Site Developer <b>call:01902549358</b> ', '2021-04-25 15:32:41', '2021-04-25 15:32:41'),
+(1638, 'en', 'Contact The Site Developer Call Now: 01902549358 ', 'Contact The Site Developer Call Now: 01902549358 ', '2021-04-25 15:38:16', '2021-04-25 15:38:16'),
+(1639, 'en', ' or Mail Now: mehidy.gb@gmail.com', ' or Mail Now: mehidy.gb@gmail.com', '2021-04-25 15:38:16', '2021-04-25 15:38:16'),
+(1640, 'en', 'Site Developer Call: 01902549358 ', 'Site Developer Call: 01902549358 ', '2021-04-25 15:39:09', '2021-04-25 15:39:09'),
+(1641, 'en', ' or Mail: mehidy.gb@gmail.com', ' or Mail: mehidy.gb@gmail.com', '2021-04-25 15:39:09', '2021-04-25 15:39:09'),
+(1642, 'en', '  or Mail: mehidy.gb@gmail.com', '  or Mail: mehidy.gb@gmail.com', '2021-04-25 15:39:55', '2021-04-25 15:39:55'),
+(1643, 'en', 'We Will Give You The updates.zip file when its available.', 'We Will Give You The updates.zip file when its available.', '2021-04-25 15:42:10', '2021-04-25 15:42:10'),
+(1644, 'en', 'Use Phone Instead', 'Use Phone Instead', '2021-04-25 16:30:12', '2021-04-25 16:30:12'),
+(1645, 'en', 'Step 1', 'Step 1', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1646, 'en', 'Download the skeleton file and fill it with proper data', 'Download the skeleton file and fill it with proper data', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1647, 'en', 'You can download the example file to understand how the data must be filled', 'You can download the example file to understand how the data must be filled', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1648, 'en', 'Once you have downloaded and filled the skeleton file, upload it in the form below and submit', 'Once you have downloaded and filled the skeleton file, upload it in the form below and submit', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1649, 'en', 'After uploading products you need to edit them and set product\'s images and choices', 'After uploading products you need to edit them and set product\'s images and choices', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1650, 'en', 'Step 2', 'Step 2', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1651, 'en', 'Category and Brand should be in numerical id', 'Category and Brand should be in numerical id', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1652, 'en', 'You can download the pdf to get Category and Brand id', 'You can download the pdf to get Category and Brand id', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1653, 'en', 'Upload Product File', 'Upload Product File', '2021-04-25 16:52:07', '2021-04-25 16:52:07'),
+(1654, 'en', 'Header Nav Menu', 'Header Nav Menu', '2021-04-25 22:53:52', '2021-04-25 22:53:52'),
+(1655, 'en', 'Link with', 'Link with', '2021-04-25 22:53:52', '2021-04-25 22:53:52'),
+(1656, 'en', 'We have limited banner height to maintain UI. We had to crop from both left & right side in view for different devices to make it responsive. Before designing banner keep these points in mind.', 'We have limited banner height to maintain UI. We had to crop from both left & right side in view for different devices to make it responsive. Before designing banner keep these points in mind.', '2021-04-25 22:56:52', '2021-04-25 22:56:52'),
+(1657, 'en', 'Home Banner 3 (Max 3)', 'Home Banner 3 (Max 3)', '2021-04-25 22:56:52', '2021-04-25 22:56:52'),
+(1658, 'en', 'Cookies Agreement', 'Cookies Agreement', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1659, 'en', 'Cookies Agreement Text', 'Cookies Agreement Text', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1660, 'en', 'Show Cookies Agreement?', 'Show Cookies Agreement?', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1661, 'en', 'Custom Script', 'Custom Script', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1662, 'en', 'Header custom script - before </head>', 'Header custom script - before </head>', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1663, 'en', 'Write script with <script> tag', 'Write script with <script> tag', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1664, 'en', 'Footer custom script - before </body>', 'Footer custom script - before </body>', '2021-04-25 22:59:17', '2021-04-25 22:59:17'),
+(1665, 'en', 'Blog', 'Blog', '2021-04-26 17:46:56', '2021-04-26 17:46:56'),
+(1666, 'en', 'Brand Names', 'Brand Names', '2021-04-26 18:17:26', '2021-04-26 18:17:26'),
+(1667, 'en', 'Generics (Allopathic)', 'Generics (Allopathic)', '2021-04-26 18:21:26', '2021-04-26 18:21:26'),
+(1668, 'en', 'Generics (Herbal)', 'Generics (Herbal)', '2021-04-26 18:21:26', '2021-04-26 18:21:26'),
+(1669, 'en', 'Pharmaceuticals', 'Pharmaceuticals', '2021-04-26 18:21:26', '2021-04-26 18:21:26'),
+(1670, 'en', 'Parent Category', 'Parent Category', '2021-04-26 18:27:00', '2021-04-26 18:27:00'),
+(1671, 'en', 'Order Level', 'Order Level', '2021-04-26 18:27:00', '2021-04-26 18:27:00'),
+(1672, 'en', 'Level', 'Level', '2021-04-26 18:27:00', '2021-04-26 18:27:00'),
+(1673, 'en', 'Category Information', 'Category Information', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1674, 'en', 'No Parent', 'No Parent', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1675, 'en', 'Ordering Number', 'Ordering Number', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1676, 'en', 'Physical', 'Physical', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1677, 'en', 'Digital', 'Digital', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1678, 'en', '200x200', '200x200', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1679, 'en', '32x32', '32x32', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1680, 'en', 'Commission Rate', 'Commission Rate', '2021-04-26 18:27:28', '2021-04-26 18:27:28'),
+(1681, 'en', 'Category has been updated successfully', 'Category has been updated successfully', '2021-04-26 18:28:28', '2021-04-26 18:28:28'),
+(1682, 'en', 'Category has been inserted successfully', 'Category has been inserted successfully', '2021-04-26 18:31:12', '2021-04-26 18:31:12'),
+(1683, 'en', 'Category has been deleted successfully', 'Category has been deleted successfully', '2021-04-26 19:30:12', '2021-04-26 19:30:12'),
+(1684, 'en', 'Contact', 'Contact', '2021-04-26 19:31:21', '2021-04-26 19:31:21'),
+(1685, 'en', 'New page has been created successfully', 'New page has been created successfully', '2021-04-26 19:34:50', '2021-04-26 19:34:50'),
+(1686, 'en', 'Details Info', 'Details Info', '2021-04-26 19:35:57', '2021-04-26 19:35:57'),
+(1687, 'en', 'Copy Link', 'Copy Link', '2021-04-26 19:35:57', '2021-04-26 19:35:57'),
+(1688, 'en', 'Ok. I Understood', 'Ok. I Understood', '2021-04-26 20:08:46', '2021-04-26 20:08:46'),
+(1689, 'en', 'Job Circuler', 'Job Circuler', '2021-05-08 18:00:06', '2021-05-08 18:00:06'),
+(1690, 'en', 'Circulers', 'Circulers', '2021-05-08 18:00:06', '2021-05-08 18:00:06'),
+(1691, 'en', 'All Circulers', 'All Circulers', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
+(1692, 'en', 'Add Job Circuler', 'Add Job Circuler', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
+(1693, 'en', 'Job Title', 'Job Title', '2021-05-08 18:00:10', '2021-05-08 18:00:10'),
+(1694, 'en', 'Job Information', 'Job Information', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
+(1695, 'en', 'Job Description', 'Job Description', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
+(1696, 'en', 'Meta Keywords', 'Meta Keywords', '2021-05-08 18:00:12', '2021-05-08 18:00:12'),
+(1697, 'en', 'Best', 'Best', '2021-05-09 06:33:39', '2021-05-09 06:33:39'),
+(1698, 'en', 'Add circuler', 'Add circuler', '2021-05-09 06:36:21', '2021-05-09 06:36:21'),
+(1699, 'en', 'Change Job status successfully', 'Change Job status successfully', '2021-05-11 08:56:39', '2021-05-11 08:56:39'),
+(1700, 'en', 'Circuler has been inserted successfully', 'Circuler has been inserted successfully', '2021-05-11 08:57:04', '2021-05-11 08:57:04'),
+(1701, 'en', 'Circuler has been Delated successfully', 'Circuler has been Delated successfully', '2021-05-11 08:58:25', '2021-05-11 08:58:25'),
+(1702, 'en', 'Updated at', 'Updated at', '2021-05-11 09:02:57', '2021-05-11 09:02:57'),
+(1703, 'en', 'Circuler has been updated successfully', 'Circuler has been updated successfully', '2021-05-11 09:03:09', '2021-05-11 09:03:09'),
+(1704, 'en', 'Add Category', 'Add Category', '2021-05-11 09:16:38', '2021-05-11 09:16:38'),
+(1705, 'en', 'All Jobs Categories', 'All Jobs Categories', '2021-05-11 09:38:54', '2021-05-11 09:38:54'),
+(1706, 'en', 'Phone Verification', 'Phone Verification', '2021-05-11 10:05:12', '2021-05-11 10:05:12'),
+(1707, 'en', 'Resend Code', 'Resend Code', '2021-05-11 10:05:12', '2021-05-11 10:05:12'),
+(1708, 'en', 'Job Categories', 'Job Categories', '2021-05-11 10:20:24', '2021-05-11 10:20:24'),
+(1709, 'en', 'Blog Category Information', 'Blog Category Information', '2021-05-11 10:21:50', '2021-05-11 10:21:50'),
+(1710, 'en', 'Blog category has been created successfully', 'Blog category has been created successfully', '2021-05-11 10:24:27', '2021-05-11 10:24:27'),
+(1711, 'en', 'Job Category Information', 'Job Category Information', '2021-05-11 10:28:19', '2021-05-11 10:28:19'),
+(1712, 'en', 'Job category has been created successfully', 'Job category has been created successfully', '2021-05-11 10:28:22', '2021-05-11 10:28:22'),
+(1713, 'en', 'Job category has been updated successfully', 'Job category has been updated successfully', '2021-05-11 13:38:23', '2021-05-11 13:38:23'),
+(1714, 'en', 'Job Category', 'Job Category', '2021-05-11 15:28:06', '2021-05-11 15:28:06'),
+(1715, 'en', 'Blog Information', 'Blog Information', '2021-05-11 17:09:14', '2021-05-11 17:09:14'),
+(1716, 'en', 'Blog Title', 'Blog Title', '2021-05-11 17:09:14', '2021-05-11 17:09:14'),
+(1717, 'en', 'Blog post has been created successfully', 'Blog post has been created successfully', '2021-05-11 17:09:23', '2021-05-11 17:09:23'),
+(1718, 'en', 'This is used for search. Input those words by which cutomer can find this product.', 'This is used for search. Input those words by which cutomer can find this product.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1719, 'en', 'These images are visible in product details page gallery. Use 600x600 sizes images.', 'These images are visible in product details page gallery. Use 600x600 sizes images.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1720, 'en', 'This image is visible in all product box. Use 300x300 sizes image. Keep some blank space around main object of your image as we had to crop some edge in different devices to make it responsive.', 'This image is visible in all product box. Use 300x300 sizes image. Keep some blank space around main object of your image as we had to crop some edge in different devices to make it responsive.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1721, 'en', 'Use proper link without extra parameter. Don\'t use short share link/embeded iframe code.', 'Use proper link without extra parameter. Don\'t use short share link/embeded iframe code.', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1722, 'en', 'Product Wise Shipping', 'Product Wise Shipping', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1723, 'en', 'Is Product Quantity Mulitiply', 'Is Product Quantity Mulitiply', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1724, 'en', 'Low Stock Quantity Warning', 'Low Stock Quantity Warning', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1725, 'en', 'Stock Visibility State', 'Stock Visibility State', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1726, 'en', 'Show Stock Quantity', 'Show Stock Quantity', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1727, 'en', 'Show Stock With Text Only', 'Show Stock With Text Only', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1728, 'en', 'Hide Stock', 'Hide Stock', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1729, 'en', 'Flash Deal', 'Flash Deal', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1730, 'en', 'Add To Flash', 'Add To Flash', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1731, 'en', 'Estimate Shipping Time', 'Estimate Shipping Time', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1732, 'en', 'Shipping Days', 'Shipping Days', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1733, 'en', 'Save As Draft', 'Save As Draft', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1734, 'en', 'Save & Unpublish', 'Save & Unpublish', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1735, 'en', 'Save & Publish', 'Save & Publish', '2021-05-12 04:59:59', '2021-05-12 04:59:59'),
+(1736, 'en', 'Change Circuler status successfully', 'Change Circuler status successfully', '2021-05-14 12:10:29', '2021-05-14 12:10:29'),
+(1737, 'en', 'Career', 'Career', '2021-05-14 12:27:05', '2021-05-14 12:27:05'),
+(1738, 'en', 'Create', 'Create', '2021-05-14 12:42:34', '2021-05-14 12:42:34'),
+(1739, 'en', 'Circuler status Changed  successfully', 'Circuler status Changed  successfully', '2021-05-14 12:46:18', '2021-05-14 12:46:18');
+INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`, `updated_at`) VALUES
+(1740, 'en', 'job', 'job', '2021-05-14 13:33:19', '2021-05-14 13:33:19'),
+(1741, 'en', 'Affiliate Balance', 'Affiliate Balance', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1742, 'en', 'Configure Payout', 'Configure Payout', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1743, 'en', 'Copy Url', 'Copy Url', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1744, 'en', 'Affiliate Stats', 'Affiliate Stats', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1745, 'en', 'No of click', 'No of click', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1746, 'en', 'No of item', 'No of item', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1747, 'en', 'No of deliverd', 'No of deliverd', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1748, 'en', 'No of cancel', 'No of cancel', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1749, 'en', 'Affiliate Earning History', 'Affiliate Earning History', '2021-05-14 18:08:21', '2021-05-14 18:08:21'),
+(1750, 'en', 'Wallet Balance', 'Wallet Balance', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1751, 'en', 'Recharge Wallet', 'Recharge Wallet', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1752, 'en', 'Iyzico', 'Iyzico', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1753, 'en', 'Bkash', 'Bkash', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1754, 'en', 'Nagad', 'Nagad', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1755, 'en', 'Offline Recharge Wallet', 'Offline Recharge Wallet', '2021-05-14 20:16:52', '2021-05-14 20:16:52'),
+(1756, 'en', 'Author', 'Author', '2021-05-15 10:03:45', '2021-05-15 10:03:45'),
+(1757, 'en', 'Circuler status Changed successfully', 'Circuler status Changed successfully', '2021-05-15 17:04:24', '2021-05-15 17:04:24'),
+(1758, 'en', 'Uplaod Product', 'Uplaod Product', '2021-05-15 19:21:53', '2021-05-15 19:21:53'),
+(1759, 'en', 'Product has been inserted successfully', 'Product has been inserted successfully', '2021-05-15 19:27:01', '2021-05-15 19:27:01'),
+(1760, 'en', 'Please click the button below to verify your email address.', 'Please click the button below to verify your email address.', '2021-05-15 19:51:30', '2021-05-15 19:51:30'),
+(1761, 'en', 'Email Verification - ', 'Email Verification - ', '2021-05-15 19:51:30', '2021-05-15 19:51:30'),
+(1762, 'en', 'Your Shop has been created successfully!', 'Your Shop has been created successfully!', '2021-05-15 19:51:30', '2021-05-15 19:51:30'),
+(1763, 'en', 'Shop Logo', 'Shop Logo', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1764, 'en', 'Shop Address', 'Shop Address', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1765, 'en', 'Banner Settings', 'Banner Settings', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1766, 'en', 'Banners', 'Banners', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1767, 'en', 'We had to limit height to maintian consistancy. In some device both side of the banner might be cropped for height limitation.', 'We had to limit height to maintian consistancy. In some device both side of the banner might be cropped for height limitation.', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1768, 'en', 'Insert link with https ', 'Insert link with https ', '2021-05-15 19:51:31', '2021-05-15 19:51:31'),
+(1769, 'en', 'Verify Your Email Address', 'Verify Your Email Address', '2021-05-16 08:17:03', '2021-05-16 08:17:03'),
+(1770, 'en', 'Before proceeding, please check your email for a verification link.', 'Before proceeding, please check your email for a verification link.', '2021-05-16 08:17:03', '2021-05-16 08:17:03'),
+(1771, 'en', 'If you did not receive the email.', 'If you did not receive the email.', '2021-05-16 08:17:03', '2021-05-16 08:17:03'),
+(1772, 'en', 'Click here to request another', 'Click here to request another', '2021-05-16 08:17:03', '2021-05-16 08:17:03'),
+(1773, 'en', 'Payment Settings', 'Payment Settings', '2021-05-16 08:17:24', '2021-05-16 08:17:24'),
+(1774, 'en', 'Paypal Email', 'Paypal Email', '2021-05-16 08:17:24', '2021-05-16 08:17:24'),
+(1775, 'en', 'Bank Informations', 'Bank Informations', '2021-05-16 08:17:24', '2021-05-16 08:17:24'),
+(1776, 'en', 'Acc. No, Bank Name etc', 'Acc. No, Bank Name etc', '2021-05-16 08:17:24', '2021-05-16 08:17:24'),
+(1777, 'en', 'Update Payment Settings', 'Update Payment Settings', '2021-05-16 08:17:24', '2021-05-16 08:17:24'),
+(1778, 'en', 'View Circuler', 'View Circuler', '2021-05-17 13:35:31', '2021-05-17 13:35:31'),
+(1779, 'en', 'Company Name', 'Company Name', '2021-05-17 13:59:06', '2021-05-17 13:59:06'),
+(1780, 'en', 'Enter Your Company Name', 'Enter Your Company Name', '2021-05-17 13:59:06', '2021-05-17 13:59:06'),
+(1781, 'en', 'All Jobs job_locations', 'All Jobs job_locations', '2021-05-17 15:33:41', '2021-05-17 15:33:41'),
+(1782, 'en', 'Job job_locations', 'Job job_locations', '2021-05-17 15:33:41', '2021-05-17 15:33:41'),
+(1783, 'en', 'Add New Location', 'Add New Location', '2021-05-17 15:34:29', '2021-05-17 15:34:29'),
+(1784, 'en', 'Job Location Information', 'Job Location Information', '2021-05-17 15:37:26', '2021-05-17 15:37:26'),
+(1785, 'en', 'Job locations has been created successfully', 'Job locations has been created successfully', '2021-05-17 15:37:37', '2021-05-17 15:37:37'),
+(1786, 'en', 'Blog Location Information', 'Blog Location Information', '2021-05-17 16:39:45', '2021-05-17 16:39:45'),
+(1787, 'en', 'educational Status', 'educational Status', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1788, 'en', 'Your educational status', 'Your educational status', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1789, 'en', 'Experience', 'Experience', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1790, 'en', 'Your experience', 'Your experience', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1791, 'en', 'Salary Name', 'Salary Name', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1792, 'en', 'salary', 'salary', '2021-05-18 07:57:24', '2021-05-18 07:57:24'),
+(1793, 'en', 'vacancy', 'vacancy', '2021-05-18 08:03:35', '2021-05-18 08:03:35'),
+(1794, 'en', 'Employment Status', 'Employment Status', '2021-05-18 08:14:51', '2021-05-18 08:14:51'),
+(1795, 'en', '1234 Main St', '1234 Main St', '2021-05-18 08:42:53', '2021-05-18 08:42:53'),
+(1796, 'en', 'Address 2', 'Address 2', '2021-05-18 08:42:53', '2021-05-18 08:42:53'),
+(1797, 'en', 'Apartment, studio, or floor', 'Apartment, studio, or floor', '2021-05-18 08:42:53', '2021-05-18 08:42:53'),
+(1798, 'en', 'Shop Info', 'Shop Info', '2021-05-19 07:37:57', '2021-05-19 07:37:57'),
+(1799, 'en', 'Seller has been approved successfully', 'Seller has been approved successfully', '2021-05-19 07:42:34', '2021-05-19 07:42:34'),
+(1800, 'en', 'New verification request(s)', 'New verification request(s)', '2021-05-19 07:42:48', '2021-05-19 07:42:48'),
+(1801, 'en', 'No payment history available for this seller', 'No payment history available for this seller', '2021-05-19 07:55:40', '2021-05-19 07:55:40'),
+(1802, 'en', 'Edit Seller Information', 'Edit Seller Information', '2021-05-19 07:55:46', '2021-05-19 07:55:46'),
+(1803, 'en', 'Seller Information', 'Seller Information', '2021-05-19 07:55:46', '2021-05-19 07:55:46'),
+(1804, 'en', 'Gender', 'Gender', '2021-05-19 09:26:37', '2021-05-19 09:26:37'),
+(1805, 'en', 'Age', 'Age', '2021-05-19 09:52:41', '2021-05-19 09:52:41'),
+(1806, 'en', 'Ex: 22 to 30 years', 'Ex: 22 to 30 years', '2021-05-19 09:52:41', '2021-05-19 09:52:41'),
+(1807, 'en', 'Ex: Negotiable or type Salary', 'Ex: Negotiable or type Salary', '2021-05-19 09:52:46', '2021-05-19 09:52:46'),
+(1808, 'en', 'Circuler Information', 'Circuler Information', '2021-05-19 16:34:38', '2021-05-19 16:34:38'),
+(1809, 'en', 'Ex: Negotiable or Enter The Amount', 'Ex: Negotiable or Enter The Amount', '2021-05-20 18:24:58', '2021-05-20 18:24:58'),
+(1810, 'en', 'Sendmail', 'Sendmail', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1811, 'en', 'Mailgun', 'Mailgun', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1812, 'en', 'MAIL HOST', 'MAIL HOST', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1813, 'en', 'MAIL PORT', 'MAIL PORT', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1814, 'en', 'MAIL USERNAME', 'MAIL USERNAME', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1815, 'en', 'MAIL PASSWORD', 'MAIL PASSWORD', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1816, 'en', 'MAIL ENCRYPTION', 'MAIL ENCRYPTION', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1817, 'en', 'MAIL FROM ADDRESS', 'MAIL FROM ADDRESS', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1818, 'en', 'MAIL FROM NAME', 'MAIL FROM NAME', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1819, 'en', 'MAILGUN DOMAIN', 'MAILGUN DOMAIN', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1820, 'en', 'MAILGUN SECRET', 'MAILGUN SECRET', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1821, 'en', 'Save Configuration', 'Save Configuration', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1822, 'en', 'Test SMTP configuration', 'Test SMTP configuration', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1823, 'en', 'Enter your email address', 'Enter your email address', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1824, 'en', 'Send test email', 'Send test email', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1825, 'en', 'Instruction', 'Instruction', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1826, 'en', 'Please be carefull when you are configuring SMTP. For incorrect configuration you will get error at the time of order place, new registration, sending newsletter. If faced issue please Contact With The Site Developer', 'Please be carefull when you are configuring SMTP. For incorrect configuration you will get error at the time of order place, new registration, sending newsletter. If faced issue please Contact With The Site Developer', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1827, 'en', 'For Non-SSL', 'For Non-SSL', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1828, 'en', 'Select sendmail for Mail Driver if you face any issue after configuring smtp as Mail Driver ', 'Select sendmail for Mail Driver if you face any issue after configuring smtp as Mail Driver ', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1829, 'en', 'Set Mail Host according to your server Mail Client Manual Settings', 'Set Mail Host according to your server Mail Client Manual Settings', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1830, 'en', 'Set Mail port as 587', 'Set Mail port as 587', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1831, 'en', 'Set Mail Encryption as ssl if you face issue with tls', 'Set Mail Encryption as ssl if you face issue with tls', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1832, 'en', 'For SSL', 'For SSL', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1833, 'en', 'Set Mail port as 465', 'Set Mail port as 465', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1834, 'en', 'Set Mail Encryption as ssl', 'Set Mail Encryption as ssl', '2021-05-20 21:11:04', '2021-05-20 21:11:04'),
+(1835, 'en', 'Info', 'Info', '2021-05-21 14:08:06', '2021-05-21 14:08:06'),
+(1836, 'en', 'Jobs', 'Jobs', '2021-05-21 14:50:57', '2021-05-21 14:50:57'),
+(1837, 'en', 'Locations', 'Locations', '2021-05-21 20:57:05', '2021-05-21 20:57:05'),
+(1838, 'en', 'enter location', 'enter location', '2021-05-21 20:58:45', '2021-05-21 20:58:45'),
+(1839, 'en', 'Job Locations', 'Job Locations', '2021-05-21 21:02:28', '2021-05-21 21:02:28'),
+(1840, 'en', 'Job Locations Informations', 'Job Locations Informations', '2021-05-21 21:02:48', '2021-05-21 21:02:48');
 
 -- --------------------------------------------------------
 
@@ -3153,10 +3850,26 @@ CREATE TABLE `uploads` (
   `file_size` int(11) DEFAULT NULL,
   `extension` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `uploads`
+--
+
+INSERT INTO `uploads` (`id`, `file_original_name`, `file_name`, `user_id`, `file_size`, `extension`, `type`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Em+Ed+logo', 'uploads/all/qNmqoaHdVemnirJXqgzMTZ0qJnTEOao2vwtO4ULK.png', 9, 12911, 'png', 'image', '2021-04-26 18:08:40', '2021-04-26 18:08:40', NULL),
+(2, 'Em+Ed+logo', 'uploads/all/dnDmGubP7bJCmHIzQwwMghBJTipExjX2J4zGFtnE.png', 9, 16462, 'png', 'image', '2021-04-26 18:10:24', '2021-04-26 18:10:24', NULL),
+(3, 'Em+Ed+logo', 'uploads/all/jQP245cqpWJnvr15TtP1tQpE0aJWjHN0RzaR7iY3.png', 9, 35233, 'png', 'image', '2021-04-26 18:13:05', '2021-04-26 18:13:05', NULL),
+(4, 'admin', 'uploads/all/D5JorTGHV9e1VXLifipLRl9xQAtMYwbKfVZAKjP9.png', 9, 189774, 'png', 'image', '2021-05-14 13:15:58', '2021-05-14 13:15:58', NULL),
+(5, 'napa', 'uploads/all/Nf51fG3O5jSlHlZO2ktkRpmyCZyCmYfgECXc5MjK.jpg', 3, 13305, 'jpg', 'image', '2021-05-15 19:25:18', '2021-05-15 19:25:18', NULL),
+(6, 'lol5_n', 'uploads/all/ou83Qj4Q0wfoOrLPlOuBSyunjzG9L9w6iOzbyew1.jpg', 8, 66647, 'jpg', 'image', '2021-05-16 11:50:54', '2021-05-16 11:50:54', NULL),
+(7, 'burhan mehedi', 'uploads/all/EoI2ToJJ0gxbs6WkrEs4xE4S0cfO5kBiRrdZdhFz.png', 9, 2364506, 'png', 'image', '2021-05-17 11:39:02', '2021-05-17 11:39:02', NULL),
+(8, 'ponnoposhara', 'uploads/all/XoIc1RV1z3D5W5F21J9CjclRrf7kIbNvfkd9Fss4.jpg', 9, 54915, 'png', 'image', '2021-05-20 20:44:14', '2021-05-20 20:44:14', NULL),
+(9, 'logo_white', 'uploads/all/jNyehwlwOZplZy2U3tA6kZp6c2oC1TeMYmHQnDBG.png', 8, 4755, 'png', 'image', '2021-05-21 20:39:02', '2021-05-21 20:39:02', NULL),
+(10, 'logo_black', 'uploads/all/D3Pbk3OERADEVipy9giUUE5nbPC1OuP3OPAFBX4D.png', 8, 5105, 'png', 'image', '2021-05-21 20:39:17', '2021-05-21 20:39:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -3172,8 +3885,8 @@ CREATE TABLE `users` (
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `verification_code` text COLLATE utf8_unicode_ci,
-  `new_email_verificiation_code` text COLLATE utf8_unicode_ci,
+  `verification_code` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `new_email_verificiation_code` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `avatar` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -3183,11 +3896,11 @@ CREATE TABLE `users` (
   `city` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   `postal_code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `banned` tinyint(4) NOT NULL DEFAULT '0',
+  `balance` double(20,2) NOT NULL DEFAULT 0.00,
+  `banned` tinyint(4) NOT NULL DEFAULT 0,
   `referral_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `customer_package_id` int(11) DEFAULT NULL,
-  `remaining_uploads` int(11) DEFAULT '0',
+  `remaining_uploads` int(11) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -3197,8 +3910,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `referred_by`, `provider_id`, `user_type`, `name`, `email`, `email_verified_at`, `verification_code`, `new_email_verificiation_code`, `password`, `remember_token`, `avatar`, `avatar_original`, `address`, `country`, `city`, `postal_code`, `phone`, `balance`, `banned`, `referral_code`, `customer_package_id`, `remaining_uploads`, `created_at`, `updated_at`) VALUES
-(3, NULL, NULL, 'seller', 'Mr. Seller', 'seller@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', '1zoU4eQxnOC5yxRWLsTzMNBPpJuOvTk4g3GMUVYIrbGijiXHOfIlFq0wHrIn', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, 'Demo address', 'US', 'Demo city', '1234', NULL, 0.00, 0, '3dLUoHsR1l', NULL, NULL, '2018-10-07 04:42:57', '2020-03-05 01:33:22'),
-(8, NULL, NULL, 'customer', 'Mr. Customer', 'customer@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', '9ndcz5o7xgnuxctJIbvUQcP41QKmgnWCc7JDSnWdHOvipOP2AijpamCNafEe', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, 'Demo address', 'US', 'Demo city', '1234', NULL, 0.00, 0, '8zJTyXTlTT', NULL, NULL, '2018-10-07 04:42:57', '2020-03-03 04:26:11');
+(3, NULL, NULL, 'seller', 'Mr. Seller', 'seller@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', '3C3jzZJeuSUiCHvX01dsnBO5jRDlG5LwzqXBYM96oS7LthjEa8V0LV0bugU1', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, 'Demo address', 'US', 'Demo city', '1234', NULL, 0.00, 0, '3dLUoHsR1l', NULL, NULL, '2018-10-07 04:42:57', '2020-03-05 01:33:22'),
+(8, NULL, NULL, 'customer', 'Mr. User', 'customer@example.com', '2018-12-11 18:00:00', NULL, NULL, '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'z8Z2YdbfUs5ATbrV0TGsW6Z86stO7C7j4hEzLWQuH2BouEG2Lw7sMbiNNxm0', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', NULL, NULL, NULL, NULL, NULL, '01635354223', 0.00, 0, '8zJTyXTlTT', NULL, NULL, '2018-10-07 04:42:57', '2021-05-15 16:56:43'),
+(9, NULL, NULL, 'admin', 'Mehedi Hasan', 'admin@admin.com', '2021-04-25 14:04:06', NULL, NULL, '$2y$10$5cNxjWLeDskdZqXbaH452eE6VBB6a4ncT31D7xpBg0hKf4nn0NezS', '5bZ0auY1LKdWCnE75MOrRou8Hdn000hHLLcFguU5aUveInYlSgE0mdGcT3pv', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0, NULL, NULL, 0, '2021-04-25 14:10:06', '2021-05-21 13:29:54'),
+(10, NULL, NULL, 'staff', 'Accountant', 'accountant@example.com', NULL, NULL, NULL, '$2y$10$f0bfeW7ofUoJP1Q2hLPVZ.Cn2kROCdPU2rwN4bMHLqqr/pywbFplW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01902549358', 0.00, 0, NULL, NULL, 0, '2021-04-25 14:32:35', '2021-04-25 14:32:35'),
+(11, NULL, NULL, 'staff', 'Manager', 'manager@example.com', NULL, NULL, NULL, '$2y$10$VkJbxqFFFz00QNzmqk6IS.RmPPWrXgr6ewfYTQf7VV/KRcSNMkpjK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01635354223', 0.00, 0, NULL, NULL, 0, '2021-04-25 14:33:06', '2021-04-25 14:33:06'),
+(12, NULL, NULL, 'seller', 'demo user', NULL, '2021-05-10 22:05:09', 'eyJpdiI6Ik1tWmhxdGxqOU9YUkdkZUw3QUdPcWc9PSIsInZhbHVlIjoiXC9XcGt5RXRDOGI1VGM4cFM4YzZXN3c9PSIsIm1hYyI6ImQwZmQ5ZWUxNDU5NWM5ODRhYWVmNGQzMDEwNjVhNmRlYjQxNWE3ZWIyOTYzZGQ0ODZkOWVkMjk3N2VhZmRkNDEifQ==', NULL, '$2y$10$uCG8aDojABjLFrj1FTl1OeWOZNpmvwc3AJrJfIIOsQ.ARBn3KEq76', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+8801635354223', 0.00, 0, NULL, NULL, 0, '2021-05-11 10:05:10', '2021-05-15 19:51:30'),
+(13, NULL, NULL, 'customer', 'cheking data', 'gb@gmail.com', '2021-05-10 22:05:21', '397379', NULL, '$2y$10$i71RpTcNGSbFBPTeXDOhM.AZhjtYZwJMZwbKn.iANh/dqlZmkuhd.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+8801902549358', 0.00, 0, NULL, NULL, 0, '2021-05-11 10:09:31', '2021-05-21 20:25:09'),
+(14, 8, NULL, 'customer', 'demo demo', NULL, '2021-05-11 03:05:52', '438867', NULL, '$2y$10$7AoBCNyS8INSwf1Wii4kyejzIGF9CW7XtJLtjwnL63VUZlIx4qTz2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+8801635354226', 0.00, 0, NULL, NULL, 0, '2021-05-11 15:57:19', '2021-05-11 15:57:52'),
+(15, 8, NULL, 'customer', 'md mehedi', 'me@gmail.com', '2021-05-11 03:05:52', 'eyJpdiI6Ild1YzBwazJ1T3g4SklIRU1DaitSYXc9PSIsInZhbHVlIjoiVzVpSytqQXF0eWJqVTVXZGN2ckhQUT09IiwibWFjIjoiNWNjZDU1N2ZkMzgyNDM0ODNjOWRjY2VmY2I1Y2E4NGFiNmYzNWJlNDQyMDJiMzY3MDgyZjRiZTQ2N2FlOWIzYSJ9', NULL, '$2y$10$JIGAn8sHUTptOSwR9mFWDusOErz2cLY.VlTeI.wWKjvPXLIPZvZsy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0, NULL, NULL, 0, '2021-05-16 08:15:56', '2021-05-16 08:27:01');
 
 -- --------------------------------------------------------
 
@@ -3211,9 +3931,9 @@ CREATE TABLE `wallets` (
   `user_id` int(11) NOT NULL,
   `amount` double(20,2) NOT NULL,
   `payment_method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_details` longtext COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `payment_details` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3226,8 +3946,8 @@ CREATE TABLE `wishlists` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3244,6 +3964,48 @@ ALTER TABLE `addons`
 -- Indexes for table `addresses`
 --
 ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_configs`
+--
+ALTER TABLE `affiliate_configs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_logs`
+--
+ALTER TABLE `affiliate_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_options`
+--
+ALTER TABLE `affiliate_options`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_payments`
+--
+ALTER TABLE `affiliate_payments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_stats`
+--
+ALTER TABLE `affiliate_stats`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_users`
+--
+ALTER TABLE `affiliate_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `affiliate_withdraw_requests`
+--
+ALTER TABLE `affiliate_withdraw_requests`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3440,6 +4202,25 @@ ALTER TABLE `home_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `jobs_id_unique` (`id`);
+
+--
+-- Indexes for table `job_categories`
+--
+ALTER TABLE `job_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `job_locations`
+--
+ALTER TABLE `job_locations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `languages`
 --
 ALTER TABLE `languages`
@@ -3507,6 +4288,12 @@ ALTER TABLE `orders`
 -- Indexes for table `order_details`
 --
 ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `otp_configurations`
+--
+ALTER TABLE `otp_configurations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3596,6 +4383,43 @@ ALTER TABLE `role_translations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sb_conversations`
+--
+ALTER TABLE `sb_conversations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agent_id` (`agent_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `sb_messages`
+--
+ALTER TABLE `sb_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `conversation_id` (`conversation_id`);
+
+--
+-- Indexes for table `sb_settings`
+--
+ALTER TABLE `sb_settings`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `sb_users`
+--
+ALTER TABLE `sb_users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `sb_users_data`
+--
+ALTER TABLE `sb_users_data`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sb_users_data_index` (`user_id`,`slug`);
+
+--
 -- Indexes for table `searches`
 --
 ALTER TABLE `searches`
@@ -3607,6 +4431,12 @@ ALTER TABLE `searches`
 ALTER TABLE `sellers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `seller_packages`
+--
+ALTER TABLE `seller_packages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `seller_withdraw_requests`
@@ -3702,12 +4532,54 @@ ALTER TABLE `wishlists`
 -- AUTO_INCREMENT for table `addons`
 --
 ALTER TABLE `addons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `affiliate_configs`
+--
+ALTER TABLE `affiliate_configs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `affiliate_logs`
+--
+ALTER TABLE `affiliate_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `affiliate_options`
+--
+ALTER TABLE `affiliate_options`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `affiliate_payments`
+--
+ALTER TABLE `affiliate_payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `affiliate_stats`
+--
+ALTER TABLE `affiliate_stats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `affiliate_users`
+--
+ALTER TABLE `affiliate_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `affiliate_withdraw_requests`
+--
+ALTER TABLE `affiliate_withdraw_requests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -3738,13 +4610,13 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `blog_categories`
 --
 ALTER TABLE `blog_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -3762,7 +4634,7 @@ ALTER TABLE `brand_translations`
 -- AUTO_INCREMENT for table `business_settings`
 --
 ALTER TABLE `business_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `carts`
@@ -3774,13 +4646,13 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `category_translations`
 --
 ALTER TABLE `category_translations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -3840,7 +4712,7 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `customer_packages`
@@ -3903,6 +4775,24 @@ ALTER TABLE `home_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT for table `job_categories`
+--
+ALTER TABLE `job_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `job_locations`
+--
+ALTER TABLE `job_locations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
@@ -3924,7 +4814,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -3951,16 +4841,22 @@ ALTER TABLE `order_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `otp_configurations`
+--
+ALTER TABLE `otp_configurations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `page_translations`
 --
 ALTER TABLE `page_translations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -3990,25 +4886,25 @@ ALTER TABLE `policies`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_stocks`
 --
 ALTER TABLE `product_stocks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_taxes`
 --
 ALTER TABLE `product_taxes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_translations`
 --
 ALTER TABLE `product_translations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -4029,6 +4925,30 @@ ALTER TABLE `role_translations`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `sb_conversations`
+--
+ALTER TABLE `sb_conversations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sb_messages`
+--
+ALTER TABLE `sb_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sb_users`
+--
+ALTER TABLE `sb_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `sb_users_data`
+--
+ALTER TABLE `sb_users_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `searches`
 --
 ALTER TABLE `searches`
@@ -4038,7 +4958,13 @@ ALTER TABLE `searches`
 -- AUTO_INCREMENT for table `sellers`
 --
 ALTER TABLE `sellers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `seller_packages`
+--
+ALTER TABLE `seller_packages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `seller_withdraw_requests`
@@ -4056,7 +4982,7 @@ ALTER TABLE `seo_settings`
 -- AUTO_INCREMENT for table `shops`
 --
 ALTER TABLE `shops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -4068,7 +4994,7 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -4098,19 +5024,19 @@ ALTER TABLE `ticket_replies`
 -- AUTO_INCREMENT for table `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1386;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1841;
 
 --
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `wallets`
@@ -4123,6 +5049,30 @@ ALTER TABLE `wallets`
 --
 ALTER TABLE `wishlists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `sb_conversations`
+--
+ALTER TABLE `sb_conversations`
+  ADD CONSTRAINT `sb_conversations_ibfk_1` FOREIGN KEY (`agent_id`) REFERENCES `sb_users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `sb_conversations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `sb_users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sb_messages`
+--
+ALTER TABLE `sb_messages`
+  ADD CONSTRAINT `sb_messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `sb_users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `sb_messages_ibfk_2` FOREIGN KEY (`conversation_id`) REFERENCES `sb_conversations` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sb_users_data`
+--
+ALTER TABLE `sb_users_data`
+  ADD CONSTRAINT `sb_users_data_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `sb_users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
